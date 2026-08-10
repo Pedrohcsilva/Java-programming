@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resoluções — Lição 1: Primeiros Passos — Programação em Java</title>
+<style>
+:root {
+  --primary:   #e76f00;
+  --secondary: #bf5700;
+  --blue:      #1565c0;
+  --teal:      #00695c;
+  --amber:     #b45309;
+  --ink:       #2b2140;
+  --rule:      #ffd7b5;
+  --code-bg:   #fff8f0;
+  --code-inline: #bf5700;
+  --bg:        #fafafa;
+  --text:      #1a1a2e;
+  --muted:     #6b6b80;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* ── HEADER ── */
+header.title-block {
+  border-top: 5px solid var(--primary);
+  padding: 2.2rem 0 1.4rem;
+  margin-bottom: 2rem;
+}
+header.title-block h1.title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+header.title-block p.subtitle {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.15rem;
+  color: var(--secondary);
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+header.title-block p.author,
+header.title-block p.date {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  font-style: italic;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ── TOC ── */
+nav#TOC {
+  background: #fff3e8;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 2.5rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.92rem;
+}
+nav#TOC::before {
+  content: 'Índice';
+  display: block;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+nav#TOC ol { padding-left: 1.2rem; }
+nav#TOC li { margin: 0.18rem 0; }
+nav#TOC a { color: var(--blue); text-decoration: none; }
+nav#TOC a:hover { text-decoration: underline; }
+
+/* ── HEADINGS ── */
+h1 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.7rem;
+  color: var(--primary);
+  border-bottom: 1.2px solid var(--rule);
+  padding-bottom: 0.35rem;
+  margin: 2.2rem 0 0.9rem;
+}
+h2 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.3rem;
+  color: var(--secondary);
+  margin: 1.9rem 0 0.65rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ffe0c4;
+}
+h3 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: var(--teal);
+  margin: 1.4rem 0 0.5rem;
+}
+h4 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.97rem;
+  color: var(--amber);
+  margin: 1.1rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── PARAGRAPHS & LISTS ── */
+p { margin: 0.75rem 0; }
+ul, ol { padding-left: 1.6rem; margin: 0.6rem 0; }
+li { margin: 0.25rem 0; }
+strong { color: var(--ink); }
+
+/* ── BLOCKQUOTE ── */
+blockquote {
+  border-left: 4px solid var(--primary);
+  background: #fff8f0;
+  margin: 1.2rem 0;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink);
+  font-style: italic;
+}
+blockquote strong { font-style: normal; }
+
+/* ── CODE ── */
+code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+  background: var(--code-bg);
+  color: var(--code-inline);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  border-left: 4px solid var(--secondary);
+  background: var(--code-bg);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+pre code {
+  background: none;
+  color: var(--ink);
+  padding: 0;
+  font-size: 0.855rem;
+}
+
+/* ── TABLES ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+thead th {
+  background: var(--secondary);
+  color: #fff;
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+}
+tbody tr:nth-child(odd)  { background: #fff8f0; }
+tbody tr:nth-child(even) { background: #fff; }
+td, th { padding: 0.45rem 0.9rem; border-bottom: 1px solid #f0d8c0; }
+
+/* ── HR ── */
+hr { border: none; border-top: 1.5px solid var(--rule); margin: 2rem 0; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+</style>
+</head>
+<body>
+
+<header class="title-block">
+  <h1 class="title">Programação em Java — Resoluções</h1>
+  <p class="subtitle">Lição 1: Primeiros Passos</p>
+  <p class="author">Java Programming MOOC · Universidade de Helsinque — tradução para o português</p>
+  <p class="date">2026</p>
+</header>
+
+<nav id="TOC">
+  <ol>
+    <li><a href="#exercicio-1-ola-usuario">Exercício 1 — Olá, usuário!</a></li>
+    <li><a href="#exercicio-2-calculadora-simples">Exercício 2 — Calculadora simples</a></li>
+    <li><a href="#exercicio-3-par-ou-impar">Exercício 3 — Par ou ímpar</a></li>
+    <li><a href="#exercicio-4-classificacao-de-temperatura">Exercício 4 — Classificação de temperatura</a></li>
+    <li><a href="#exercicio-5-imc">Exercício 5 — IMC</a></li>
+  </ol>
+</nav>
+
+<h1 id="resolucoes-licao-1-primeiros-passos">Resoluções — Lição 1: Primeiros Passos</h1>
+
+<p>Resolução dos 5 exercícios propostos em <code>licao01.md</code>.</p>
+
+<hr>
+
+<h2 id="exercicio-1-ola-usuario">Exercício 1 — Olá, usuário!</h2>
+
+<pre><code>import java.util.Scanner;
+
+public class OlaUsuario {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Qual é o seu nome? ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Qual é a sua idade? ");
+        int idade = Integer.valueOf(scanner.nextLine());
+
+        System.out.println("Olá, " + nome + "! Você tem " + idade + " anos.");
+    }
+}</code></pre>
+<p><strong>Exemplo de execução:</strong></p>
+<pre><code>Qual é o seu nome? Pedro
+Qual é a sua idade? 21
+Olá, Pedro! Você tem 21 anos.</code></pre>
+
+<hr>
+
+<h2 id="exercicio-2-calculadora-simples">Exercício 2 — Calculadora simples</h2>
+
+<pre><code>import java.util.Scanner;
+
+public class CalculadoraSimples {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Primeiro número: ");
+        int a = Integer.valueOf(scanner.nextLine());
+
+        System.out.print("Segundo número: ");
+        int b = Integer.valueOf(scanner.nextLine());
+
+        double quociente = (double) a / b;
+
+        System.out.println("Soma: " + (a + b));
+        System.out.println("Diferença: " + (a - b));
+        System.out.println("Produto: " + (a * b));
+        System.out.println("Quociente: " + quociente);
+    }
+}</code></pre>
+<p>O quociente usa <code>(double) a / b</code> para não perder a parte decimal do resultado.</p>
+
+<hr>
+
+<h2 id="exercicio-3-par-ou-impar">Exercício 3 — Par ou ímpar</h2>
+
+<pre><code>import java.util.Scanner;
+
+public class ParOuImpar {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite um número inteiro: ");
+        int numero = Integer.valueOf(scanner.nextLine());
+
+        if (numero % 2 == 0) {
+            System.out.println(numero + " é par.");
+        } else {
+            System.out.println(numero + " é ímpar.");
+        }
+    }
+}</code></pre>
+
+<hr>
+
+<h2 id="exercicio-4-classificacao-de-temperatura">Exercício 4 — Classificação de temperatura</h2>
+
+<pre><code>import java.util.Scanner;
+
+public class ClassificacaoTemperatura {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite a temperatura em °C: ");
+        double temperatura = Double.valueOf(scanner.nextLine());
+
+        if (temperatura &lt; 15) {
+            System.out.println("Frio");
+        } else if (temperatura &lt;= 25) {
+            System.out.println("Agradável");
+        } else {
+            System.out.println("Quente");
+        }
+    }
+}</code></pre>
+
+<hr>
+
+<h2 id="exercicio-5-imc">Exercício 5 — IMC</h2>
+
+<pre><code>import java.util.Scanner;
+
+public class CalculadoraIMC {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Peso (kg): ");
+        double peso = Double.valueOf(scanner.nextLine());
+
+        System.out.print("Altura (m): ");
+        double altura = Double.valueOf(scanner.nextLine());
+
+        double imc = peso / (altura * altura);
+
+        System.out.println("Seu IMC é: " + imc);
+
+        if (imc &lt; 18.5) {
+            System.out.println("Classificação: Abaixo do peso");
+        } else if (imc &lt; 25) {
+            System.out.println("Classificação: Peso normal");
+        } else if (imc &lt; 30) {
+            System.out.println("Classificação: Sobrepeso");
+        } else {
+            System.out.println("Classificação: Obesidade");
+        }
+    }
+}</code></pre>
+<p><strong>Observação:</strong> os limites usam <code>&lt;</code> (estrito) em vez de <code>&lt;=</code> para os intervalos, seguindo exatamente as faixas descritas no enunciado (ex.: 24.9 já cai em "abaixo de 25").</p>
+
+<footer>
+  Java Programming MOOC · Universidade de Helsinque · tradução para o português · 2026
+</footer>
+</body>
+</html>

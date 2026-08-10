@@ -1,0 +1,653 @@
+% ============================================================
+%  Programação em Java — Lição 4: Orientação a Objetos — Fundamentos
+%  Java Programming MOOC · Universidade de Helsinque
+%  Compilar com: pdflatex licao04.tex
+% ============================================================
+\documentclass[12pt, a4paper]{article}
+
+% ── Codificação e língua ──────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+
+% ── Fontes ────────────────────────────────────────────────
+\usepackage{palatino}
+\usepackage[scaled=0.88]{beramono}
+
+% ── Geometria ─────────────────────────────────────────────
+\usepackage[
+  a4paper,
+  top=3cm, bottom=3cm,
+  left=3cm, right=3cm
+]{geometry}
+
+% ── Cores ─────────────────────────────────────────────────
+\usepackage[dvipsnames, table, x11names]{xcolor}
+
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaLightBg}{HTML}{FFF5EC}
+\definecolor{javaKeyword}{HTML}{D73A49}
+\definecolor{javaString}{HTML}{032F62}
+\definecolor{javaComment}{HTML}{6A737D}
+
+% ── Cabeçalho e rodapé ────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaOrange}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\color{javaOrange}\textbf{Programação em Java}}
+\fancyhead[R]{\small\color{javaDeep}Lição 4: Orientação a Objetos}
+\fancyfoot[C]{\small\color{javaAmber}\thepage}
+\fancyfoot[R]{\small\color{gray}Java Programming MOOC}
+
+% ── Títulos de seção ──────────────────────────────────────
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\color{javaOrange}\large\bfseries}
+  {\color{javaOrange}\thesection.}{0.6em}{}
+  [\vspace{2pt}\color{javaRule}\titlerule]
+
+\titleformat{\subsection}
+  {\color{javaDeep}\normalsize\bfseries}
+  {\color{javaDeep}\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+  {\color{javaTeal}\normalsize\bfseries}
+  {\color{javaTeal}\thesubsubsection.}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{2ex}{1ex}
+\titlespacing*{\subsection}{0pt}{1.8ex}{0.6ex}
+\titlespacing*{\subsubsection}{0pt}{1.4ex}{0.4ex}
+
+% ── Hiperlinks ────────────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=javaBlue,
+  urlcolor=javaBlue,
+  citecolor=javaBlue,
+  pdfauthor={Java Programming MOOC},
+  pdftitle={Licao 4: Orientacao a Objetos -- Fundamentos},
+  pdfsubject={Programacao em Java},
+  pdfkeywords={java, classes, objetos, encapsulamento, OOP}
+]{hyperref}
+
+% ── Código-fonte ─────────────────────────────────────────
+\usepackage{listings}
+
+\lstdefinestyle{java}{
+  language=Java,
+  basicstyle=\small\ttfamily\color{javaInk},
+  keywordstyle=\color{javaKeyword}\bfseries,
+  stringstyle=\color{javaString},
+  commentstyle=\color{javaComment}\itshape,
+  numberstyle=\tiny\color{gray},
+  numbers=left,
+  numbersep=8pt,
+  stepnumber=1,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=4,
+  frame=none,
+  morekeywords={var, record, String, Scanner, ArrayList, HashMap,
+                System, Integer, Double, Boolean, File, Math,
+                Override, FileNotFoundException},
+}
+
+\lstdefinestyle{plaintext}{
+  basicstyle=\small\ttfamily\color{javaInk},
+  numbers=none,
+  showstringspaces=false,
+  breaklines=true,
+  frame=none,
+}
+
+% ── tcolorbox para blocos de código ───────────────────────
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings, breakable}
+
+\newtcblisting{javacode}{
+  listing only,
+  listing style=java,
+  breakable,
+  enhanced jigsaw,
+  colback=javaCodeBg,
+  colframe=javaRule,
+  borderline west={3pt}{0pt}{javaDeep},
+  arc=4pt,
+  top=6pt, bottom=6pt, left=10pt, right=6pt,
+  boxrule=0.5pt,
+}
+
+\newtcblisting{plaincode}{
+  listing only,
+  listing style=plaintext,
+  breakable,
+  enhanced jigsaw,
+  colback=javaCodeBg,
+  colframe=javaRule,
+  borderline west={3pt}{0pt}{javaAmber},
+  arc=4pt,
+  top=6pt, bottom=6pt, left=10pt, right=6pt,
+  boxrule=0.5pt,
+}
+
+% Caixa de destaque (callout)
+\newtcolorbox{callout}[1][Nota]{
+  breakable,
+  enhanced jigsaw,
+  colback=javaLightBg,
+  colframe=javaOrange,
+  coltitle=white,
+  fonttitle=\small\bfseries,
+  title=#1,
+  arc=4pt,
+  boxrule=1pt,
+  top=4pt, bottom=4pt, left=8pt, right=8pt,
+}
+
+% Caixa de exercício
+\newtcolorbox{exercicio}[1]{
+  breakable,
+  enhanced jigsaw,
+  colback=white,
+  colframe=javaRule,
+  borderline west={4pt}{0pt}{javaOrange},
+  coltitle=javaOrange,
+  fonttitle=\normalsize\bfseries,
+  title=Exercício #1,
+  arc=4pt,
+  boxrule=0.5pt,
+  top=6pt, bottom=6pt, left=10pt, right=8pt,
+  attach boxed title to top left={yshift=-2mm, xshift=8pt},
+  boxed title style={
+    colback=javaOrange, colframe=javaDeep,
+    arc=3pt, boxrule=0.5pt,
+    fontupper=\small\bfseries\color{white}
+  },
+}
+
+% ── Tabelas ───────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+
+% ── Utilitários ───────────────────────────────────────────
+\usepackage{microtype}
+\usepackage{parskip}
+\setlength{\parskip}{0.5em}
+\usepackage{enumitem}
+\setlist[itemize]{topsep=2pt, itemsep=2pt, leftmargin=1.5em}
+\setlist[enumerate]{topsep=2pt, itemsep=2pt, leftmargin=1.5em}
+
+% ── Código inline ─────────────────────────────────────────
+\newcommand{\code}[1]{\texttt{\color{javaDeep}#1}}
+
+% ──────────────────────────────────────────────────────────
+%  CAPA
+% ──────────────────────────────────────────────────────────
+\usepackage{tikz}
+
+\newcommand{\makejavacapa}{%
+  \begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[javaOrange]
+        (current page.north west) rectangle
+        ([yshift=-10cm] current page.north east);
+      \fill[javaDeep]
+        ([yshift=-10cm] current page.north west) rectangle
+        ([yshift=-10.5cm] current page.north east);
+      \fill[javaAmber!40!white]
+        (current page.south west) rectangle
+        ([yshift=3cm] current page.south east);
+    \end{tikzpicture}
+
+    \vspace*{2.5cm}
+    {\color{white}\fontsize{13}{16}\selectfont\textbf{PROGRAMAÇÃO EM JAVA}}\\[0.5cm]
+    {\color{white}\fontsize{28}{34}\selectfont\textbf{Lição 4}}\\[0.3cm]
+    {\color{white!90!javaOrange}\fontsize{18}{22}\selectfont Orientação a Objetos --- Fundamentos}\\[1.8cm]
+
+    {\color{white!85!javaOrange}\large Java Programming MOOC}\\[0.3cm]
+    {\color{white!80!javaOrange}\normalsize Universidade de Helsinque}\\[2cm]
+
+    \vfill
+    {\color{javaAmber!60!black}\small
+      Tradução para o português do Brasil --- 2026\\
+      Licença: CC BY-NC-SA 4.0
+    }
+    \vspace{1.5cm}
+  \end{titlepage}
+}
+
+% ══════════════════════════════════════════════════════════
+\begin{document}
+
+\makejavacapa
+\tableofcontents
+\newpage
+
+% ──────────────────────────────────────────────────────────
+\section{Objetivos de aprendizagem}
+% ──────────────────────────────────────────────────────────
+
+Ao final desta lição, você será capaz de:
+
+\begin{itemize}
+  \item Entender o que são classes e objetos
+  \item Criar classes com variáveis de instância, construtores e métodos
+  \item Usar \code{this} para referenciar o objeto atual
+  \item Implementar encapsulamento com \code{private} e métodos getters/setters
+  \item Armazenar objetos em listas (\code{ArrayList})
+  \item Ler dados de arquivos e representá-los como objetos
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────
+\section{O que são classes e objetos?}
+% ──────────────────────────────────────────────────────────
+
+Uma \textbf{classe} é um molde (blueprint) que descreve um conceito do mundo real: seus atributos e comportamentos. Um \textbf{objeto} é uma instância concreta desse molde.
+
+Analogia: a \textbf{planta baixa} de uma casa é a classe. Cada \textbf{casa construída} a partir dessa planta é um objeto. Todas seguem o mesmo projeto, mas cada uma tem características próprias (cor, moradores, etc.).
+
+\subsection{Por que usar orientação a objetos?}
+
+\begin{itemize}
+  \item Modela o problema de forma natural (conceitos do domínio viram classes)
+  \item Facilita a organização e manutenção de programas grandes
+  \item Promove o reúso de código
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────
+\section{Criando uma classe}
+% ──────────────────────────────────────────────────────────
+
+\begin{javacode}
+public class Pessoa {
+    // variaveis de instancia (atributos)
+    private String nome;
+    private int idade;
+
+    // construtor
+    public Pessoa(String nome) {
+        this.nome = nome;
+        this.idade = 0;
+    }
+
+    // metodos
+    public void crescer() {
+        this.idade++;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public int getIdade() {
+        return this.idade;
+    }
+
+    @Override
+    public String toString() {
+        return this.nome + ", " + this.idade + " anos";
+    }
+}
+\end{javacode}
+
+\subsection{Usando a classe}
+
+\begin{javacode}
+Pessoa alice = new Pessoa("Alice");
+Pessoa bruno = new Pessoa("Bruno");
+
+alice.crescer();
+alice.crescer();
+
+System.out.println(alice);           // Alice, 2 anos
+System.out.println(bruno);           // Bruno, 0 anos
+System.out.println(alice.getNome()); // Alice
+\end{javacode}
+
+Cada objeto tem seu \textbf{próprio} conjunto de variáveis de instância --- alterar \code{alice} não afeta \code{bruno}.
+
+% ──────────────────────────────────────────────────────────
+\section{Variáveis de instância}
+% ──────────────────────────────────────────────────────────
+
+As variáveis de instância guardam o \textbf{estado} do objeto. Em geral, são declaradas como \code{private} para protegê-las de acesso externo direto.
+
+\begin{javacode}
+public class ContaBancaria {
+    private String titular;
+    private double saldo;
+
+    public ContaBancaria(String titular, double saldoInicial) {
+        this.titular = titular;
+        this.saldo = saldoInicial;
+    }
+}
+\end{javacode}
+
+% ──────────────────────────────────────────────────────────
+\section{Construtores}
+% ──────────────────────────────────────────────────────────
+
+O \textbf{construtor} é chamado com \code{new} e inicializa as variáveis de instância. Tem o mesmo nome da classe e não declara tipo de retorno.
+
+\begin{javacode}
+ContaBancaria conta = new ContaBancaria("Maria", 1000.0);
+\end{javacode}
+
+\begin{callout}[Importante]
+Se você não definir um construtor, Java fornece um padrão (sem parâmetros), mas assim que você define um, o padrão deixa de existir.
+\end{callout}
+
+% ──────────────────────────────────────────────────────────
+\section{O \texttt{this}}
+% ──────────────────────────────────────────────────────────
+
+A palavra \code{this} dentro de um método refere-se ao \textbf{objeto que chamou o método}:
+
+\begin{javacode}
+public class Ponto {
+    private int x;
+    private int y;
+
+    public Ponto(int x, int y) {
+        this.x = x; // this.x e a variavel de instancia; x e o parametro
+        this.y = y;
+    }
+
+    public double distanciaOrigem() {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+}
+\end{javacode}
+
+% ──────────────────────────────────────────────────────────
+\section{Encapsulamento: \texttt{private} e getters/setters}
+% ──────────────────────────────────────────────────────────
+
+\textbf{Encapsulamento} significa esconder os detalhes internos do objeto. Declaramos variáveis como \code{private} e fornecemos métodos públicos para lê-las ou alterá-las.
+
+\subsection{Getters (leitura)}
+
+\begin{javacode}
+public String getNome() {
+    return this.nome;
+}
+
+public int getIdade() {
+    return this.idade;
+}
+
+public boolean isMaiorDeIdade() {
+    return this.idade >= 18;
+}
+\end{javacode}
+
+\subsection{Setters (escrita com validação)}
+
+\begin{javacode}
+public void setIdade(int idade) {
+    if (idade >= 0) {
+        this.idade = idade;
+    }
+}
+
+public void setSaldo(double saldo) {
+    if (saldo >= 0) {
+        this.saldo = saldo;
+    }
+}
+\end{javacode}
+
+O setter pode \textbf{validar} o valor antes de atribuí-lo --- isso é impossível com acesso direto à variável.
+
+% ──────────────────────────────────────────────────────────
+\section{O método \texttt{toString()}}
+% ──────────────────────────────────────────────────────────
+
+O método \code{toString()} define como o objeto é representado como texto. É chamado automaticamente quando o objeto é passado para \code{System.out.println()} ou concatenado com uma string.
+
+\begin{javacode}
+@Override
+public String toString() {
+    return this.titular + " | Saldo: R$ " + this.saldo;
+}
+\end{javacode}
+
+\begin{javacode}
+ContaBancaria conta = new ContaBancaria("Joao", 500.0);
+System.out.println(conta); // Joao | Saldo: R$ 500.0
+\end{javacode}
+
+% ──────────────────────────────────────────────────────────
+\section{Métodos que modificam o estado}
+% ──────────────────────────────────────────────────────────
+
+\begin{javacode}
+public class ContaBancaria {
+    private String titular;
+    private double saldo;
+
+    public ContaBancaria(String titular, double saldoInicial) {
+        this.titular = titular;
+        this.saldo = saldoInicial;
+    }
+
+    public void depositar(double valor) {
+        if (valor > 0) {
+            this.saldo += valor;
+        }
+    }
+
+    public boolean sacar(double valor) {
+        if (valor > 0 && this.saldo >= valor) {
+            this.saldo -= valor;
+            return true;
+        }
+        return false;
+    }
+
+    public double getSaldo() {
+        return this.saldo;
+    }
+
+    @Override
+    public String toString() {
+        return this.titular + " | Saldo: R$ " + String.format("%.2f", this.saldo);
+    }
+}
+\end{javacode}
+
+\begin{javacode}
+ContaBancaria conta = new ContaBancaria("Carlos", 200.0);
+conta.depositar(300.0);
+conta.sacar(100.0);
+System.out.println(conta); // Carlos | Saldo: R$ 400,00
+\end{javacode}
+
+% ──────────────────────────────────────────────────────────
+\section{Objetos em listas}
+% ──────────────────────────────────────────────────────────
+
+Objetos podem ser armazenados em \code{ArrayList} como qualquer outro tipo:
+
+\begin{javacode}
+ArrayList<Pessoa> pessoas = new ArrayList<>();
+pessoas.add(new Pessoa("Ana"));
+pessoas.add(new Pessoa("Bob"));
+pessoas.add(new Pessoa("Carol"));
+
+for (Pessoa p : pessoas) {
+    System.out.println(p);
+}
+\end{javacode}
+
+\subsection{Buscando um objeto na lista}
+
+\begin{javacode}
+public static Pessoa buscarPorNome(ArrayList<Pessoa> lista, String nome) {
+    for (Pessoa p : lista) {
+        if (p.getNome().equals(nome)) {
+            return p;
+        }
+    }
+    return null; // nao encontrado
+}
+\end{javacode}
+
+% ──────────────────────────────────────────────────────────
+\section{Lendo dados de arquivos}
+% ──────────────────────────────────────────────────────────
+
+Java pode ler arquivos de texto com \code{Scanner} e \code{File}:
+
+\begin{javacode}
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+public class LeitorDeArquivo {
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File("pessoas.txt"));
+
+        ArrayList<Pessoa> pessoas = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            String linha = scanner.nextLine();
+            String[] partes = linha.split(",");
+            String nome = partes[0];
+
+            Pessoa p = new Pessoa(nome);
+            pessoas.add(p);
+        }
+
+        for (Pessoa p : pessoas) {
+            System.out.println(p);
+        }
+    }
+}
+\end{javacode}
+
+Exemplo de arquivo \code{pessoas.txt}:
+
+\begin{plaincode}
+Alice,30
+Bruno,25
+Carol,28
+\end{plaincode}
+
+% ──────────────────────────────────────────────────────────
+\section{Exemplo completo: classe \texttt{Produto}}
+% ──────────────────────────────────────────────────────────
+
+\begin{javacode}
+public class Produto {
+    private String nome;
+    private double preco;
+    private int estoque;
+
+    public Produto(String nome, double preco, int estoque) {
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
+    }
+
+    public String getNome() { return this.nome; }
+    public double getPreco() { return this.preco; }
+    public int getEstoque() { return this.estoque; }
+
+    public boolean vender(int quantidade) {
+        if (quantidade > this.estoque) {
+            System.out.println("Estoque insuficiente!");
+            return false;
+        }
+        this.estoque -= quantidade;
+        return true;
+    }
+
+    public void repor(int quantidade) {
+        this.estoque += quantidade;
+    }
+
+    @Override
+    public String toString() {
+        return this.nome + " | R$ " + String.format("%.2f", this.preco)
+               + " | Estoque: " + this.estoque;
+    }
+}
+\end{javacode}
+
+% ──────────────────────────────────────────────────────────
+\section{Resumo}
+% ──────────────────────────────────────────────────────────
+
+\begin{itemize}
+  \item Uma \textbf{classe} define o molde; um \textbf{objeto} é uma instância da classe.
+  \item \textbf{Variáveis de instância} (\code{private}) guardam o estado do objeto.
+  \item O \textbf{construtor} inicializa o objeto ao criá-lo com \code{new}.
+  \item \textbf{\code{this}} refere-se ao próprio objeto dentro dos seus métodos.
+  \item \textbf{Encapsulamento}: atributos \code{private}, acesso via getters e setters.
+  \item \textbf{\code{toString()}} define a representação textual do objeto.
+  \item Objetos podem ser armazenados em \code{ArrayList<NomeDaClasse>}.
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────
+\section{Exercícios}
+% ──────────────────────────────────────────────────────────
+
+\begin{exercicio}{1 --- Retângulo}
+Crie a classe \code{Retangulo} com atributos \code{largura} e \code{altura} (ambos \code{double}, \code{private}). Adicione:
+\begin{itemize}
+  \item Construtor com os dois valores
+  \item Métodos \code{getArea()} e \code{getPerimetro()}
+  \item Método \code{ehQuadrado()} que retorna \code{boolean}
+  \item \code{toString()} descritivo
+\end{itemize}
+\end{exercicio}
+
+\begin{exercicio}{2 --- Aluno e notas}
+Crie a classe \code{Aluno} com \code{nome} (String) e uma lista de notas (\code{ArrayList<Integer>}). Adicione:
+\begin{itemize}
+  \item Método \code{adicionarNota(int nota)} (valide: nota entre 0 e 10)
+  \item Método \code{calcularMedia()} retornando \code{double}
+  \item Método \code{aprovado()} que retorna \code{true} se média $\geq$ 6
+  \item \code{toString()} mostrando nome, média e situação
+\end{itemize}
+\end{exercicio}
+
+\begin{exercicio}{3 --- Estacionamento}
+Crie a classe \code{Veiculo} com \code{placa} (String) e \code{marca} (String). Crie a classe \code{Estacionamento} com:
+\begin{itemize}
+  \item Capacidade máxima (definida no construtor)
+  \item Lista de veículos
+  \item Métodos \code{entrar(Veiculo v)} (verifica se há vaga), \code{sair(String placa)}, \code{listarVeiculos()}
+\end{itemize}
+\end{exercicio}
+
+\begin{exercicio}{4 --- Leitura de arquivo}
+Crie um arquivo \code{produtos.txt} com linhas no formato \code{nome,preco,estoque}.
+Leia o arquivo, crie objetos \code{Produto} e exiba todos os produtos. Calcule o valor total em estoque (preço $\times$ quantidade).
+\end{exercicio}
+
+% ──────────────────────────────────────────────────────────
+\vfill
+\begin{center}
+  \small\color{gray}
+  Java Programming MOOC · Universidade de Helsinque ·
+  \href{https://java-programming.mooc.fi/part-4}{java-programming.mooc.fi/part-4}\\
+  Licença: \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{CC BY-NC-SA 4.0} ·
+  Tradução para o português do Brasil --- 2026
+\end{center}
+
+\end{document}

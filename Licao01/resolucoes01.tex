@@ -1,0 +1,302 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[11pt,a4paper]{article}
+
+% ── Codificação e língua ──────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+
+% ── Tipografia ────────────────────────────────────────────────────────────────
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ── Cores ─────────────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaShade}{HTML}{FFF3E8}
+
+% ── Caixas e código ───────────────────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{listings}
+\usepackage{fvextra}
+
+\lstdefinestyle{javastyle}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{javaBlue}\bfseries,
+  stringstyle=\color{javaDeep},
+  commentstyle=\color{javaTeal}\itshape,
+  numberstyle=\tiny\color{gray},
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  tabsize=4,
+}
+
+\newtcblisting{javacode}{
+  listing only,
+  listing style=javastyle,
+  breakable,
+  enhanced,
+  colback=javaCodeBg,
+  colframe=javaDeep,
+  leftrule=4pt,
+  rightrule=0.4pt,
+  toprule=0.4pt,
+  bottomrule=0.4pt,
+  arc=2pt,
+  fontupper=\small,
+  top=4pt, bottom=4pt, left=6pt, right=6pt,
+}
+
+\newtcbox{\inlinecode}{
+  on line,
+  colback=javaCodeBg,
+  colframe=javaRule,
+  boxrule=0.5pt,
+  arc=2pt,
+  fontupper=\ttfamily\small\color{javaDeep},
+  boxsep=1pt, left=2pt, right=2pt, top=1pt, bottom=1pt,
+}
+
+% ── Layout ────────────────────────────────────────────────────────────────────
+\usepackage[margin=2.4cm, top=2.8cm, bottom=2.8cm]{geometry}
+
+% ── Cabeçalho / rodapé ────────────────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaRule}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\sffamily\color{javaDeep} Java Programming MOOC}
+\fancyhead[R]{\small\sffamily\color{javaDeep} Resoluções · Lição 1}
+\fancyfoot[C]{\small\sffamily\color{gray}\thepage}
+
+% ── Seções ────────────────────────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{javaOrange}}
+  {\thesection}{0.7em}{}
+  [\vspace{2pt}{\color{javaRule}\titlerule[1.2pt]}]
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{javaDeep}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{javaTeal}}
+  {\thesubsubsection}{0.5em}{}
+
+% ── Listas ────────────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt, parsep=0pt}
+\setlist[enumerate]{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+% ── Tabelas ───────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+
+% ── Hiperlinks ────────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=javaBlue,
+  urlcolor=javaBlue,
+  citecolor=javaBlue,
+  pdftitle={Programação em Java --- Resoluções --- Lição 1: Primeiros Passos},
+  pdfauthor={Java Programming MOOC · Universidade de Helsinque},
+  pdflang={pt-BR},
+}
+
+% ── Caixa de destaque (dica/atenção) ─────────────────────────────────────────
+\newtcolorbox{destaque}[1][Observação]{
+  enhanced, breakable,
+  colback=javaShade,
+  colframe=javaOrange,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt,
+  fonttitle=\sffamily\bfseries\color{javaOrange},
+  title=#1,
+  top=4pt, bottom=4pt,
+}
+
+% ── Título personalizado ──────────────────────────────────────────────────────
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\color{javaRule}\rule{\linewidth}{1pt}}\\[6pt]
+    {\Huge\sffamily\bfseries\color{javaOrange} \@title}\\[6pt]
+    \ifx\@subtitle\undefined\else
+      {\Large\sffamily\color{javaDeep} \@subtitle}\\[4pt]
+    \fi
+    {\small\sffamily\color{gray} \@author}\\[2pt]
+    {\small\sffamily\color{gray} \@date}\\[6pt]
+    {\color{javaRule}\rule{\linewidth}{1pt}}
+  \end{center}
+  \vspace{1em}
+}
+\makeatother
+
+% ─────────────────────────────────────────────────────────────────────────────
+\title{Programação em Java — Resoluções}
+\subtitle{Lição 1: Primeiros Passos}
+\author{Java Programming MOOC · Universidade de Helsinque — tradução para o português}
+\date{2026}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1.5em}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 1 --- Olá, usuário!}
+
+\begin{javacode}
+import java.util.Scanner;
+
+public class OlaUsuario {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Qual é o seu nome? ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Qual é a sua idade? ");
+        int idade = Integer.valueOf(scanner.nextLine());
+
+        System.out.println("Olá, " + nome + "! Você tem " + idade + " anos.");
+    }
+}
+\end{javacode}
+
+\begin{destaque}[Exemplo de execução]
+\begin{verbatim}
+Qual é o seu nome? Pedro
+Qual é a sua idade? 21
+Olá, Pedro! Você tem 21 anos.
+\end{verbatim}
+\end{destaque}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 2 --- Calculadora simples}
+
+\begin{javacode}
+import java.util.Scanner;
+
+public class CalculadoraSimples {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Primeiro número: ");
+        int a = Integer.valueOf(scanner.nextLine());
+
+        System.out.print("Segundo número: ");
+        int b = Integer.valueOf(scanner.nextLine());
+
+        double quociente = (double) a / b;
+
+        System.out.println("Soma: " + (a + b));
+        System.out.println("Diferença: " + (a - b));
+        System.out.println("Produto: " + (a * b));
+        System.out.println("Quociente: " + quociente);
+    }
+}
+\end{javacode}
+
+O quociente usa \inlinecode{(double) a / b} para não perder a parte decimal do resultado.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 3 --- Par ou ímpar}
+
+\begin{javacode}
+import java.util.Scanner;
+
+public class ParOuImpar {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite um número inteiro: ");
+        int numero = Integer.valueOf(scanner.nextLine());
+
+        if (numero % 2 == 0) {
+            System.out.println(numero + " é par.");
+        } else {
+            System.out.println(numero + " é ímpar.");
+        }
+    }
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 4 --- Classificação de temperatura}
+
+\begin{javacode}
+import java.util.Scanner;
+
+public class ClassificacaoTemperatura {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite a temperatura em °C: ");
+        double temperatura = Double.valueOf(scanner.nextLine());
+
+        if (temperatura < 15) {
+            System.out.println("Frio");
+        } else if (temperatura <= 25) {
+            System.out.println("Agradável");
+        } else {
+            System.out.println("Quente");
+        }
+    }
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 5 --- IMC}
+
+\begin{javacode}
+import java.util.Scanner;
+
+public class CalculadoraIMC {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Peso (kg): ");
+        double peso = Double.valueOf(scanner.nextLine());
+
+        System.out.print("Altura (m): ");
+        double altura = Double.valueOf(scanner.nextLine());
+
+        double imc = peso / (altura * altura);
+
+        System.out.println("Seu IMC é: " + imc);
+
+        if (imc < 18.5) {
+            System.out.println("Classificação: Abaixo do peso");
+        } else if (imc < 25) {
+            System.out.println("Classificação: Peso normal");
+        } else if (imc < 30) {
+            System.out.println("Classificação: Sobrepeso");
+        } else {
+            System.out.println("Classificação: Obesidade");
+        }
+    }
+}
+\end{javacode}
+
+\begin{destaque}
+Os limites usam \inlinecode{<} (estrito) em vez de \inlinecode{<=} para os intervalos, seguindo exatamente as faixas descritas no enunciado (ex.: 24,9 já cai em ``abaixo de 25'').
+\end{destaque}
+
+\end{document}

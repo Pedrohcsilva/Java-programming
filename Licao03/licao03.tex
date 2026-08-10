@@ -1,0 +1,654 @@
+% ============================================================
+%  Programação em Java — Lição 3: Listas, Arrays e Strings
+%  Java Programming MOOC · Universidade de Helsinque
+%  Compilar com: pdflatex licao03.tex
+% ============================================================
+\documentclass[12pt, a4paper]{article}
+
+% ── Codificação e língua ──────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+
+% ── Fontes ────────────────────────────────────────────────
+\usepackage{palatino}
+\usepackage[scaled=0.88]{beramono}
+
+% ── Geometria ─────────────────────────────────────────────
+\usepackage[
+  a4paper,
+  top=3cm, bottom=3cm,
+  left=3cm, right=3cm
+]{geometry}
+
+% ── Cores ─────────────────────────────────────────────────
+\usepackage[dvipsnames, table, x11names]{xcolor}
+
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaLightBg}{HTML}{FFF5EC}
+\definecolor{javaKeyword}{HTML}{D73A49}
+\definecolor{javaString}{HTML}{032F62}
+\definecolor{javaComment}{HTML}{6A737D}
+
+% ── Cabeçalho e rodapé ────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaOrange}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\color{javaOrange}\textbf{Programação em Java}}
+\fancyhead[R]{\small\color{javaDeep}Lição 3: Listas, Arrays e Strings}
+\fancyfoot[C]{\small\color{javaAmber}\thepage}
+\fancyfoot[R]{\small\color{gray}Java Programming MOOC}
+
+% ── Títulos de seção ──────────────────────────────────────
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\color{javaOrange}\large\bfseries}
+  {\color{javaOrange}\thesection.}{0.6em}{}
+  [\vspace{2pt}\color{javaRule}\titlerule]
+
+\titleformat{\subsection}
+  {\color{javaDeep}\normalsize\bfseries}
+  {\color{javaDeep}\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+  {\color{javaTeal}\normalsize\bfseries}
+  {\color{javaTeal}\thesubsubsection.}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{2ex}{1ex}
+\titlespacing*{\subsection}{0pt}{1.8ex}{0.6ex}
+\titlespacing*{\subsubsection}{0pt}{1.4ex}{0.4ex}
+
+% ── Hiperlinks ────────────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=javaBlue,
+  urlcolor=javaBlue,
+  citecolor=javaBlue,
+  pdfauthor={Java Programming MOOC},
+  pdftitle={Lição 3: Listas, Arrays e Strings},
+  pdfsubject={Programação em Java},
+  pdfkeywords={java, listas, arrays, strings, ArrayList}
+]{hyperref}
+
+% ── Código-fonte ─────────────────────────────────────────
+\usepackage{listings}
+
+\lstdefinestyle{java}{
+  language=Java,
+  basicstyle=\small\ttfamily\color{javaInk},
+  keywordstyle=\color{javaKeyword}\bfseries,
+  stringstyle=\color{javaString},
+  commentstyle=\color{javaComment}\itshape,
+  numberstyle=\tiny\color{gray},
+  numbers=left,
+  numbersep=8pt,
+  stepnumber=1,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=4,
+  frame=none,
+  morekeywords={var, record, String, Scanner, ArrayList, HashMap,
+                System, Integer, Double, Boolean, File, Math},
+}
+
+\lstdefinestyle{plaintext}{
+  basicstyle=\small\ttfamily\color{javaInk},
+  numbers=none,
+  showstringspaces=false,
+  breaklines=true,
+  frame=none,
+}
+
+% ── tcolorbox para blocos de código ───────────────────────
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings, breakable}
+
+\newtcblisting{javacode}{
+  listing only,
+  listing style=java,
+  breakable,
+  enhanced jigsaw,
+  colback=javaCodeBg,
+  colframe=javaRule,
+  borderline west={3pt}{0pt}{javaDeep},
+  arc=4pt,
+  top=6pt, bottom=6pt, left=10pt, right=6pt,
+  boxrule=0.5pt,
+}
+
+\newtcblisting{plaincode}{
+  listing only,
+  listing style=plaintext,
+  breakable,
+  enhanced jigsaw,
+  colback=javaCodeBg,
+  colframe=javaRule,
+  borderline west={3pt}{0pt}{javaAmber},
+  arc=4pt,
+  top=6pt, bottom=6pt, left=10pt, right=6pt,
+  boxrule=0.5pt,
+}
+
+% Caixa de destaque (callout)
+\newtcolorbox{callout}[1][Nota]{
+  breakable,
+  enhanced jigsaw,
+  colback=javaLightBg,
+  colframe=javaOrange,
+  coltitle=white,
+  fonttitle=\small\bfseries,
+  title=#1,
+  arc=4pt,
+  boxrule=1pt,
+  top=4pt, bottom=4pt, left=8pt, right=8pt,
+}
+
+% Caixa de exercício
+\newtcolorbox{exercicio}[1]{
+  breakable,
+  enhanced jigsaw,
+  colback=white,
+  colframe=javaRule,
+  borderline west={4pt}{0pt}{javaOrange},
+  coltitle=javaOrange,
+  fonttitle=\normalsize\bfseries,
+  title=Exercício #1,
+  arc=4pt,
+  boxrule=0.5pt,
+  top=6pt, bottom=6pt, left=10pt, right=8pt,
+  attach boxed title to top left={yshift=-2mm, xshift=8pt},
+  boxed title style={
+    colback=javaOrange, colframe=javaDeep,
+    arc=3pt, boxrule=0.5pt,
+    fontupper=\small\bfseries\color{white}
+  },
+}
+
+% ── Tabelas ───────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+
+% ── Utilitários ───────────────────────────────────────────
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{parskip}
+\setlength{\parskip}{0.5em}
+\usepackage{enumitem}
+\setlist[itemize]{topsep=2pt, itemsep=2pt, leftmargin=1.5em}
+\setlist[enumerate]{topsep=2pt, itemsep=2pt, leftmargin=1.5em}
+
+% ── Código inline ─────────────────────────────────────────
+\newcommand{\code}[1]{\texttt{\color{javaDeep}#1}}
+
+% ──────────────────────────────────────────────────────────
+%  CAPA
+% ──────────────────────────────────────────────────────────
+\usepackage{eso-pic}
+\usepackage{tikz}
+
+\newcommand{\makejavacapa}{%
+  \begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+      % Fundo superior
+      \fill[javaOrange]
+        (current page.north west) rectangle
+        ([yshift=-10cm] current page.north east);
+      % Faixa decorativa
+      \fill[javaDeep]
+        ([yshift=-10cm] current page.north west) rectangle
+        ([yshift=-10.5cm] current page.north east);
+      % Faixa inferior
+      \fill[javaAmber!40!white]
+        (current page.south west) rectangle
+        ([yshift=3cm] current page.south east);
+    \end{tikzpicture}
+
+    \vspace*{2.5cm}
+    {\color{white}\fontsize{13}{16}\selectfont\textbf{PROGRAMAÇÃO EM JAVA}}\\[0.5cm]
+    {\color{white}\fontsize{28}{34}\selectfont\textbf{Lição 3}}\\[0.3cm]
+    {\color{white!90!javaOrange}\fontsize{18}{22}\selectfont Listas, Arrays e Strings}\\[1.8cm]
+
+    {\color{white!85!javaOrange}\large Java Programming MOOC}\\[0.3cm]
+    {\color{white!80!javaOrange}\normalsize Universidade de Helsinque}\\[2cm]
+
+    \vfill
+    {\color{javaAmber!60!black}\small
+      Tradução para o português do Brasil — 2026\\
+      Licença: CC BY-NC-SA 4.0
+    }
+    \vspace{1.5cm}
+  \end{titlepage}
+}
+
+% ══════════════════════════════════════════════════════════
+\begin{document}
+
+\makejavacapa
+\tableofcontents
+\newpage
+
+% ──────────────────────────────────────────────────────────
+\section{Objetivos de aprendizagem}
+% ──────────────────────────────────────────────────────────
+
+Ao final desta lição, você será capaz de:
+
+\begin{itemize}
+  \item Usar \code{ArrayList} para armazenar coleções de dados
+  \item Adicionar, acessar, remover e buscar elementos em uma lista
+  \item Percorrer listas com laços \code{for} e \code{for-each}
+  \item Criar e usar arrays de tamanho fixo
+  \item Trabalhar com métodos importantes da classe \code{String}
+  \item Dividir strings com \code{split()}
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────
+\section{Descobrindo e corrigindo erros}
+% ──────────────────────────────────────────────────────────
+
+Antes de falar sobre listas, é importante saber lidar com erros. Em Java, o compilador identifica erros de \textbf{sintaxe} (código mal escrito), mas erros de \textbf{lógica} só aparecem durante a execução.
+
+\subsection{Tipos de erro}
+
+\begin{center}
+\rowcolors{2}{javaLightBg}{white}
+\begin{longtable}{>{\bfseries}p{3.2cm} p{4.2cm} p{5.5cm}}
+\toprule
+\rowcolor{javaOrange}
+\color{white}\textbf{Tipo} &
+\color{white}\textbf{Quando ocorre} &
+\color{white}\textbf{Exemplo} \\
+\midrule
+\endhead
+Erro de sintaxe & Na compilação & Falta de \code{;} ou \code{\}} \\
+Erro de execução & Ao rodar o programa & Divisão por zero, \code{NullPointerException} \\
+Erro de lógica & O programa roda, mas dá resultado errado & Usar \code{+} em vez de \code{-} \\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\subsection{Stack trace}
+
+Quando um erro de execução ocorre, Java exibe um \textbf{stack trace} — uma lista das chamadas de método até o ponto do erro. Leia de baixo para cima para entender o que causou o problema:
+
+\begin{plaincode}
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 5
+    at Programa.main(Programa.java:8)
+\end{plaincode}
+
+Isso diz: o erro foi \code{ArrayIndexOutOfBoundsException} na linha 8 do arquivo \code{Programa.java}.
+
+% ──────────────────────────────────────────────────────────
+\section{Listas com \texttt{ArrayList}}
+% ──────────────────────────────────────────────────────────
+
+Um \code{ArrayList} é uma coleção dinâmica que pode crescer ou diminuir conforme necessário. É muito mais prático do que declarar dezenas de variáveis separadas.
+
+\subsection{Criando e adicionando elementos}
+
+\begin{javacode}
+import java.util.ArrayList;
+
+ArrayList<String> nomes = new ArrayList<>();
+nomes.add("Alice");
+nomes.add("Bruno");
+nomes.add("Carlos");
+
+System.out.println(nomes); // [Alice, Bruno, Carlos]
+\end{javacode}
+
+\begin{callout}[Dica]
+Para tipos primitivos como \code{int} e \code{double}, use os equivalentes em maiúsculo:
+\code{Integer}, \code{Double}.
+\end{callout}
+
+\begin{javacode}
+ArrayList<Integer> numeros = new ArrayList<>();
+numeros.add(10);
+numeros.add(20);
+numeros.add(30);
+\end{javacode}
+
+\subsection{Acessando elementos}
+
+Os índices começam em 0:
+
+\begin{javacode}
+System.out.println(nomes.get(0)); // Alice
+System.out.println(nomes.get(1)); // Bruno
+System.out.println(nomes.size()); // 3
+\end{javacode}
+
+\subsection{Removendo elementos}
+
+\begin{javacode}
+nomes.remove("Bruno");        // remove pelo valor
+System.out.println(nomes);    // [Alice, Carlos]
+
+nomes.remove(0);              // remove pelo indice
+System.out.println(nomes);    // [Carlos]
+\end{javacode}
+
+\subsection{Verificando existência}
+
+\begin{javacode}
+ArrayList<String> frutas = new ArrayList<>();
+frutas.add("maca");
+frutas.add("banana");
+
+System.out.println(frutas.contains("banana")); // true
+System.out.println(frutas.contains("uva"));    // false
+\end{javacode}
+
+\subsection{Percorrendo listas}
+
+\subsubsection{Com \texttt{for} indexado}
+
+\begin{javacode}
+for (int i = 0; i < nomes.size(); i++) {
+    System.out.println(i + ": " + nomes.get(i));
+}
+\end{javacode}
+
+\subsubsection{Com \texttt{for-each} (mais legível)}
+
+\begin{javacode}
+for (String nome : nomes) {
+    System.out.println(nome);
+}
+\end{javacode}
+
+\subsubsection{Com \texttt{while}}
+
+\begin{javacode}
+int i = 0;
+while (i < nomes.size()) {
+    System.out.println(nomes.get(i));
+    i++;
+}
+\end{javacode}
+
+\subsection{Lista como parâmetro de método}
+
+Como \code{ArrayList} é um tipo de referência, o método recebe a referência ao objeto original --- alterações dentro do método afetam a lista original:
+
+\begin{javacode}
+public static void adicionarZero(ArrayList<Integer> lista) {
+    lista.add(0);
+}
+
+public static void main(String[] args) {
+    ArrayList<Integer> numeros = new ArrayList<>();
+    numeros.add(1);
+    numeros.add(2);
+
+    adicionarZero(numeros);
+    System.out.println(numeros); // [1, 2, 0]
+}
+\end{javacode}
+
+\subsection{Exemplo: soma e média de uma lista}
+
+\begin{javacode}
+public static double calcularMedia(ArrayList<Integer> lista) {
+    if (lista.size() == 0) {
+        return 0.0;
+    }
+    int soma = 0;
+    for (int n : lista) {
+        soma += n;
+    }
+    return (double) soma / lista.size();
+}
+\end{javacode}
+
+% ──────────────────────────────────────────────────────────
+\section{Arrays}
+% ──────────────────────────────────────────────────────────
+
+Um \textbf{array} é uma coleção de \textbf{tamanho fixo} do mesmo tipo. Diferentemente do \code{ArrayList}, o tamanho não pode ser alterado após a criação.
+
+\subsection{Criando arrays}
+
+\begin{javacode}
+int[] numeros = new int[5];         // array de 5 inteiros, todos 0
+String[] nomes = new String[3];     // array de 3 strings, todas null
+
+// Inicializacao direta
+int[] valores = {10, 20, 30, 40, 50};
+\end{javacode}
+
+\subsection{Acessando e modificando elementos}
+
+\begin{javacode}
+int[] arr = {5, 10, 15, 20};
+
+System.out.println(arr[0]); // 5
+System.out.println(arr[3]); // 20
+
+arr[1] = 99;
+System.out.println(arr[1]); // 99
+\end{javacode}
+
+\subsection{Tamanho do array}
+
+\begin{javacode}
+int[] arr = {1, 2, 3, 4, 5};
+System.out.println(arr.length); // 5
+\end{javacode}
+
+\subsection{Percorrendo um array}
+
+\begin{javacode}
+for (int i = 0; i < arr.length; i++) {
+    System.out.println(arr[i]);
+}
+
+// Ou com for-each:
+for (int n : arr) {
+    System.out.println(n);
+}
+\end{javacode}
+
+\subsection{Quando usar array vs.\ ArrayList?}
+
+\begin{center}
+\rowcolors{2}{javaLightBg}{white}
+\begin{longtable}{p{5cm} >{\centering\arraybackslash}p{2.5cm} >{\centering\arraybackslash}p{2.5cm}}
+\toprule
+\rowcolor{javaOrange}
+\color{white}\textbf{Critério} &
+\color{white}\textbf{Array} &
+\color{white}\textbf{ArrayList} \\
+\midrule
+\endhead
+Tamanho fixo & Sim & Não \\
+Mais eficiente & Sim & Não \\
+Mais flexível & Não & Sim \\
+Tipos primitivos diretos & Sim & Não (usa wrapper) \\
+\bottomrule
+\end{longtable}
+\end{center}
+
+Use arrays quando o tamanho for fixo e conhecido. Prefira \code{ArrayList} para a maioria dos casos.
+
+% ──────────────────────────────────────────────────────────
+\section{Trabalhando com Strings}
+% ──────────────────────────────────────────────────────────
+
+\code{String} é uma das classes mais usadas em Java. Ela possui muitos métodos úteis.
+
+\subsection{Métodos principais}
+
+\begin{javacode}
+String texto = "Ola, mundo!";
+
+System.out.println(texto.length());          // 11 -- tamanho
+System.out.println(texto.toUpperCase());     // OLA, MUNDO!
+System.out.println(texto.toLowerCase());     // ola, mundo!
+System.out.println(texto.contains("mundo")); // true
+System.out.println(texto.startsWith("Ola")); // true
+System.out.println(texto.endsWith("!"));     // true
+System.out.println(texto.indexOf("mundo"));  // 5 -- posicao
+System.out.println(texto.replace("mundo", "Java")); // Ola, Java!
+System.out.println(texto.trim());            // remove espacos das bordas
+\end{javacode}
+
+\subsection{Acessando caracteres}
+
+\begin{javacode}
+String palavra = "Java";
+char c = palavra.charAt(0); // J
+System.out.println(c);
+\end{javacode}
+
+\subsection{Comparando strings}
+
+\begin{callout}[Atenção]
+Sempre use \code{.equals()}, \textbf{nunca} \code{==} para comparar strings!
+\end{callout}
+
+\begin{javacode}
+String a = "Java";
+String b = "Java";
+
+System.out.println(a.equals(b));                // true
+System.out.println(a.equalsIgnoreCase("java")); // true -- ignora maiusculas/minusculas
+\end{javacode}
+
+\subsection{Dividindo strings com \texttt{split()}}
+
+O método \code{split()} divide uma string em partes, retornando um array de Strings:
+
+\begin{javacode}
+String linha = "Alice,25,Sao Paulo";
+String[] partes = linha.split(",");
+
+System.out.println(partes[0]); // Alice
+System.out.println(partes[1]); // 25
+System.out.println(partes[2]); // Sao Paulo
+\end{javacode}
+
+\begin{javacode}
+String frase = "Java e uma linguagem poderosa";
+String[] palavras = frase.split(" ");
+
+for (String palavra : palavras) {
+    System.out.println(palavra);
+}
+\end{javacode}
+
+\subsection{Convertendo tipos}
+
+\begin{javacode}
+int numero = Integer.valueOf("42");
+double decimal = Double.valueOf("3.14");
+String texto = String.valueOf(100); // "100"
+\end{javacode}
+
+\subsection{Exemplo: processando dados CSV}
+
+\begin{javacode}
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class ProcessadorCSV {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Digite registros no formato 'nome,idade' (ou 'fim' para encerrar):");
+
+        ArrayList<String> nomes = new ArrayList<>();
+        ArrayList<Integer> idades = new ArrayList<>();
+
+        while (true) {
+            String linha = scanner.nextLine();
+            if (linha.equals("fim")) {
+                break;
+            }
+            String[] partes = linha.split(",");
+            nomes.add(partes[0]);
+            idades.add(Integer.valueOf(partes[1]));
+        }
+
+        System.out.println("\n--- Registros ---");
+        for (int i = 0; i < nomes.size(); i++) {
+            System.out.println(nomes.get(i) + " tem " + idades.get(i) + " anos.");
+        }
+    }
+}
+\end{javacode}
+
+% ──────────────────────────────────────────────────────────
+\section{Resumo}
+% ──────────────────────────────────────────────────────────
+
+\begin{itemize}
+  \item \code{ArrayList} é uma coleção dinâmica; use \code{add()}, \code{get()}, \code{remove()}, \code{contains()}, \code{size()}.
+  \item Índices começam em 0; acessar índice inválido lança \code{IndexOutOfBoundsException}.
+  \item Arrays têm tamanho fixo, declarado com \code{new tipo[tamanho]} ou literal \code{\{v1, v2, ...\}}.
+  \item \code{String} tem métodos como \code{length()}, \code{contains()}, \code{split()}, \code{equals()}, \code{charAt()}.
+  \item Para comparar strings, use \code{.equals()} --- nunca \code{==}.
+  \item \code{split(",")} divide uma string em partes usando o delimitador fornecido.
+\end{itemize}
+
+% ──────────────────────────────────────────────────────────
+\section{Exercícios}
+% ──────────────────────────────────────────────────────────
+
+\begin{exercicio}{1 --- Lista de compras}
+Escreva um programa que:
+\begin{itemize}
+  \item Lê itens de uma lista de compras até o usuário digitar \code{"sair"}
+  \item Exibe todos os itens numerados
+  \item Informa a quantidade total de itens
+\end{itemize}
+\end{exercicio}
+
+\begin{exercicio}{2 --- Mínimo e máximo}
+Crie um método \code{minimo(ArrayList<Integer> lista)} e \code{maximo(ArrayList<Integer> lista)}.
+Popule uma lista com 6 números lidos do usuário e exiba o menor e o maior.
+\end{exercicio}
+
+\begin{exercicio}{3 --- Palavras únicas}
+Leia palavras do usuário (até \code{"fim"}) e armazene apenas as que ainda não foram adicionadas à lista (sem duplicatas). Ao final, exiba todas as palavras únicas.
+\end{exercicio}
+
+\begin{exercicio}{4 --- Invertendo um array}
+Crie um método \code{inverter(int[] arr)} que retorna um novo array com os elementos na ordem inversa. Não modifique o array original.
+\end{exercicio}
+
+\begin{exercicio}{5 --- Análise de frase}
+Escreva um programa que lê uma frase e exibe:
+\begin{itemize}
+  \item Número de palavras
+  \item A palavra mais longa
+  \item A palavra mais curta
+  \item A frase com todas as palavras em maiúsculo
+\end{itemize}
+\end{exercicio}
+
+% ──────────────────────────────────────────────────────────
+\vfill
+\begin{center}
+  \small\color{gray}
+  Java Programming MOOC · Universidade de Helsinque ·
+  \href{https://java-programming.mooc.fi/part-3}{java-programming.mooc.fi/part-3}\\
+  Licença: \href{https://creativecommons.org/licenses/by-nc-sa/4.0/}{CC BY-NC-SA 4.0} ·
+  Tradução para o português do Brasil --- 2026
+\end{center}
+
+\end{document}

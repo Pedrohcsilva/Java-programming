@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lição 1: Primeiros Passos — Programação em Java</title>
+<style>
+:root {
+  --primary:   #e76f00;
+  --secondary: #bf5700;
+  --blue:      #1565c0;
+  --teal:      #00695c;
+  --amber:     #b45309;
+  --ink:       #2b2140;
+  --rule:      #ffd7b5;
+  --code-bg:   #fff8f0;
+  --code-inline: #bf5700;
+  --bg:        #fafafa;
+  --text:      #1a1a2e;
+  --muted:     #6b6b80;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* ── HEADER ── */
+header.title-block {
+  border-top: 5px solid var(--primary);
+  padding: 2.2rem 0 1.4rem;
+  margin-bottom: 2rem;
+}
+header.title-block h1.title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+header.title-block p.subtitle {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.15rem;
+  color: var(--secondary);
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+header.title-block p.author,
+header.title-block p.date {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  font-style: italic;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ── TOC ── */
+nav#TOC {
+  background: #fff3e8;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 2.5rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.92rem;
+}
+nav#TOC::before {
+  content: 'Índice';
+  display: block;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+nav#TOC ol { padding-left: 1.2rem; }
+nav#TOC li { margin: 0.18rem 0; }
+nav#TOC a { color: var(--blue); text-decoration: none; }
+nav#TOC a:hover { text-decoration: underline; }
+
+/* ── HEADINGS ── */
+h1 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.7rem;
+  color: var(--primary);
+  border-bottom: 1.2px solid var(--rule);
+  padding-bottom: 0.35rem;
+  margin: 2.2rem 0 0.9rem;
+}
+h2 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.3rem;
+  color: var(--secondary);
+  margin: 1.9rem 0 0.65rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ffe0c4;
+}
+h3 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: var(--teal);
+  margin: 1.4rem 0 0.5rem;
+}
+h4 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.97rem;
+  color: var(--amber);
+  margin: 1.1rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── PARAGRAPHS & LISTS ── */
+p { margin: 0.75rem 0; }
+ul, ol { padding-left: 1.6rem; margin: 0.6rem 0; }
+li { margin: 0.25rem 0; }
+strong { color: var(--ink); }
+
+/* ── BLOCKQUOTE ── */
+blockquote {
+  border-left: 4px solid var(--primary);
+  background: #fff8f0;
+  margin: 1.2rem 0;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink);
+  font-style: italic;
+}
+blockquote strong { font-style: normal; }
+
+/* ── CODE ── */
+code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+  background: var(--code-bg);
+  color: var(--code-inline);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  border-left: 4px solid var(--secondary);
+  background: var(--code-bg);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+pre code {
+  background: none;
+  color: var(--ink);
+  padding: 0;
+  font-size: 0.855rem;
+}
+
+/* ── TABLES ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+thead th {
+  background: var(--secondary);
+  color: #fff;
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+}
+tbody tr:nth-child(odd)  { background: #fff8f0; }
+tbody tr:nth-child(even) { background: #fff; }
+td, th { padding: 0.45rem 0.9rem; border-bottom: 1px solid #f0d8c0; }
+
+/* ── HR ── */
+hr { border: none; border-top: 1.5px solid var(--rule); margin: 2rem 0; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+</style>
+</head>
+<body>
+
+<header class="title-block">
+  <h1 class="title">Programação em Java</h1>
+  <p class="subtitle">Lição 1: Primeiros Passos</p>
+  <p class="author">Java Programming MOOC · Universidade de Helsinque — tradução para o português</p>
+  <p class="date">2026</p>
+</header>
+
+<nav id="TOC">
+  <ol>
+    <li><a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a></li>
+    <li><a href="#o-que-e-programacao">O que é programação?</a></li>
+    <li><a href="#estrutura-de-um-programa-java">Estrutura de um programa Java</a></li>
+    <li><a href="#exibindo-texto-na-tela">Exibindo texto na tela</a></li>
+    <li><a href="#lendo-a-entrada-do-usuario">Lendo a entrada do usuário</a></li>
+    <li><a href="#variaveis">Variáveis</a></li>
+    <li><a href="#calculando-com-numeros">Calculando com números</a></li>
+    <li><a href="#condicionais">Condicionais</a></li>
+    <li><a href="#resumo">Resumo</a></li>
+    <li><a href="#exercicios">Exercícios</a></li>
+  </ol>
+</nav>
+
+<h1 id="licao-1-primeiros-passos">Lição 1: Primeiros Passos</h1>
+
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem</h2>
+
+<p>Ao final desta lição, você será capaz de:</p>
+<ul>
+  <li>Entender o que é um programa de computador</li>
+  <li>Escrever programas que exibem texto na tela</li>
+  <li>Ler dados digitados pelo usuário</li>
+  <li>Criar e usar variáveis dos tipos <code>String</code>, <code>int</code>, <code>double</code> e <code>boolean</code></li>
+  <li>Realizar cálculos aritméticos básicos</li>
+  <li>Usar condicionais (<code>if</code>, <code>else if</code>, <code>else</code>)</li>
+</ul>
+
+<h2 id="o-que-e-programacao">O que é programação?</h2>
+
+<p>Programação é a arte de escrever instruções que um computador possa executar. Essas instruções são chamadas de <strong>código</strong>, e um conjunto organizado delas forma um <strong>programa</strong>.</p>
+<p>Os computadores são máquinas que executam instruções com extrema rapidez, mas são completamente literais: fazem exatamente o que o programador manda, nem mais, nem menos. Por isso, escrever código envolve ser muito preciso.</p>
+<p>Java é uma das linguagens de programação mais utilizadas no mundo. É uma linguagem <strong>compilada</strong>, <strong>fortemente tipada</strong> e <strong>orientada a objetos</strong>. Neste curso, aprenderemos Java do zero.</p>
+
+<h2 id="estrutura-de-um-programa-java">Estrutura de um programa Java</h2>
+
+<p>Todo programa Java tem a mesma estrutura básica:</p>
+<pre><code>public class NomeDoPrograma {
+    public static void main(String[] args) {
+        // o código do programa vai aqui
+    }
+}</code></pre>
+<ul>
+  <li><code>public class NomeDoPrograma</code> define a <strong>classe</strong> do programa. O nome da classe deve coincidir com o nome do arquivo (ex.: <code>NomeDoPrograma.java</code>).</li>
+  <li><code>public static void main(String[] args)</code> é o <strong>método principal</strong> — o ponto de partida da execução.</li>
+  <li>As chaves <code>{ }</code> delimitam blocos de código.</li>
+  <li>O <code>//</code> inicia um comentário, que é ignorado pelo compilador.</li>
+</ul>
+
+<h2 id="exibindo-texto-na-tela">Exibindo texto na tela</h2>
+
+<p>O comando mais básico de Java é o <code>System.out.println</code>, que imprime uma linha de texto:</p>
+<pre><code>public class OlaMundo {
+    public static void main(String[] args) {
+        System.out.println("Olá, mundo!");
+    }
+}</code></pre>
+<p><strong>Saída:</strong></p>
+<pre><code>Olá, mundo!</code></pre>
+
+<p>Você pode imprimir várias linhas repetindo o comando:</p>
+<pre><code>System.out.println("Primeira linha");
+System.out.println("Segunda linha");
+System.out.println("Terceira linha");</code></pre>
+
+<p>Para imprimir sem pular a linha, use <code>System.out.print</code>:</p>
+<pre><code>System.out.print("Olá, ");
+System.out.print("mundo!");</code></pre>
+
+<blockquote>
+  <strong>Dica:</strong> Na maioria das IDEs, você pode digitar <code>sout</code> e pressionar Tab para escrever <code>System.out.println()</code> automaticamente.
+</blockquote>
+
+<h2 id="lendo-a-entrada-do-usuario">Lendo a entrada do usuário</h2>
+
+<p>Para ler dados digitados pelo usuário, usamos a classe <code>Scanner</code>:</p>
+<pre><code>import java.util.Scanner;
+
+public class LeitorDeNome {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Qual é o seu nome? ");
+        String nome = scanner.nextLine();
+
+        System.out.println("Olá, " + nome + "!");
+    }
+}</code></pre>
+<p>O <code>import java.util.Scanner</code> torna a classe <code>Scanner</code> disponível. O <code>scanner.nextLine()</code> lê uma linha inteira de texto digitada pelo usuário.</p>
+
+<h2 id="variaveis">Variáveis</h2>
+
+<p>Uma <strong>variável</strong> é um espaço nomeado na memória onde guardamos um valor. Em Java, toda variável tem um <strong>tipo</strong> definido na criação.</p>
+
+<h3>Tipos básicos</h3>
+<table>
+  <thead><tr><th>Tipo</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><code>String</code></td><td>Texto</td><td><code>"Olá"</code></td></tr>
+    <tr><td><code>int</code></td><td>Número inteiro</td><td><code>42</code></td></tr>
+    <tr><td><code>double</code></td><td>Número decimal</td><td><code>3.14</code></td></tr>
+    <tr><td><code>boolean</code></td><td>Verdadeiro ou falso</td><td><code>true</code>, <code>false</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Declarando variáveis</h3>
+<pre><code>String nome = "Ana";
+int idade = 25;
+double altura = 1.68;
+boolean estudante = true;
+
+System.out.println(nome);      // Ana
+System.out.println(idade);     // 25
+System.out.println(altura);    // 1.68
+System.out.println(estudante); // true</code></pre>
+
+<h3>Boas práticas de nomeação</h3>
+<ul>
+  <li>Use <strong>camelCase</strong>: primeira palavra em minúsculo, demais começam em maiúsculo.</li>
+  <li>Escolha nomes significativos.</li>
+</ul>
+<pre><code>// Ruim
+double a = 3.14;
+double b = 22.0;
+double c = a * b * b;
+
+// Bom
+double pi = 3.14;
+double raio = 22.0;
+double areaDoCirculo = pi * raio * raio;</code></pre>
+
+<h3>Lendo valores de outros tipos</h3>
+<pre><code>Scanner scanner = new Scanner(System.in);
+
+System.out.print("Digite um número inteiro: ");
+int numero = Integer.valueOf(scanner.nextLine());
+
+System.out.print("Digite um número decimal: ");
+double decimal = Double.valueOf(scanner.nextLine());</code></pre>
+
+<h2 id="calculando-com-numeros">Calculando com números</h2>
+
+<table>
+  <thead><tr><th style="text-align:center">Operador</th><th>Operação</th><th>Exemplo</th><th>Resultado</th></tr></thead>
+  <tbody>
+    <tr><td style="text-align:center"><code>+</code></td><td>Adição</td><td><code>3 + 4</code></td><td><code>7</code></td></tr>
+    <tr><td style="text-align:center"><code>-</code></td><td>Subtração</td><td><code>10 - 3</code></td><td><code>7</code></td></tr>
+    <tr><td style="text-align:center"><code>*</code></td><td>Multiplicação</td><td><code>5 * 6</code></td><td><code>30</code></td></tr>
+    <tr><td style="text-align:center"><code>/</code></td><td>Divisão</td><td><code>10 / 3</code></td><td><code>3</code> <em>(inteira!)</em></td></tr>
+    <tr><td style="text-align:center"><code>%</code></td><td>Resto</td><td><code>10 % 3</code></td><td><code>1</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Divisão inteira vs. divisão decimal</h3>
+<pre><code>System.out.println(10 / 3);    // 3  (parte decimal descartada)
+System.out.println(10.0 / 3);  // 3.3333...
+
+int a = 10;
+int b = 3;
+double resultado = (double) a / b;
+System.out.println(resultado); // 3.3333...</code></pre>
+
+<h2 id="condicionais">Condicionais</h2>
+
+<p>Condicionais permitem que o programa tome decisões.</p>
+
+<h3><code>if</code> e <code>else</code></h3>
+<pre><code>int temperatura = 30;
+
+if (temperatura > 25) {
+    System.out.println("Está quente!");
+} else {
+    System.out.println("Não está tão quente.");
+}</code></pre>
+
+<h3><code>else if</code></h3>
+<pre><code>int nota = 75;
+
+if (nota >= 90) {
+    System.out.println("A");
+} else if (nota >= 80) {
+    System.out.println("B");
+} else if (nota >= 70) {
+    System.out.println("C");
+} else {
+    System.out.println("Reprovado");
+}</code></pre>
+
+<h3>Operadores de comparação</h3>
+<table>
+  <thead><tr><th style="text-align:center">Operador</th><th>Significado</th></tr></thead>
+  <tbody>
+    <tr><td style="text-align:center"><code>==</code></td><td>Igual a</td></tr>
+    <tr><td style="text-align:center"><code>!=</code></td><td>Diferente de</td></tr>
+    <tr><td style="text-align:center"><code>&lt;</code></td><td>Menor que</td></tr>
+    <tr><td style="text-align:center"><code>&gt;</code></td><td>Maior que</td></tr>
+    <tr><td style="text-align:center"><code>&lt;=</code></td><td>Menor ou igual</td></tr>
+    <tr><td style="text-align:center"><code>&gt;=</code></td><td>Maior ou igual</td></tr>
+  </tbody>
+</table>
+
+<h3>Comparando Strings</h3>
+<p>Para Strings, <strong>não use <code>==</code></strong>. Use o método <code>.equals()</code>:</p>
+<pre><code>String entrada = scanner.nextLine();
+
+if (entrada.equals("sim")) {
+    System.out.println("Você confirmou.");
+} else {
+    System.out.println("Você não confirmou.");
+}</code></pre>
+
+<h2 id="resumo">Resumo</h2>
+<ul>
+  <li>Todo programa Java tem a estrutura <code>public class ... { public static void main ... }</code>.</li>
+  <li><code>System.out.println()</code> exibe texto e pula a linha; <code>System.out.print()</code> exibe sem pular.</li>
+  <li><code>Scanner</code> lê a entrada do usuário. Use <code>scanner.nextLine()</code> para ler texto.</li>
+  <li>Os quatro tipos básicos são: <code>String</code>, <code>int</code>, <code>double</code> e <code>boolean</code>.</li>
+  <li>Java realiza divisão inteira quando ambos os operandos são <code>int</code>.</li>
+  <li><code>if</code>, <code>else if</code> e <code>else</code> permitem que o programa tome decisões.</li>
+  <li>Para comparar Strings, use <code>.equals()</code>, não <code>==</code>.</li>
+</ul>
+
+<h2 id="exercicios">Exercícios</h2>
+
+<p><strong>Exercício 1 — Olá, usuário!</strong></p>
+<p>Escreva um programa que:</p>
+<ol>
+  <li>Pergunta o nome do usuário</li>
+  <li>Pergunta a idade do usuário</li>
+  <li>Exibe a mensagem: <code>Olá, [nome]! Você tem [idade] anos.</code></li>
+</ol>
+
+<p><strong>Exercício 2 — Calculadora simples</strong></p>
+<p>Escreva um programa que lê dois números inteiros do usuário e exibe a soma, diferença, produto e quociente (com resultado decimal).</p>
+
+<p><strong>Exercício 3 — Par ou ímpar</strong></p>
+<p>Escreva um programa que lê um número inteiro e informa se é par ou ímpar.</p>
+
+<p><strong>Exercício 4 — Classificação de temperatura</strong></p>
+<p>Escreva um programa que lê uma temperatura em graus Celsius e exibe:</p>
+<ul>
+  <li><code>"Frio"</code> se for menor que 15</li>
+  <li><code>"Agradável"</code> se estiver entre 15 e 25 (inclusive)</li>
+  <li><code>"Quente"</code> se for maior que 25</li>
+</ul>
+
+<p><strong>Exercício 5 — IMC</strong></p>
+<p>Escreva um programa que lê o peso (kg) e a altura (m) do usuário, calcula o IMC (<code>peso / altura²</code>) e classifica:</p>
+<ul>
+  <li>Menor que 18.5 → Abaixo do peso</li>
+  <li>Entre 18.5 e 24.9 → Peso normal</li>
+  <li>Entre 25 e 29.9 → Sobrepeso</li>
+  <li>30 ou mais → Obesidade</li>
+</ul>
+
+<footer>
+  Java Programming MOOC · Universidade de Helsinque · tradução para o português · 2026
+</footer>
+</body>
+</html>

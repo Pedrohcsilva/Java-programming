@@ -1,0 +1,402 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[11pt,a4paper]{article}
+
+% ── Codificação e língua ──────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+
+% ── Tipografia ────────────────────────────────────────────────────────────────
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ── Cores ─────────────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaShade}{HTML}{FFF3E8}
+
+% ── Caixas e código ───────────────────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{listings}
+\usepackage{fvextra}
+
+\lstdefinestyle{javastyle}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{javaBlue}\bfseries,
+  stringstyle=\color{javaDeep},
+  commentstyle=\color{javaTeal}\itshape,
+  numberstyle=\tiny\color{gray},
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  tabsize=4,
+}
+
+\newtcblisting{javacode}{
+  listing only,
+  listing style=javastyle,
+  breakable,
+  enhanced,
+  colback=javaCodeBg,
+  colframe=javaDeep,
+  leftrule=4pt,
+  rightrule=0.4pt,
+  toprule=0.4pt,
+  bottomrule=0.4pt,
+  arc=2pt,
+  fontupper=\small,
+  top=4pt, bottom=4pt, left=6pt, right=6pt,
+}
+
+\newtcbox{\inlinecode}{
+  on line,
+  colback=javaCodeBg,
+  colframe=javaRule,
+  boxrule=0.5pt,
+  arc=2pt,
+  fontupper=\ttfamily\small\color{javaDeep},
+  boxsep=1pt, left=2pt, right=2pt, top=1pt, bottom=1pt,
+}
+
+% ── Layout ────────────────────────────────────────────────────────────────────
+\usepackage[margin=2.4cm, top=2.8cm, bottom=2.8cm]{geometry}
+
+% ── Cabeçalho / rodapé ────────────────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaRule}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\sffamily\color{javaDeep} Java Programming MOOC}
+\fancyhead[R]{\small\sffamily\color{javaDeep} Resoluções · Lição 5}
+\fancyfoot[C]{\small\sffamily\color{gray}\thepage}
+
+% ── Seções ────────────────────────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{javaOrange}}
+  {\thesection}{0.7em}{}
+  [\vspace{2pt}{\color{javaRule}\titlerule[1.2pt]}]
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{javaDeep}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{javaTeal}}
+  {\thesubsubsection}{0.5em}{}
+
+% ── Listas ────────────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt, parsep=0pt}
+\setlist[enumerate]{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+% ── Tabelas ───────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+
+% ── Hiperlinks ────────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=javaBlue,
+  urlcolor=javaBlue,
+  citecolor=javaBlue,
+  pdftitle={Programação em Java --- Resoluções --- Lição 5},
+  pdfauthor={Java Programming MOOC · Universidade de Helsinque},
+  pdflang={pt-BR},
+}
+
+% ── Caixa de destaque (dica/atenção) ─────────────────────────────────────────
+\newtcolorbox{destaque}[1][Observação]{
+  enhanced, breakable,
+  colback=javaShade,
+  colframe=javaOrange,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt,
+  fonttitle=\sffamily\bfseries\color{javaOrange},
+  title=#1,
+  top=4pt, bottom=4pt,
+}
+
+% ── Título personalizado ──────────────────────────────────────────────────────
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\color{javaRule}\rule{\linewidth}{1pt}}\\[6pt]
+    {\Huge\sffamily\bfseries\color{javaOrange} \@title}\\[6pt]
+    \ifx\@subtitle\undefined\else
+      {\Large\sffamily\color{javaDeep} \@subtitle}\\[4pt]
+    \fi
+    {\small\sffamily\color{gray} \@author}\\[2pt]
+    {\small\sffamily\color{gray} \@date}\\[6pt]
+    {\color{javaRule}\rule{\linewidth}{1pt}}
+  \end{center}
+  \vspace{1em}
+}
+\makeatother
+
+% ─────────────────────────────────────────────────────────────────────────────
+\title{Programação em Java — Resoluções}
+\subtitle{Lição 5}
+\author{Java Programming MOOC · Universidade de Helsinque — tradução para o português}
+\date{2026}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1.5em}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 1 --- Sobrecarga de construtores}
+
+\begin{javacode}
+import java.util.Objects;
+
+public class Livro {
+    private String titulo;
+    private String autor;
+    private int anoPublicacao;
+
+    public Livro(String titulo, String autor, int anoPublicacao) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.anoPublicacao = anoPublicacao;
+    }
+
+    public Livro(String titulo, String autor) {
+        this(titulo, autor, 0);
+    }
+
+    public Livro(String titulo) {
+        this(titulo, "Desconhecido", 0);
+    }
+
+    @Override
+    public String toString() {
+        return titulo + " - " + autor + " (" + anoPublicacao + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Livro)) return false;
+
+        Livro outro = (Livro) obj;
+        return titulo.equals(outro.titulo) && autor.equals(outro.autor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo, autor);
+    }
+
+    public static void main(String[] args) {
+        Livro l1 = new Livro("Dom Casmurro", "Machado de Assis", 1899);
+        Livro l2 = new Livro("O Cortiço", "Aluísio Azevedo");
+        Livro l3 = new Livro("Sem título definido");
+        Livro l4 = new Livro("Dom Casmurro", "Machado de Assis", 2020);
+
+        System.out.println(l1);
+        System.out.println(l2);
+        System.out.println(l3);
+
+        System.out.println("l1 equals l4? " + l1.equals(l4)); // true, mesmo com ano diferente
+    }
+}
+\end{javacode}
+
+\begin{destaque}
+O uso de \inlinecode{this(...)} no início dos construtores encurtados evita repetir a lógica de atribuição --- cada construtor ``cai'' no construtor mais completo passando os valores padrão que faltam.
+\end{destaque}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 2 --- Referências vs. primitivas}
+
+\begin{javacode}
+public class ReferenciasVsPrimitivas {
+
+    static class Contador {
+        int valor;
+
+        Contador(int valor) {
+            this.valor = valor;
+        }
+    }
+
+    public static void main(String[] args) {
+        // Copiando um tipo primitivo (int)
+        int a = 10;
+        int b = a; // b recebe uma CÓPIA do valor de a
+
+        b = 99;
+
+        System.out.println("--- Primitivos ---");
+        System.out.println("a = " + a); // continua 10
+        System.out.println("b = " + b); // 99
+
+        // Copiando uma referência a um objeto
+        Contador c1 = new Contador(10);
+        Contador c2 = c1; // c2 aponta para o MESMO objeto que c1
+
+        c2.valor = 99;
+
+        System.out.println("--- Objetos ---");
+        System.out.println("c1.valor = " + c1.valor); // também vira 99!
+        System.out.println("c2.valor = " + c2.valor); // 99
+    }
+}
+\end{javacode}
+
+\begin{destaque}[Saída]
+\begin{verbatim}
+--- Primitivos ---
+a = 10
+b = 99
+--- Objetos ---
+c1.valor = 99
+c2.valor = 99
+\end{verbatim}
+\end{destaque}
+
+Isso mostra a diferença fundamental: \inlinecode{int} é copiado por valor, enquanto uma variável de objeto guarda uma referência (um ``endereço''), então \inlinecode{c1} e \inlinecode{c2} acabam apontando para o mesmo espaço na memória.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 3 --- Ponto no plano}
+
+\begin{javacode}
+public class Ponto {
+    private double x;
+    private double y;
+
+    public Ponto(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double distanciaAte(Ponto outro) {
+        double dx = this.x - outro.x;
+        double dy = this.y - outro.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Ponto)) return false;
+
+        Ponto outro = (Ponto) obj;
+        return Math.abs(this.x - outro.x) < 0.001 && Math.abs(this.y - outro.y) < 0.001;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+}
+\end{javacode}
+
+\begin{javacode}
+public class Circulo {
+    private Ponto centro;
+    private double raio;
+
+    public Circulo(Ponto centro, double raio) {
+        this.centro = centro;
+        this.raio = raio;
+    }
+
+    public boolean contemPonto(Ponto p) {
+        return centro.distanciaAte(p) <= raio;
+    }
+
+    @Override
+    public String toString() {
+        return "Circulo{centro=" + centro + ", raio=" + raio + "}";
+    }
+
+    public static void main(String[] args) {
+        Ponto centro = new Ponto(0, 0);
+        Circulo circulo = new Circulo(centro, 5);
+
+        Ponto dentro = new Ponto(3, 4); // distância = 5, está na borda
+        Ponto fora = new Ponto(10, 10);
+
+        System.out.println(circulo);
+        System.out.println("(3,4) está dentro? " + circulo.contemPonto(dentro));
+        System.out.println("(10,10) está dentro? " + circulo.contemPonto(fora));
+    }
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 4 --- Null safety}
+
+\begin{javacode}
+public class Pessoa {
+    private String nome;
+    private int idade;
+
+    public Pessoa(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+}
+\end{javacode}
+
+\begin{javacode}
+public class NullSafety {
+
+    public static void imprimirPessoa(Pessoa p) {
+        if (p == null) {
+            System.out.println("Pessoa não encontrada.");
+            return;
+        }
+        System.out.println(p.getNome() + ", " + p.getIdade() + " anos");
+    }
+
+    public static void main(String[] args) {
+        Pessoa pessoa = new Pessoa("Maria", 30);
+
+        imprimirPessoa(pessoa);
+        imprimirPessoa(null);
+    }
+}
+\end{javacode}
+
+\begin{destaque}[Saída]
+\begin{verbatim}
+Maria, 30 anos
+Pessoa não encontrada.
+\end{verbatim}
+\end{destaque}
+
+\end{document}

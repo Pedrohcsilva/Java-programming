@@ -1,0 +1,399 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage{xcolor}
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaShade}{HTML}{FFF3E8}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{listings}
+\usepackage{fvextra}
+
+\lstdefinestyle{javastyle}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{javaBlue}\bfseries,
+  stringstyle=\color{javaDeep},
+  commentstyle=\color{javaTeal}\itshape,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+}
+
+\newtcblisting{javacode}{
+  listing only,
+  listing style=javastyle,
+  breakable, enhanced,
+  colback=javaCodeBg, colframe=javaDeep,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt, fontupper=\small,
+  top=4pt, bottom=4pt, left=6pt, right=6pt,
+}
+
+\newtcbox{\inlinecode}{
+  on line,
+  colback=javaCodeBg, colframe=javaRule,
+  boxrule=0.5pt, arc=2pt,
+  fontupper=\ttfamily\small\color{javaDeep},
+  boxsep=1pt, left=2pt, right=2pt, top=1pt, bottom=1pt,
+}
+
+\usepackage[margin=2.4cm, top=2.8cm, bottom=2.8cm]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaRule}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\sffamily\color{javaDeep} Java Programming MOOC}
+\fancyhead[R]{\small\sffamily\color{javaDeep} Lição 2}
+\fancyfoot[C]{\small\sffamily\color{gray}\thepage}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{javaOrange}}{\thesection}{0.7em}{}
+  [\vspace{2pt}{\color{javaRule}\titlerule[1.2pt]}]
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{javaDeep}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{javaTeal}}{\thesubsubsection}{0.5em}{}
+
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt, parsep=0pt}
+\setlist[enumerate]{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=javaBlue, urlcolor=javaBlue, citecolor=javaBlue,
+  pdftitle={Programação em Java — Lição 2: Repetição e Métodos},
+  pdfauthor={Java Programming MOOC · Universidade de Helsinque},
+  pdflang={pt-BR},
+}
+
+\newtcolorbox{destaque}[1][Atenção]{
+  enhanced, breakable,
+  colback=javaShade, colframe=javaOrange,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt,
+  fonttitle=\sffamily\bfseries\color{javaOrange},
+  title=#1,
+  top=4pt, bottom=4pt,
+}
+
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\color{javaRule}\rule{\linewidth}{1pt}}\\[6pt]
+    {\Huge\sffamily\bfseries\color{javaOrange} \@title}\\[6pt]
+    \ifx\@subtitle\undefined\else
+      {\Large\sffamily\color{javaDeep} \@subtitle}\\[4pt]
+    \fi
+    {\small\sffamily\color{gray} \@author}\\[2pt]
+    {\small\sffamily\color{gray} \@date}\\[6pt]
+    {\color{javaRule}\rule{\linewidth}{1pt}}
+  \end{center}
+  \vspace{1em}
+}
+\makeatother
+
+\title{Programação em Java}
+\subtitle{Lição 2: Repetição e Métodos}
+\author{Java Programming MOOC · Universidade de Helsinque — tradução para o português}
+\date{2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1.5em}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Objetivos de aprendizagem}
+
+Ao final desta lição, você será capaz de:
+
+\begin{itemize}
+  \item Usar o laço \inlinecode{while} para repetir código
+  \item Usar os comandos \inlinecode{break} e \inlinecode{continue}
+  \item Usar o laço \inlinecode{for} para percorrer sequências
+  \item Criar e chamar métodos próprios
+  \item Criar métodos com parâmetros e com valor de retorno
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Padrões comuns de repetição}
+
+Antes de aprender os laços, é útil reconhecer padrões frequentes.
+
+\textbf{Leitura contínua até um valor sentinela:}
+
+\begin{javacode}
+Scanner scanner = new Scanner(System.in);
+while (true) {
+    String linha = scanner.nextLine();
+    if (linha.equals("fim")) {
+        break;
+    }
+    System.out.println("Você digitou: " + linha);
+}
+\end{javacode}
+
+\textbf{Acúmulo de resultado:}
+
+\begin{javacode}
+int soma = 0;
+int contador = 0;
+// ... leitura de valores no laço ...
+double media = (double) soma / contador;
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{O laço \texttt{while}}
+
+O laço \inlinecode{while} repete um bloco de código enquanto uma condição for verdadeira.
+
+\subsection{Forma básica}
+
+\begin{javacode}
+int numero = 1;
+while (numero <= 5) {
+    System.out.println(numero);
+    numero++;
+}
+\end{javacode}
+
+\subsection{Laço infinito com \texttt{break}}
+
+\begin{javacode}
+Scanner scanner = new Scanner(System.in);
+int soma = 0;
+while (true) {
+    System.out.print("Digite um número (0 para sair): ");
+    int n = Integer.valueOf(scanner.nextLine());
+    if (n == 0) {
+        break;
+    }
+    soma += n;
+}
+System.out.println("Soma total: " + soma);
+\end{javacode}
+
+\subsection{O comando \texttt{continue}}
+
+O \inlinecode{continue} pula o restante da iteração atual e volta ao início do laço:
+
+\begin{javacode}
+int i = 0;
+while (i < 10) {
+    i++;
+    if (i % 2 == 0) {
+        continue; // pula os pares
+    }
+    System.out.println(i); // imprime apenas ímpares
+}
+\end{javacode}
+
+\subsection{Calculando estatísticas}
+
+Variáveis de acúmulo devem ser declaradas \textbf{antes} do laço:
+
+\begin{javacode}
+Scanner scanner = new Scanner(System.in);
+int soma = 0, quantidade = 0, maior = Integer.MIN_VALUE;
+
+while (true) {
+    System.out.print("Digite um número (ou -1 para encerrar): ");
+    int n = Integer.valueOf(scanner.nextLine());
+    if (n == -1) break;
+    soma += n;
+    quantidade++;
+    if (n > maior) maior = n;
+}
+
+if (quantidade > 0) {
+    System.out.println("Quantidade: " + quantidade);
+    System.out.println("Soma: " + soma);
+    System.out.println("Média: " + (double) soma / quantidade);
+    System.out.println("Maior: " + maior);
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{O laço \texttt{for}}
+
+O \inlinecode{for} é mais compacto e muito usado quando se sabe antecipadamente quantas iterações serão feitas.
+
+\subsection{Sintaxe}
+
+\begin{javacode}
+for (inicialização; condição; atualização) {
+    // corpo
+}
+\end{javacode}
+
+\subsection{Exemplos}
+
+\begin{javacode}
+// Conta de 1 a 5
+for (int i = 1; i <= 5; i++) {
+    System.out.println(i);
+}
+
+// Pulos de 2 em 2
+for (int i = 0; i <= 10; i += 2) {
+    System.out.println(i); // 0 2 4 6 8 10
+}
+\end{javacode}
+
+\subsection{Laços aninhados}
+
+\begin{javacode}
+for (int linha = 1; linha <= 3; linha++) {
+    for (int coluna = 1; coluna <= 3; coluna++) {
+        System.out.print(linha + "x" + coluna + "=" + (linha*coluna) + "  ");
+    }
+    System.out.println();
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Métodos}
+
+Um \textbf{método} é um bloco de código nomeado que realiza uma tarefa específica.
+
+\subsection{Método sem parâmetros e sem retorno}
+
+\begin{javacode}
+public static void saudacao() {
+    System.out.println("Olá! Bem-vindo ao programa.");
+}
+// chamada:
+saudacao();
+\end{javacode}
+
+\subsection{Método com parâmetros}
+
+\begin{javacode}
+public static void saudar(int vezes) {
+    for (int i = 0; i < vezes; i++) {
+        System.out.println("Olá!");
+    }
+}
+\end{javacode}
+
+\begin{destaque}[Atenção]
+Parâmetros são \textbf{cópias} dos valores passados. Modificá-los dentro do método não altera as variáveis originais.
+\end{destaque}
+
+\subsection{Método com valor de retorno}
+
+\begin{javacode}
+public static int soma(int a, int b) {
+    return a + b;
+}
+
+public static double media(int a, int b, int c) {
+    return (a + b + c) / 3.0;
+}
+
+public static boolean ehPar(int n) {
+    return n % 2 == 0;
+}
+\end{javacode}
+
+\subsection{Exemplo completo}
+
+\begin{javacode}
+import java.util.Scanner;
+
+public class Calculadora {
+
+    public static double calcularMedia(int a, int b, int c) {
+        return (a + b + c) / 3.0;
+    }
+
+    public static int calcularMaximo(int a, int b) {
+        return a > b ? a : b;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Primeiro número: ");
+        int n1 = Integer.valueOf(scanner.nextLine());
+        System.out.print("Segundo número: ");
+        int n2 = Integer.valueOf(scanner.nextLine());
+        System.out.print("Terceiro número: ");
+        int n3 = Integer.valueOf(scanner.nextLine());
+
+        System.out.println("Média: " + calcularMedia(n1, n2, n3));
+        System.out.println("Maior dos dois primeiros: " + calcularMaximo(n1, n2));
+    }
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Quando usar \texttt{while} vs.\ \texttt{for}}
+
+\begin{center}
+\begin{tabular}{l l}
+\toprule
+\textbf{Situação} & \textbf{Use} \\
+\midrule
+Número de iterações desconhecido & \texttt{while} \\
+Lendo até um valor sentinela & \texttt{while (true)} com \texttt{break} \\
+Percorrendo um intervalo conhecido & \texttt{for} \\
+Percorrendo uma coleção & \texttt{for-each} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Resumo}
+
+\begin{itemize}
+  \item O laço \inlinecode{while} repete enquanto a condição for verdadeira; \inlinecode{break} sai, \inlinecode{continue} pula.
+  \item O laço \inlinecode{for} é ideal quando sabemos o número de iterações.
+  \item Variáveis de acúmulo devem ser declaradas \textbf{antes} do laço.
+  \item Um \textbf{método} pode receber parâmetros e retornar valores.
+  \item Parâmetros são cópias: alterá-los no método não afeta as variáveis originais.
+  \item \inlinecode{return} encerra o método e devolve um valor.
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercícios}
+
+\begin{enumerate}
+  \item \textbf{Tabuada} — Lê um número inteiro \(n\) e imprime a tabuada de \(n\) (de 1 a 10).
+
+  \item \textbf{Fatorial} — Crie um método \inlinecode{fatorial(int n)} que retorna o fatorial de \(n\). Teste com \(0, 1, 5\) e \(10\).
+
+  \item \textbf{Contagem de pares e ímpares} — Lê números inteiros até o usuário digitar \(0\) e exibe quantos foram pares e quantos foram ímpares.
+
+  \item \textbf{Potência} — Crie \inlinecode{potencia(int base, int expoente)} usando um laço (sem \inlinecode{Math.pow}). Teste com \inlinecode{potencia(2, 10)}.
+
+  \item \textbf{Validação de entrada} — Crie \inlinecode{lerInteiroPositivo(Scanner scanner)} que pede um número positivo, repete se inválido, e retorna o número válido. Use-o para ler dois números e exibir o produto.
+
+  \item \textbf{Estrelas} — Crie \inlinecode{imprimirEstrelas(int n)} que imprime \(n\) asteriscos. Use-o para imprimir um triângulo crescente de 1 a 5 linhas.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apresentação do Curso — Programação em Java</title>
+<style>
+:root {
+  --primary:   #e76f00;
+  --secondary: #bf5700;
+  --blue:      #1565c0;
+  --teal:      #00695c;
+  --amber:     #b45309;
+  --ink:       #2b2140;
+  --rule:      #ffd7b5;
+  --code-bg:   #fff8f0;
+  --code-inline: #bf5700;
+  --bg:        #fafafa;
+  --text:      #1a1a2e;
+  --muted:     #6b6b80;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* ── HEADER ── */
+header.title-block {
+  border-top: 5px solid var(--primary);
+  padding: 2.2rem 0 1.4rem;
+  margin-bottom: 2rem;
+}
+header.title-block h1.title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+header.title-block p.subtitle {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.15rem;
+  color: var(--secondary);
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+header.title-block p.author,
+header.title-block p.date {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  font-style: italic;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ── TOC ── */
+nav#TOC {
+  background: #fff3e8;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 2.5rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.92rem;
+}
+nav#TOC::before {
+  content: 'Índice';
+  display: block;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+nav#TOC ol { padding-left: 1.2rem; }
+nav#TOC li { margin: 0.18rem 0; }
+nav#TOC a { color: var(--blue); text-decoration: none; }
+nav#TOC a:hover { text-decoration: underline; }
+
+/* ── HEADINGS ── */
+h1 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.7rem;
+  color: var(--primary);
+  border-bottom: 1.2px solid var(--rule);
+  padding-bottom: 0.35rem;
+  margin: 2.2rem 0 0.9rem;
+}
+h2 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.3rem;
+  color: var(--secondary);
+  margin: 1.9rem 0 0.65rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ffe0c4;
+}
+h3 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: var(--teal);
+  margin: 1.4rem 0 0.5rem;
+}
+h4 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.97rem;
+  color: var(--amber);
+  margin: 1.1rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── PARAGRAPHS & LISTS ── */
+p { margin: 0.75rem 0; }
+ul, ol { padding-left: 1.6rem; margin: 0.6rem 0; }
+li { margin: 0.25rem 0; }
+strong { color: var(--ink); }
+a { color: var(--blue); }
+
+/* ── BLOCKQUOTE ── */
+blockquote {
+  border-left: 4px solid var(--primary);
+  background: #fff8f0;
+  margin: 1.2rem 0;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink);
+  font-style: italic;
+}
+blockquote strong { font-style: normal; }
+
+/* ── CODE ── */
+code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+  background: var(--code-bg);
+  color: var(--code-inline);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  border-left: 4px solid var(--secondary);
+  background: var(--code-bg);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+pre code {
+  background: none;
+  color: var(--ink);
+  padding: 0;
+  font-size: 0.855rem;
+}
+
+/* ── TABLES ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+thead th {
+  background: var(--secondary);
+  color: #fff;
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+}
+tbody tr:nth-child(odd)  { background: #fff8f0; }
+tbody tr:nth-child(even) { background: #fff; }
+td, th { padding: 0.45rem 0.9rem; border-bottom: 1px solid #f0d8c0; }
+
+/* ── HR ── */
+hr { border: none; border-top: 1.5px solid var(--rule); margin: 2rem 0; }
+
+/* ── FAQ ── */
+.faq-item { margin: 1.2rem 0; }
+.faq-item p:first-child { font-weight: bold; color: var(--secondary); margin-bottom: 0.2rem; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+</style>
+</head>
+<body>
+
+<header class="title-block">
+  <h1 class="title">Programação em Java</h1>
+  <p class="subtitle">Apresentação do Curso: Sobre, Suporte e Perguntas Frequentes</p>
+  <p class="author">Java Programming MOOC · Universidade de Helsinque — tradução para o português</p>
+  <p class="date">2026</p>
+</header>
+
+<nav id="TOC">
+  <ol>
+    <li><a href="#sobre-o-curso">Sobre o Curso</a></li>
+    <li><a href="#avaliacao-e-certificados">Avaliação e Certificados</a></li>
+    <li><a href="#suporte-e-assistencia">Suporte e Assistência</a></li>
+    <li><a href="#faq">Perguntas Frequentes (FAQ)</a></li>
+    <li><a href="#creditos">Créditos</a></li>
+  </ol>
+</nav>
+
+<h1>Apresentação do Curso</h1>
+
+<h2 id="sobre-o-curso">Sobre o Curso</h2>
+
+<p>Este é um curso <strong>gratuito e online</strong> de programação em Java oferecido pela <strong>Universidade de Helsinque</strong>, desenvolvido pelo grupo de pesquisa <a href="https://www.helsinki.fi/en/researchgroups/data-driven-education">Agile Education Research</a>. Trata-se de uma versão atualizada do antigo curso <em>Object-Oriented Programming with Java</em>.</p>
+
+<p>O objetivo do curso é ensinar os <strong>fundamentos de programação de computadores</strong>, incluindo algoritmos e programação orientada a objetos, utilizando a linguagem de programação <strong>Java</strong>.</p>
+
+<h3>Para quem é este curso?</h3>
+<p>O curso <strong>não exige conhecimento prévio em programação</strong>. É voltado tanto para iniciantes absolutos quanto para quem já tem alguma experiência e deseja aprender Java especificamente.</p>
+
+<h3>Estrutura</h3>
+<table>
+  <thead><tr><th>Curso</th><th style="text-align:center">Partes</th><th>Conteúdo</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Java Programming I</strong></td><td style="text-align:center">1 a 7</td><td>Fundamentos: variáveis, condicionais, repetição, métodos, listas, orientação a objetos, algoritmos</td></tr>
+    <tr><td><strong>Java Programming II</strong></td><td style="text-align:center">8 a 14</td><td>Avançado: herança, polimorfismo, interfaces, generics, streams, lambdas, interfaces gráficas</td></tr>
+  </tbody>
+</table>
+
+<h3>O que você aprenderá</h3>
+<p>Ao concluir o <strong>Java Programming I</strong>, você será capaz de:</p>
+<ul>
+  <li>Escrever programas estruturados em Java</li>
+  <li>Usar variáveis, condicionais e laços de repetição</li>
+  <li>Criar e chamar métodos</li>
+  <li>Trabalhar com listas, arrays e Strings</li>
+  <li>Projetar e implementar classes e objetos</li>
+  <li>Aplicar encapsulamento e composição</li>
+  <li>Implementar algoritmos básicos de ordenação e busca</li>
+  <li>Entender os paradigmas de programação</li>
+</ul>
+
+<h3>Ferramentas necessárias</h3>
+<ol>
+  <li><strong>Java Development Kit (JDK) versão 11 ou superior</strong><br>
+    Download: <a href="https://www.oracle.com/java/technologies/downloads/">https://www.oracle.com/java/technologies/downloads/</a><br>
+    Alternativa gratuita: <a href="https://adoptium.net/">https://adoptium.net/</a></li>
+  <li><strong>IntelliJ IDEA</strong> (IDE recomendada)<br>
+    Download: <a href="https://www.jetbrains.com/idea/download/">https://www.jetbrains.com/idea/download/</a></li>
+  <li><strong>Plugin TMC (Test My Code)</strong><br>
+    Instruções: <a href="https://www.mooc.fi/en/installation/intellij/">https://www.mooc.fi/en/installation/intellij/</a></li>
+</ol>
+
+<h3>Como começar</h3>
+<ol>
+  <li>Acesse <a href="https://www.mooc.fi/en/sign-up">https://www.mooc.fi/en/sign-up</a> e crie uma conta gratuita</li>
+  <li>Instale o JDK 11 e o IntelliJ IDEA</li>
+  <li>Instale o plugin TMC no IntelliJ</li>
+  <li>No TMC, selecione o curso <strong>"Java Programming I"</strong></li>
+  <li>Faça o download da Parte 1 e comece!</li>
+</ol>
+
+<h3>Links principais do curso</h3>
+<table>
+  <thead><tr><th>Recurso</th><th>Link</th></tr></thead>
+  <tbody>
+    <tr><td>Página principal</td><td><a href="https://java-programming.mooc.fi/">https://java-programming.mooc.fi/</a></td></tr>
+    <tr><td>Java Programming I</td><td><a href="https://java-programming.mooc.fi/part-1">part-1</a> até <a href="https://java-programming.mooc.fi/part-7">part-7</a></td></tr>
+    <tr><td>Java Programming II</td><td><a href="https://java-programming.mooc.fi/part-8">part-8</a> até <a href="https://java-programming.mooc.fi/part-14">part-14</a></td></tr>
+    <tr><td>Criar conta</td><td><a href="https://www.mooc.fi/en/sign-up">https://www.mooc.fi/en/sign-up</a></td></tr>
+    <tr><td>Ver seus pontos</td><td><a href="https://tmc.mooc.fi">https://tmc.mooc.fi</a></td></tr>
+    <tr><td>Ver certificados</td><td><a href="https://www.mooc.fi/en/profile/completions">https://www.mooc.fi/en/profile/completions</a></td></tr>
+    <tr><td>Repositório GitHub</td><td><a href="https://github.com/rage/java-programming">https://github.com/rage/java-programming</a></td></tr>
+    <tr><td>Guia de instalação</td><td><a href="https://www.mooc.fi/en/installation/intellij/">https://www.mooc.fi/en/installation/intellij/</a></td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2 id="avaliacao-e-certificados">Avaliação e Certificados</h2>
+
+<p>A avaliação é feita exclusivamente por meio dos <strong>exercícios de programação</strong>, corrigidos automaticamente pela ferramenta <strong>Test My Code (TMC)</strong>. Você pode tentar quantas vezes quiser.</p>
+
+<p>Para o <strong>certificado de conclusão</strong>, você precisa atingir pelo menos <strong>80% dos pontos</strong> em cada parte:</p>
+<ul>
+  <li>Certificado do <strong>Java Programming I</strong>: ao completar 80%+ das partes 1 a 7</li>
+  <li>Certificado do <strong>Java Programming II</strong>: ao completar 80%+ das partes 8 a 14</li>
+</ul>
+<p>Certificados disponíveis em: <a href="https://www.mooc.fi/en/profile/completions">https://www.mooc.fi/en/profile/completions</a></p>
+
+<blockquote>
+  <strong>Atenção:</strong> este curso <strong>não oferece créditos acadêmicos</strong> da Universidade de Helsinque. Para cursos com créditos ECTS, consulte <a href="https://programming-23.mooc.fi/">https://programming-23.mooc.fi/</a>.
+</blockquote>
+
+<hr>
+
+<h2 id="suporte-e-assistencia">Suporte e Assistência</h2>
+
+<h3>Canal oficial: Discord</h3>
+<p>O suporte é oferecido <strong>voluntariamente</strong> no servidor Discord do Departamento de Ciência da Computação da Universidade de Helsinque.</p>
+<p><strong>Entre no servidor Discord:</strong><br>
+<a href="https://study.cs.helsinki.fi/discord/join/java">https://study.cs.helsinki.fi/discord/join/java</a></p>
+
+<h3>Boas práticas ao pedir ajuda</h3>
+<ol>
+  <li><strong>Qual exercício</strong> você está tentando resolver (número e nome)</li>
+  <li><strong>O que você tentou fazer</strong> — mostre seu código</li>
+  <li><strong>Qual erro aparece</strong> — copie a mensagem completa</li>
+  <li><strong>O que você esperava</strong> que acontecesse</li>
+</ol>
+
+<h3>Links de apoio ao estudo</h3>
+<table>
+  <thead><tr><th>Recurso</th><th>Link</th></tr></thead>
+  <tbody>
+    <tr><td>Discord do curso</td><td><a href="https://study.cs.helsinki.fi/discord/join/java">discord/join/java</a></td></tr>
+    <tr><td>Repositório GitHub</td><td><a href="https://github.com/rage/java-programming">github.com/rage/java-programming</a></td></tr>
+    <tr><td>Documentação Java</td><td><a href="https://docs.oracle.com/en/java/javase/11/docs/api/">Java SE 11 API</a></td></tr>
+    <tr><td>Tutorial Java Oracle</td><td><a href="https://docs.oracle.com/javase/tutorial/">docs.oracle.com/javase/tutorial/</a></td></tr>
+    <tr><td>W3Schools Java</td><td><a href="https://www.w3schools.com/java/">w3schools.com/java/</a></td></tr>
+    <tr><td>Stack Overflow</td><td><a href="https://stackoverflow.com/questions/tagged/java">stackoverflow.com/java</a></td></tr>
+    <tr><td>Visualizador Java</td><td><a href="https://pythontutor.com/java.html">pythontutor.com/java.html</a></td></tr>
+    <tr><td>IntelliJ IDEA</td><td><a href="https://www.jetbrains.com/idea/download/">jetbrains.com/idea/download/</a></td></tr>
+    <tr><td>Guia TMC</td><td><a href="https://www.mooc.fi/en/installation/intellij/">mooc.fi/installation/intellij/</a></td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2 id="faq">Perguntas Frequentes (FAQ)</h2>
+
+<h3>Sobre o curso em geral</h3>
+
+<div class="faq-item">
+  <p>O curso é gratuito?</p>
+  <p>Sim. O curso é completamente gratuito — material, exercícios e certificado.</p>
+</div>
+<div class="faq-item">
+  <p>Preciso criar uma conta?</p>
+  <p>Sim. Para usar o TMC e submeter exercícios, crie uma conta em <a href="https://www.mooc.fi/en/sign-up">https://www.mooc.fi/en/sign-up</a>.</p>
+</div>
+<div class="faq-item">
+  <p>Posso estudar no meu próprio ritmo?</p>
+  <p>Sim. Não há prazos fixos para conclusão.</p>
+</div>
+<div class="faq-item">
+  <p>Este curso oferece créditos acadêmicos?</p>
+  <p>Não. Apenas certificado de conclusão. Para créditos ECTS: <a href="https://programming-23.mooc.fi/">https://programming-23.mooc.fi/</a>.</p>
+</div>
+
+<h3>Sobre instalação e ferramentas</h3>
+
+<div class="faq-item">
+  <p>Qual IDE devo usar?</p>
+  <p>IntelliJ IDEA (Community Edition, gratuita) com o plugin TMC. Instruções em <a href="https://www.mooc.fi/en/installation/intellij/">https://www.mooc.fi/en/installation/intellij/</a>.</p>
+</div>
+<div class="faq-item">
+  <p>Qual versão do Java devo instalar?</p>
+  <p>JDK versão 11. Remova versões mais antigas para evitar conflitos.</p>
+</div>
+<div class="faq-item">
+  <p>Estou recebendo erro sobre JAVA_HOME. Como resolver?</p>
+  <p>Verifique se o JDK 11 está instalado e configure a variável de ambiente <code>JAVA_HOME</code> apontando para o diretório de instalação do JDK.</p>
+</div>
+
+<h3>Sobre o plugin TMC e exercícios</h3>
+
+<div class="faq-item">
+  <p>Como atualizo o plugin TMC?</p>
+  <p>No IntelliJ IDEA: acesse <strong>Help → Check for Updates</strong>.</p>
+</div>
+<div class="faq-item">
+  <p>Como baixo os exercícios das próximas partes?</p>
+  <p>O TMC libera automaticamente ao atingir <strong>25% dos pontos</strong> da parte anterior. Você também pode baixar manualmente pelo menu TMC.</p>
+</div>
+<div class="faq-item">
+  <p>Como reporto um possível bug em um exercício?</p>
+  <p>Primeiro verifique se o erro está no seu código (peça ajuda no Discord). Se confirmar que é um bug, notifique os assistentes no Discord.</p>
+</div>
+
+<hr>
+
+<h2 id="creditos">Créditos</h2>
+
+<p>O curso foi criado e é mantido pelo grupo <strong>Agile Education Research</strong> da Universidade de Helsinque:</p>
+<ul>
+  <li><strong>Arto Hellas</strong> e <strong>Matti Luukkainen</strong> (autores principais)</li>
+  <li>Colaboradores: Antti Laaksonen, Henrik Nygren, Juho Leinonen, entre outros</li>
+</ul>
+
+<p><strong>Licença:</strong> Creative Commons BY-NC-SA 4.0 —
+<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></p>
+
+<table>
+  <thead><tr><th>Recurso</th><th>Link</th></tr></thead>
+  <tbody>
+    <tr><td>Universidade de Helsinque</td><td><a href="https://www.helsinki.fi/en">https://www.helsinki.fi/en</a></td></tr>
+    <tr><td>Agile Education Research</td><td><a href="https://www.helsinki.fi/en/researchgroups/data-driven-education">data-driven-education</a></td></tr>
+    <tr><td>Plataforma mooc.fi</td><td><a href="https://www.mooc.fi/en/">https://www.mooc.fi/en/</a></td></tr>
+    <tr><td>Test My Code (TMC)</td><td><a href="https://tmc.mooc.fi">https://tmc.mooc.fi</a></td></tr>
+    <tr><td>GitHub do curso</td><td><a href="https://github.com/rage/java-programming">https://github.com/rage/java-programming</a></td></tr>
+  </tbody>
+</table>
+
+<footer>
+  Java Programming MOOC · Universidade de Helsinque · tradução para o português · 2026
+</footer>
+</body>
+</html>

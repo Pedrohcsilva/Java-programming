@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lição 6: Listas de Objetos, Testes e Programas Complexos — Programação em Java</title>
+<style>
+:root {
+  --primary:   #e76f00;
+  --secondary: #bf5700;
+  --blue:      #1565c0;
+  --teal:      #00695c;
+  --amber:     #b45309;
+  --ink:       #2b2140;
+  --rule:      #ffd7b5;
+  --code-bg:   #fff8f0;
+  --code-inline: #bf5700;
+  --bg:        #fafafa;
+  --text:      #1a1a2e;
+  --muted:     #6b6b80;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* ── HEADER ── */
+header.title-block {
+  border-top: 5px solid var(--primary);
+  padding: 2.2rem 0 1.4rem;
+  margin-bottom: 2rem;
+}
+header.title-block h1.title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+header.title-block p.subtitle {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.15rem;
+  color: var(--secondary);
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+header.title-block p.author,
+header.title-block p.date {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  font-style: italic;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ── TOC ── */
+nav#TOC {
+  background: #fff3e8;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 2.5rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.92rem;
+}
+nav#TOC::before {
+  content: 'Índice';
+  display: block;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+nav#TOC ol { padding-left: 1.2rem; }
+nav#TOC li { margin: 0.18rem 0; }
+nav#TOC a { color: var(--blue); text-decoration: none; }
+nav#TOC a:hover { text-decoration: underline; }
+
+/* ── HEADINGS ── */
+h1 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.7rem;
+  color: var(--primary);
+  border-bottom: 1.2px solid var(--rule);
+  padding-bottom: 0.35rem;
+  margin: 2.2rem 0 0.9rem;
+}
+h2 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.3rem;
+  color: var(--secondary);
+  margin: 1.9rem 0 0.65rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ffe0c4;
+}
+h3 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: var(--teal);
+  margin: 1.4rem 0 0.5rem;
+}
+h4 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.97rem;
+  color: var(--amber);
+  margin: 1.1rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── PARAGRAPHS & LISTS ── */
+p { margin: 0.75rem 0; }
+ul, ol { padding-left: 1.6rem; margin: 0.6rem 0; }
+li { margin: 0.25rem 0; }
+strong { color: var(--ink); }
+
+/* ── BLOCKQUOTE ── */
+blockquote {
+  border-left: 4px solid var(--primary);
+  background: #fff8f0;
+  margin: 1.2rem 0;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink);
+  font-style: italic;
+}
+blockquote strong { font-style: normal; }
+
+/* ── CODE ── */
+code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+  background: var(--code-bg);
+  color: var(--code-inline);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  border-left: 4px solid var(--secondary);
+  background: var(--code-bg);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+pre code {
+  background: none;
+  color: var(--ink);
+  padding: 0;
+  font-size: 0.855rem;
+}
+
+/* ── TABLES ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+thead th {
+  background: var(--secondary);
+  color: #fff;
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+}
+tbody tr:nth-child(odd)  { background: #fff8f0; }
+tbody tr:nth-child(even) { background: #fff; }
+td, th { padding: 0.45rem 0.9rem; border-bottom: 1px solid #f0d8c0; }
+
+/* ── HR ── */
+hr { border: none; border-top: 1.5px solid var(--rule); margin: 2rem 0; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+</style>
+</head>
+<body>
+
+<header class="title-block">
+  <h1 class="title">Programação em Java</h1>
+  <p class="subtitle">Lição 6: Listas de Objetos, Testes e Programas Complexos</p>
+  <p class="author">Java Programming MOOC · Universidade de Helsinque — tradução para o português</p>
+  <p class="date">2026</p>
+</header>
+
+<nav id="TOC">
+  <ol>
+    <li><a href="#objetivos">Objetivos de aprendizagem</a></li>
+    <li><a href="#listas-objetos">Objetos em listas e listas dentro de objetos</a></li>
+    <li><a href="#separacao">Separando a interface do usuário da lógica do programa</a></li>
+    <li><a href="#testes">Introdução a testes unitários</a></li>
+    <li><a href="#stack-trace">Lendo e interpretando o stack trace</a></li>
+    <li><a href="#resumo">Resumo</a></li>
+    <li><a href="#exercicios">Exercícios</a></li>
+  </ol>
+</nav>
+
+<h1 id="licao6">Lição 6: Listas de Objetos, Testes e Programas Complexos</h1>
+
+<h2 id="objetivos">Objetivos de aprendizagem</h2>
+<p>Ao final desta lição, você será capaz de:</p>
+<ul>
+  <li>Usar listas de objetos e objetos que contêm listas</li>
+  <li>Separar a interface do usuário da lógica do programa</li>
+  <li>Escrever e executar testes unitários com JUnit</li>
+  <li>Organizar programas maiores em múltiplas classes</li>
+  <li>Entender o conceito de desenvolvimento orientado a testes (TDD)</li>
+</ul>
+
+<h2 id="listas-objetos">Objetos em listas e listas dentro de objetos</h2>
+
+<h3 id="lista-objetos">Lista de objetos</h3>
+<p>Já vimos que podemos armazenar objetos em listas. Vejamos um exemplo mais completo:</p>
+<pre><code>ArrayList&lt;Livro&gt; biblioteca = new ArrayList&lt;&gt;();
+biblioteca.add(new Livro("Dom Casmurro", "Machado de Assis", 1899));
+biblioteca.add(new Livro("O Cortiço", "Aluísio Azevedo", 1890));
+biblioteca.add(new Livro("Vidas Secas", "Graciliano Ramos", 1938));</code></pre>
+<p>Buscando um livro por título:</p>
+<pre><code>public static Livro buscarPorTitulo(ArrayList&lt;Livro&gt; lista, String titulo) {
+    for (Livro livro : lista) {
+        if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+            return livro;
+        }
+    }
+    return null;
+}</code></pre>
+<p>Filtrando por ano:</p>
+<pre><code>public static ArrayList&lt;Livro&gt; livrosAntesDe(ArrayList&lt;Livro&gt; lista, int ano) {
+    ArrayList&lt;Livro&gt; resultado = new ArrayList&lt;&gt;();
+    for (Livro livro : lista) {
+        if (livro.getAno() &lt; ano) {
+            resultado.add(livro);
+        }
+    }
+    return resultado;
+}</code></pre>
+
+<h3 id="objeto-lista">Objeto com lista interna</h3>
+<p>Uma classe pode ter um <code>ArrayList</code> como variável de instância:</p>
+<pre><code>public class Turma {
+    private String nome;
+    private ArrayList&lt;Aluno&gt; alunos;
+
+    public Turma(String nome) {
+        this.nome = nome;
+        this.alunos = new ArrayList&lt;&gt;();
+    }
+
+    public void adicionarAluno(Aluno aluno) {
+        this.alunos.add(aluno);
+    }
+
+    public int quantidadeDeAlunos() {
+        return this.alunos.size();
+    }
+
+    public double mediaGeral() {
+        if (this.alunos.isEmpty()) return 0.0;
+
+        double somaMedias = 0;
+        for (Aluno aluno : this.alunos) {
+            somaMedias += aluno.calcularMedia();
+        }
+        return somaMedias / this.alunos.size();
+    }
+
+    public void listarAprovados(double notaMinima) {
+        System.out.println("Aprovados em " + this.nome + ":");
+        for (Aluno aluno : this.alunos) {
+            if (aluno.calcularMedia() &gt;= notaMinima) {
+                System.out.println("  " + aluno);
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return this.nome + " (" + this.alunos.size() + " alunos)";
+    }
+}</code></pre>
+
+<h2 id="separacao">Separando a interface do usuário da lógica do programa</h2>
+<p>Um princípio fundamental de bom design é <strong>separar</strong> o que o programa faz (lógica) de como ele interage com o usuário (interface).</p>
+
+<h3 id="problema">O problema de misturar tudo</h3>
+<pre><code>// Ruim: lógica e UI juntas
+public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    ArrayList&lt;String&gt; itens = new ArrayList&lt;&gt;();
+
+    System.out.print("Quantos itens? ");
+    int n = Integer.valueOf(scanner.nextLine());
+
+    for (int i = 0; i &lt; n; i++) {
+        System.out.print("Item " + (i+1) + ": ");
+        itens.add(scanner.nextLine());
+    }
+
+    // lógica misturada com UI...
+}</code></pre>
+
+<h3 id="solucao">A solução: classes separadas</h3>
+<p><strong>Classe de lógica:</strong></p>
+<pre><code>public class ListaDeCompras {
+    private ArrayList&lt;String&gt; itens;
+
+    public ListaDeCompras() {
+        this.itens = new ArrayList&lt;&gt;();
+    }
+
+    public void adicionar(String item) {
+        this.itens.add(item);
+    }
+
+    public boolean remover(String item) {
+        return this.itens.remove(item);
+    }
+
+    public boolean contem(String item) {
+        return this.itens.contains(item);
+    }
+
+    public int tamanho() {
+        return this.itens.size();
+    }
+
+    public ArrayList&lt;String&gt; getItens() {
+        return new ArrayList&lt;&gt;(this.itens); // retorna cópia, não referência direta
+    }
+
+    @Override
+    public String toString() {
+        return this.itens.toString();
+    }
+}</code></pre>
+<p><strong>Classe de interface:</strong></p>
+<pre><code>public class InterfaceListaDeCompras {
+    private Scanner scanner;
+    private ListaDeCompras lista;
+
+    public InterfaceListaDeCompras(Scanner scanner) {
+        this.scanner = scanner;
+        this.lista = new ListaDeCompras();
+    }
+
+    public void executar() {
+        while (true) {
+            System.out.println("\n1. Adicionar  2. Remover  3. Listar  4. Sair");
+            System.out.print("Escolha: ");
+            String opcao = scanner.nextLine();
+
+            if (opcao.equals("1")) {
+                adicionarItem();
+            } else if (opcao.equals("2")) {
+                removerItem();
+            } else if (opcao.equals("3")) {
+                listarItens();
+            } else if (opcao.equals("4")) {
+                System.out.println("Até logo!");
+                break;
+            } else {
+                System.out.println("Opção inválida.");
+            }
+        }
+    }
+
+    private void adicionarItem() {
+        System.out.print("Item: ");
+        String item = scanner.nextLine();
+        this.lista.adicionar(item);
+        System.out.println("'" + item + "' adicionado.");
+    }
+
+    private void removerItem() {
+        System.out.print("Item a remover: ");
+        String item = scanner.nextLine();
+        if (this.lista.remover(item)) {
+            System.out.println("Removido.");
+        } else {
+            System.out.println("Item não encontrado.");
+        }
+    }
+
+    private void listarItens() {
+        System.out.println("Sua lista (" + this.lista.tamanho() + " itens):");
+        for (String item : this.lista.getItens()) {
+            System.out.println("  - " + item);
+        }
+    }
+}</code></pre>
+<p><strong><code>main</code> simples:</strong></p>
+<pre><code>public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    InterfaceListaDeCompras ui = new InterfaceListaDeCompras(scanner);
+    ui.executar();
+}</code></pre>
+
+<h2 id="testes">Introdução a testes unitários</h2>
+<p><strong>Testes unitários</strong> verificam automaticamente se um método ou classe se comporta corretamente. Em Java, usamos a biblioteca <strong>JUnit</strong>.</p>
+
+<h3 id="por-que">Por que testar?</h3>
+<ul>
+  <li>Detecta bugs antes de chegar ao usuário</li>
+  <li>Dá confiança para refatorar o código</li>
+  <li>Serve como documentação do comportamento esperado</li>
+</ul>
+
+<h3 id="estrutura">Estrutura de um teste JUnit</h3>
+<pre><code>import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class CalculadoraTest {
+
+    @Test
+    public void testSoma() {
+        Calculadora calc = new Calculadora();
+        assertEquals(5, calc.soma(2, 3));
+    }
+
+    @Test
+    public void testSubtracao() {
+        Calculadora calc = new Calculadora();
+        assertEquals(1, calc.subtracao(3, 2));
+    }
+
+    @Test
+    public void testDivisaoPorZero() {
+        Calculadora calc = new Calculadora();
+        assertEquals(0, calc.divisao(10, 0));
+    }
+}</code></pre>
+<p>Classe sendo testada:</p>
+<pre><code>public class Calculadora {
+    private int valor;
+
+    public Calculadora() {
+        this.valor = 0;
+    }
+
+    public int soma(int a, int b) {
+        return a + b;
+    }
+
+    public int subtracao(int a, int b) {
+        return a - b;
+    }
+
+    public int divisao(int a, int b) {
+        if (b == 0) return 0;
+        return a / b;
+    }
+}</code></pre>
+
+<h3 id="assercoes">Métodos de asserção do JUnit</h3>
+<table>
+  <thead><tr><th>Método</th><th>Verifica</th></tr></thead>
+  <tbody>
+    <tr><td><code>assertEquals(esperado, real)</code></td><td>Se dois valores são iguais</td></tr>
+    <tr><td><code>assertNotEquals(naoEsperado, real)</code></td><td>Se dois valores são diferentes</td></tr>
+    <tr><td><code>assertTrue(condicao)</code></td><td>Se a condição é verdadeira</td></tr>
+    <tr><td><code>assertFalse(condicao)</code></td><td>Se a condição é falsa</td></tr>
+    <tr><td><code>assertNull(objeto)</code></td><td>Se o objeto é <code>null</code></td></tr>
+    <tr><td><code>assertNotNull(objeto)</code></td><td>Se o objeto não é <code>null</code></td></tr>
+  </tbody>
+</table>
+
+<h3 id="tdd">Desenvolvimento orientado a testes (TDD)</h3>
+<p>O <strong>TDD</strong> (<em>Test-Driven Development</em>) inverte o processo tradicional:</p>
+<ol>
+  <li><strong>Escreva o teste</strong> para o comportamento desejado (antes de implementar)</li>
+  <li><strong>Execute</strong> — o teste falha (código ainda não existe)</li>
+  <li><strong>Implemente</strong> o mínimo de código para o teste passar</li>
+  <li><strong>Execute</strong> — o teste passa</li>
+  <li><strong>Refatore</strong> o código mantendo os testes passando</li>
+</ol>
+<pre><code>// Passo 1: escreva o teste primeiro
+@Test
+public void testListaVaziaRetornaZeroItens() {
+    ListaDeCompras lista = new ListaDeCompras();
+    assertEquals(0, lista.tamanho());
+}
+
+// Passo 1: teste para adicionar item
+@Test
+public void testAdicionarItemAumentaTamanho() {
+    ListaDeCompras lista = new ListaDeCompras();
+    lista.adicionar("pão");
+    assertEquals(1, lista.tamanho());
+}
+
+// Passo 1: teste para remover item
+@Test
+public void testRemoverItemDiminuiTamanho() {
+    ListaDeCompras lista = new ListaDeCompras();
+    lista.adicionar("leite");
+    lista.remover("leite");
+    assertEquals(0, lista.tamanho());
+}</code></pre>
+
+<h2 id="stack-trace">Lendo e interpretando o stack trace</h2>
+<p>Quando um erro ocorre, o Java exibe uma trilha de chamadas. Aprenda a ler:</p>
+<pre><code>Exception in thread "main" java.lang.NullPointerException
+    at Turma.mediaGeral(Turma.java:23)
+    at Main.main(Main.java:10)</code></pre>
+<ul>
+  <li><strong>Tipo do erro</strong>: <code>NullPointerException</code> — tentativa de usar uma referência <code>null</code></li>
+  <li><strong>Onde</strong>: linha 23 do arquivo <code>Turma.java</code>, dentro do método <code>mediaGeral</code></li>
+  <li><strong>Chamado de</strong>: linha 10 do <code>Main.java</code></li>
+</ul>
+<p>Leia de baixo para cima: o <code>main</code> chamou <code>mediaGeral</code>, que falhou na linha 23.</p>
+
+<h2 id="resumo">Resumo</h2>
+<ul>
+  <li>Listas podem conter objetos; classes podem ter listas como variáveis de instância.</li>
+  <li><strong>Separe a lógica da interface do usuário</strong> — lógica em classes próprias, UI em outra classe.</li>
+  <li><strong>Testes unitários</strong> verificam o comportamento de métodos isoladamente.</li>
+  <li>Use <code>assertEquals</code>, <code>assertTrue</code>, <code>assertFalse</code> etc. para verificar resultados.</li>
+  <li><strong>TDD</strong>: escreva o teste antes do código — isso guia um design melhor.</li>
+  <li>O <strong>stack trace</strong> aponta a linha exata onde o erro ocorreu.</li>
+</ul>
+
+<h2 id="exercicios">Exercícios</h2>
+
+<p><strong>Exercício 1 — Biblioteca</strong></p>
+<p>Crie a classe <code>Biblioteca</code> com uma lista de <code>Livro</code>. Implemente métodos: <code>adicionarLivro</code>, <code>buscarPorAutor</code>, <code>listarTodosOrdenados</code> (por título). Crie testes unitários para cada método.</p>
+
+<p><strong>Exercício 2 — Separação de responsabilidades</strong></p>
+<p>Refatore o seguinte código para separar a lógica da UI:</p>
+<pre><code>// Refatore isto:
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    ArrayList&lt;Integer&gt; nums = new ArrayList&lt;&gt;();
+    while (true) {
+        String l = sc.nextLine();
+        if (l.equals("fim")) break;
+        nums.add(Integer.valueOf(l));
+    }
+    int soma = 0;
+    for (int n : nums) soma += n;
+    System.out.println("Soma: " + soma);
+    System.out.println("Média: " + (double) soma / nums.size());
+}</code></pre>
+<p>Crie classes <code>ColetorDeNumeros</code> (lógica) e <code>InterfaceColetorDeNumeros</code> (UI).</p>
+
+<p><strong>Exercício 3 — TDD: Conta bancária</strong></p>
+<p>Usando TDD, implemente a classe <code>ContaBancaria</code> com os métodos <code>depositar</code>, <code>sacar</code> e <code>getSaldo</code>. Escreva os testes primeiro:</p>
+<ul>
+  <li><code>depositar</code> aumenta o saldo</li>
+  <li><code>sacar</code> com saldo suficiente diminui o saldo e retorna <code>true</code></li>
+  <li><code>sacar</code> sem saldo suficiente não altera o saldo e retorna <code>false</code></li>
+  <li>Saldo nunca fica negativo</li>
+</ul>
+
+<p><strong>Exercício 4 — Programa complexo: inventário</strong></p>
+<p>Crie um sistema de inventário simples com:</p>
+<ul>
+  <li>Classe <code>Item</code> (nome, quantidade, preço unitário)</li>
+  <li>Classe <code>Inventario</code> (lista de itens, adicionar, remover, buscar, valor total)</li>
+  <li>Classe <code>InterfaceInventario</code> (menu com opções: adicionar, remover, buscar, listar, total)</li>
+  <li>Testes para a classe <code>Inventario</code></li>
+</ul>
+
+<footer>
+  Java Programming MOOC · Universidade de Helsinque · tradução para o português · 2026
+</footer>
+</body>
+</html>

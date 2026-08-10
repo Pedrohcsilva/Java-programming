@@ -1,0 +1,448 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[11pt,a4paper]{article}
+
+% ── Codificação e língua ──────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+
+% ── Tipografia ────────────────────────────────────────────────────────────────
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ── Cores ─────────────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaShade}{HTML}{FFF3E8}
+
+% ── Caixas e código ───────────────────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{listings}
+\usepackage{fvextra}
+
+\lstdefinestyle{javastyle}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{javaBlue}\bfseries,
+  stringstyle=\color{javaDeep},
+  commentstyle=\color{javaTeal}\itshape,
+  numberstyle=\tiny\color{gray},
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  tabsize=4,
+}
+
+\newtcblisting{javacode}{
+  listing only,
+  listing style=javastyle,
+  breakable,
+  enhanced,
+  colback=javaCodeBg,
+  colframe=javaDeep,
+  leftrule=4pt,
+  rightrule=0.4pt,
+  toprule=0.4pt,
+  bottomrule=0.4pt,
+  arc=2pt,
+  fontupper=\small,
+  top=4pt, bottom=4pt, left=6pt, right=6pt,
+}
+
+\newtcbox{\inlinecode}{
+  on line,
+  colback=javaCodeBg,
+  colframe=javaRule,
+  boxrule=0.5pt,
+  arc=2pt,
+  fontupper=\ttfamily\small\color{javaDeep},
+  boxsep=1pt, left=2pt, right=2pt, top=1pt, bottom=1pt,
+}
+
+% ── Layout ────────────────────────────────────────────────────────────────────
+\usepackage[margin=2.4cm, top=2.8cm, bottom=2.8cm]{geometry}
+
+% ── Cabeçalho / rodapé ────────────────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaRule}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\sffamily\color{javaDeep} Java Programming MOOC}
+\fancyhead[R]{\small\sffamily\color{javaDeep} Lição 1}
+\fancyfoot[C]{\small\sffamily\color{gray}\thepage}
+
+% ── Seções ────────────────────────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{javaOrange}}
+  {\thesection}{0.7em}{}
+  [\vspace{2pt}{\color{javaRule}\titlerule[1.2pt]}]
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{javaDeep}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{javaTeal}}
+  {\thesubsubsection}{0.5em}{}
+
+% ── Listas ────────────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt, parsep=0pt}
+\setlist[enumerate]{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+% ── Tabelas ───────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+
+% ── Hiperlinks ────────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=javaBlue,
+  urlcolor=javaBlue,
+  citecolor=javaBlue,
+  pdftitle={Programação em Java — Lição 1: Primeiros Passos},
+  pdfauthor={Java Programming MOOC · Universidade de Helsinque},
+  pdflang={pt-BR},
+}
+
+% ── Caixa de destaque (dica/atenção) ─────────────────────────────────────────
+\newtcolorbox{destaque}[1][Dica]{
+  enhanced, breakable,
+  colback=javaShade,
+  colframe=javaOrange,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt,
+  fonttitle=\sffamily\bfseries\color{javaOrange},
+  title=#1,
+  top=4pt, bottom=4pt,
+}
+
+% ── Título personalizado ──────────────────────────────────────────────────────
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\color{javaRule}\rule{\linewidth}{1pt}}\\[6pt]
+    {\Huge\sffamily\bfseries\color{javaOrange} \@title}\\[6pt]
+    \ifx\@subtitle\undefined\else
+      {\Large\sffamily\color{javaDeep} \@subtitle}\\[4pt]
+    \fi
+    {\small\sffamily\color{gray} \@author}\\[2pt]
+    {\small\sffamily\color{gray} \@date}\\[6pt]
+    {\color{javaRule}\rule{\linewidth}{1pt}}
+  \end{center}
+  \vspace{1em}
+}
+\makeatother
+
+% ─────────────────────────────────────────────────────────────────────────────
+\title{Programação em Java}
+\subtitle{Lição 1: Primeiros Passos}
+\author{Java Programming MOOC · Universidade de Helsinque — tradução para o português}
+\date{2026}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1.5em}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Objetivos de aprendizagem}
+
+Ao final desta lição, você será capaz de:
+
+\begin{itemize}
+  \item Entender o que é um programa de computador
+  \item Escrever programas que exibem texto na tela
+  \item Ler dados digitados pelo usuário
+  \item Criar e usar variáveis dos tipos \inlinecode{String}, \inlinecode{int}, \inlinecode{double} e \inlinecode{boolean}
+  \item Realizar cálculos aritméticos básicos
+  \item Usar condicionais (\inlinecode{if}, \inlinecode{else if}, \inlinecode{else})
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{O que é programação?}
+
+Programação é a arte de escrever instruções que um computador possa executar. Essas instruções são chamadas de \textbf{código}, e um conjunto organizado delas forma um \textbf{programa}.
+
+Os computadores são máquinas que executam instruções com extrema rapidez, mas são completamente literais: fazem exatamente o que o programador manda, nem mais, nem menos. Por isso, escrever código envolve ser muito preciso.
+
+Java é uma das linguagens de programação mais utilizadas no mundo. É uma linguagem \textbf{compilada}, \textbf{fortemente tipada} e \textbf{orientada a objetos}. Neste curso, aprenderemos Java do zero.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Estrutura de um programa Java}
+
+Todo programa Java tem a mesma estrutura básica:
+
+\begin{javacode}
+public class NomeDoPrograma {
+    public static void main(String[] args) {
+        // o código do programa vai aqui
+    }
+}
+\end{javacode}
+
+\begin{itemize}
+  \item \inlinecode{public class NomeDoPrograma} define a \textbf{classe} do programa. O nome da classe deve coincidir com o nome do arquivo (ex.: \inlinecode{NomeDoPrograma.java}).
+  \item \inlinecode{public static void main(String[] args)} é o \textbf{método principal} — o ponto de partida da execução.
+  \item As chaves \inlinecode{\{ \}} delimitam blocos de código.
+  \item O \inlinecode{//} inicia um comentário, que é ignorado pelo compilador.
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exibindo texto na tela}
+
+O comando mais básico de Java é o \inlinecode{System.out.println}, que imprime uma linha de texto:
+
+\begin{javacode}
+public class OlaMundo {
+    public static void main(String[] args) {
+        System.out.println("Olá, mundo!");
+    }
+}
+\end{javacode}
+
+\textbf{Saída:}
+\begin{javacode}
+Olá, mundo!
+\end{javacode}
+
+Você pode imprimir várias linhas repetindo o comando:
+
+\begin{javacode}
+System.out.println("Primeira linha");
+System.out.println("Segunda linha");
+System.out.println("Terceira linha");
+\end{javacode}
+
+Para imprimir sem pular a linha, use \inlinecode{System.out.print}:
+
+\begin{javacode}
+System.out.print("Olá, ");
+System.out.print("mundo!");
+\end{javacode}
+
+\begin{destaque}[Dica]
+Na maioria das IDEs, você pode digitar \inlinecode{sout} e pressionar Tab para escrever \inlinecode{System.out.println()} automaticamente.
+\end{destaque}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Lendo a entrada do usuário}
+
+Para ler dados digitados pelo usuário, usamos a classe \inlinecode{Scanner}:
+
+\begin{javacode}
+import java.util.Scanner;
+
+public class LeitorDeNome {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Qual é o seu nome? ");
+        String nome = scanner.nextLine();
+
+        System.out.println("Olá, " + nome + "!");
+    }
+}
+\end{javacode}
+
+O \inlinecode{import java.util.Scanner} torna a classe \inlinecode{Scanner} disponível. O \inlinecode{scanner.nextLine()} lê uma linha inteira de texto digitada pelo usuário.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Variáveis}
+
+Uma \textbf{variável} é um espaço nomeado na memória onde guardamos um valor. Em Java, toda variável tem um \textbf{tipo} definido na criação.
+
+\subsection{Tipos básicos}
+
+\begin{center}
+\begin{tabular}{>{\ttfamily}l l >{\ttfamily}l}
+\toprule
+\normalfont\textbf{Tipo} & \textbf{Descrição} & \normalfont\textbf{Exemplo} \\
+\midrule
+String  & Texto               & "Olá" \\
+int     & Número inteiro      & 42    \\
+double  & Número decimal      & 3.14  \\
+boolean & Verdadeiro ou falso & true, false \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Declarando variáveis}
+
+\begin{javacode}
+String nome = "Ana";
+int idade = 25;
+double altura = 1.68;
+boolean estudante = true;
+
+System.out.println(nome);      // Ana
+System.out.println(idade);     // 25
+System.out.println(altura);    // 1.68
+System.out.println(estudante); // true
+\end{javacode}
+
+\subsection{Boas práticas de nomeação}
+
+\begin{itemize}
+  \item Use \textbf{camelCase}: primeira palavra em minúsculo, demais começam em maiúsculo.
+  \item Escolha nomes significativos.
+\end{itemize}
+
+\begin{javacode}
+// Ruim
+double a = 3.14, b = 22.0, c = a * b * b;
+
+// Bom
+double pi = 3.14, raio = 22.0;
+double areaDoCirculo = pi * raio * raio;
+\end{javacode}
+
+\subsection{Lendo valores de outros tipos}
+
+\begin{javacode}
+Scanner scanner = new Scanner(System.in);
+
+System.out.print("Digite um número inteiro: ");
+int numero = Integer.valueOf(scanner.nextLine());
+
+System.out.print("Digite um número decimal: ");
+double decimal = Double.valueOf(scanner.nextLine());
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Calculando com números}
+
+\begin{center}
+\begin{tabular}{c l l l}
+\toprule
+\textbf{Operador} & \textbf{Operação} & \textbf{Exemplo} & \textbf{Resultado} \\
+\midrule
+\texttt{+} & Adição         & \texttt{3 + 4}  & \texttt{7}           \\
+\texttt{-} & Subtração      & \texttt{10 - 3} & \texttt{7}           \\
+\texttt{*} & Multiplicação  & \texttt{5 * 6}  & \texttt{30}          \\
+\texttt{/} & Divisão        & \texttt{10 / 3} & \texttt{3} (inteira!) \\
+\texttt{\%} & Resto         & \texttt{10 \% 3} & \texttt{1}          \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Divisão inteira vs.\ divisão decimal}
+
+Em Java, dividir dois \inlinecode{int} sempre dá resultado inteiro:
+
+\begin{javacode}
+System.out.println(10 / 3);    // 3  (parte decimal descartada)
+System.out.println(10.0 / 3);  // 3.3333...
+
+int a = 10, b = 3;
+double resultado = (double) a / b;
+System.out.println(resultado); // 3.3333...
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Condicionais}
+
+Condicionais permitem que o programa tome decisões.
+
+\subsection{\texttt{if} e \texttt{else}}
+
+\begin{javacode}
+int temperatura = 30;
+
+if (temperatura > 25) {
+    System.out.println("Está quente!");
+} else {
+    System.out.println("Não está tão quente.");
+}
+\end{javacode}
+
+\subsection{\texttt{else if}}
+
+\begin{javacode}
+int nota = 75;
+
+if (nota >= 90) {
+    System.out.println("A");
+} else if (nota >= 80) {
+    System.out.println("B");
+} else if (nota >= 70) {
+    System.out.println("C");
+} else {
+    System.out.println("Reprovado");
+}
+\end{javacode}
+
+\subsection{Operadores de comparação}
+
+\begin{center}
+\begin{tabular}{c l}
+\toprule
+\textbf{Operador} & \textbf{Significado} \\
+\midrule
+\texttt{==} & Igual a       \\
+\texttt{!=} & Diferente de  \\
+\texttt{<}  & Menor que     \\
+\texttt{>}  & Maior que     \\
+\texttt{<=} & Menor ou igual \\
+\texttt{>=} & Maior ou igual \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Comparando Strings}
+
+Para Strings, \textbf{não use \inlinecode{==}}. Use o método \inlinecode{.equals()}:
+
+\begin{javacode}
+String entrada = scanner.nextLine();
+
+if (entrada.equals("sim")) {
+    System.out.println("Você confirmou.");
+} else {
+    System.out.println("Você não confirmou.");
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Resumo}
+
+\begin{itemize}
+  \item Todo programa Java tem a estrutura \inlinecode{public class ... \{ public static void main ... \}}.
+  \item \inlinecode{System.out.println()} exibe texto e pula a linha; \inlinecode{System.out.print()} exibe sem pular.
+  \item \inlinecode{Scanner} lê a entrada do usuário. Use \inlinecode{scanner.nextLine()} para ler texto.
+  \item Os quatro tipos básicos são: \inlinecode{String}, \inlinecode{int}, \inlinecode{double} e \inlinecode{boolean}.
+  \item Java realiza divisão inteira quando ambos os operandos são \inlinecode{int}.
+  \item \inlinecode{if}, \inlinecode{else if} e \inlinecode{else} permitem que o programa tome decisões.
+  \item Para comparar Strings, use \inlinecode{.equals()}, não \inlinecode{==}.
+\end{itemize}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercícios}
+
+\begin{enumerate}
+  \item \textbf{Olá, usuário!} — Escreva um programa que pergunta o nome e a idade do usuário e exibe: \textit{Olá, [nome]! Você tem [idade] anos.}
+
+  \item \textbf{Calculadora simples} — Escreva um programa que lê dois números inteiros e exibe a soma, diferença, produto e quociente (com resultado decimal).
+
+  \item \textbf{Par ou ímpar} — Escreva um programa que lê um número inteiro e informa se é par ou ímpar.
+
+  \item \textbf{Classificação de temperatura} — Lê uma temperatura em Celsius e exibe: \textit{Frio} (menor que 15), \textit{Agradável} (entre 15 e 25 inclusive) ou \textit{Quente} (maior que 25).
+
+  \item \textbf{IMC} — Lê o peso (kg) e a altura (m) do usuário, calcula o IMC (\(peso / altura^2\)) e classifica: Abaixo do peso ($< 18{,}5$), Peso normal (18,5–24,9), Sobrepeso (25–29,9) ou Obesidade ($\geq 30$).
+\end{enumerate}
+
+\end{document}

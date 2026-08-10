@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lição 7: Paradigmas, Algoritmos e Exercícios Finais — Programação em Java</title>
+<style>
+:root {
+  --primary:   #e76f00;
+  --secondary: #bf5700;
+  --blue:      #1565c0;
+  --teal:      #00695c;
+  --amber:     #b45309;
+  --ink:       #2b2140;
+  --rule:      #ffd7b5;
+  --code-bg:   #fff8f0;
+  --code-inline: #bf5700;
+  --bg:        #fafafa;
+  --text:      #1a1a2e;
+  --muted:     #6b6b80;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* ── HEADER ── */
+header.title-block {
+  border-top: 5px solid var(--primary);
+  padding: 2.2rem 0 1.4rem;
+  margin-bottom: 2rem;
+}
+header.title-block h1.title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+header.title-block p.subtitle {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.15rem;
+  color: var(--secondary);
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+header.title-block p.author,
+header.title-block p.date {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  font-style: italic;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ── TOC ── */
+nav#TOC {
+  background: #fff3e8;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 2.5rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.92rem;
+}
+nav#TOC::before {
+  content: 'Índice';
+  display: block;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+nav#TOC ol { padding-left: 1.2rem; }
+nav#TOC li { margin: 0.18rem 0; }
+nav#TOC a { color: var(--blue); text-decoration: none; }
+nav#TOC a:hover { text-decoration: underline; }
+
+/* ── HEADINGS ── */
+h1 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.7rem;
+  color: var(--primary);
+  border-bottom: 1.2px solid var(--rule);
+  padding-bottom: 0.35rem;
+  margin: 2.2rem 0 0.9rem;
+}
+h2 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.3rem;
+  color: var(--secondary);
+  margin: 1.9rem 0 0.65rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ffe0c4;
+}
+h3 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: var(--teal);
+  margin: 1.4rem 0 0.5rem;
+}
+h4 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.97rem;
+  color: var(--amber);
+  margin: 1.1rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── PARAGRAPHS & LISTS ── */
+p { margin: 0.75rem 0; }
+ul, ol { padding-left: 1.6rem; margin: 0.6rem 0; }
+li { margin: 0.25rem 0; }
+strong { color: var(--ink); }
+
+/* ── BLOCKQUOTE ── */
+blockquote {
+  border-left: 4px solid var(--primary);
+  background: #fff8f0;
+  margin: 1.2rem 0;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink);
+  font-style: italic;
+}
+blockquote strong { font-style: normal; }
+
+/* ── CODE ── */
+code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+  background: var(--code-bg);
+  color: var(--code-inline);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  border-left: 4px solid var(--secondary);
+  background: var(--code-bg);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+pre code {
+  background: none;
+  color: var(--ink);
+  padding: 0;
+  font-size: 0.855rem;
+}
+
+/* ── TABLES ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+thead th {
+  background: var(--secondary);
+  color: #fff;
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+}
+tbody tr:nth-child(odd)  { background: #fff8f0; }
+tbody tr:nth-child(even) { background: #fff; }
+td, th { padding: 0.45rem 0.9rem; border-bottom: 1px solid #f0d8c0; }
+
+/* ── HR ── */
+hr { border: none; border-top: 1.5px solid var(--rule); margin: 2rem 0; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+</style>
+</head>
+<body>
+
+<header class="title-block">
+  <h1 class="title">Programação em Java</h1>
+  <p class="subtitle">Lição 7: Paradigmas de Programação, Algoritmos e Exercícios Finais</p>
+  <p class="author">Java Programming MOOC · Universidade de Helsinque — tradução para o português</p>
+  <p class="date">2026</p>
+</header>
+
+<nav id="TOC">
+  <ol>
+    <li><a href="#objetivos">Objetivos de aprendizagem</a></li>
+    <li><a href="#parte1">Parte 1: Paradigmas de Programação</a></li>
+    <li><a href="#parte2">Parte 2: Algoritmos</a></li>
+    <li><a href="#parte3">Parte 3: Exercícios de Programação Maiores</a></li>
+    <li><a href="#conclusao">Conclusão do Java Programming I</a></li>
+  </ol>
+</nav>
+
+<h1 id="licao-7-paradigmas-algoritmos-e-exercicios-finais">Lição 7: Paradigmas de Programação, Algoritmos e Exercícios Finais</h1>
+
+<h2 id="objetivos">Objetivos de aprendizagem</h2>
+<ul>
+  <li>Compreender o conceito de paradigma de programação</li>
+  <li>Distinguir a programação procedural da orientada a objetos</li>
+  <li>Implementar o algoritmo de ordenação por seleção</li>
+  <li>Usar <code>Arrays.sort()</code> e <code>Collections.sort()</code></li>
+  <li>Implementar busca linear e busca binária</li>
+  <li>Distinguir métodos estáticos de métodos de instância</li>
+  <li>Aplicar os conceitos do curso em exercícios de maior porte</li>
+</ul>
+
+<hr>
+
+<h2 id="parte1">Parte 1: Paradigmas de Programação</h2>
+
+<h3>O que é um paradigma de programação?</h3>
+<p>Um <strong>paradigma de programação</strong> é uma maneira de pensar e estruturar a funcionalidade de um programa. Os paradigmas mais comuns são: (1) Programação orientada a objetos (POO), (2) Programação procedural, (3) Programação funcional.</p>
+
+<h3>Comparação: relógio procedural vs. OOP</h3>
+<p><strong>Versão procedural:</strong></p>
+<pre><code>int horas = 0, minutos = 0, segundos = 0;
+while (true) {
+    System.out.printf("%02d:%02d:%02d%n", horas, minutos, segundos);
+    segundos++;
+    if (segundos >= 60) { segundos = 0; minutos++; }
+    if (minutos >= 60)  { minutos = 0;  horas++;   }
+    if (horas >= 24)    { horas = 0; }
+}</code></pre>
+<p><strong>Versão orientada a objetos:</strong></p>
+<pre><code>public class Ponteiro {
+    private int valor, limite;
+    public Ponteiro(int limite) { this.limite = limite; this.valor = 0; }
+    public void avanca() { this.valor++; if (this.valor >= this.limite) this.valor = 0; }
+    public int getValor() { return this.valor; }
+    public String toString() { return (this.valor &lt; 10 ? "0" : "") + this.valor; }
+}
+public class Relogio {
+    private Ponteiro horas, minutos, segundos;
+    public Relogio() {
+        this.horas = new Ponteiro(24);
+        this.minutos = new Ponteiro(60);
+        this.segundos = new Ponteiro(60);
+    }
+    public void avanca() {
+        this.segundos.avanca();
+        if (this.segundos.getValor() == 0) {
+            this.minutos.avanca();
+            if (this.minutos.getValor() == 0) this.horas.avanca();
+        }
+    }
+    public String toString() { return horas + ":" + minutos + ":" + segundos; }
+}</code></pre>
+<table>
+  <thead><tr><th>Aspecto</th><th>Procedural</th><th>Orientado a objetos</th></tr></thead>
+  <tbody>
+    <tr><td>Estado</td><td>Variáveis soltas</td><td>Encapsulado nos objetos</td></tr>
+    <tr><td>Responsabilidade</td><td>Concentrada</td><td>Distribuída</td></tr>
+    <tr><td>Reúso</td><td>Difícil</td><td>Fácil</td></tr>
+  </tbody>
+</table>
+
+<h3>Programação funcional em Java (Java 8+)</h3>
+<pre><code>List&lt;Integer&gt; numeros = List.of(1, 2, 3, 4, 5, 6);
+int somaDosPares = numeros.stream()
+    .filter(n -&gt; n % 2 == 0)
+    .mapToInt(Integer::intValue)
+    .sum();
+System.out.println(somaDosPares); // 12</code></pre>
+
+<hr>
+
+<h2 id="parte2">Parte 2: Algoritmos</h2>
+
+<h3>Ordenação por seleção</h3>
+<pre><code>public static void ordenacaoPorSelecao(int[] vetor) {
+    for (int i = 0; i &lt; vetor.length - 1; i++) {
+        int indiceMinimo = i;
+        for (int j = i + 1; j &lt; vetor.length; j++) {
+            if (vetor[j] &lt; vetor[indiceMinimo]) indiceMinimo = j;
+        }
+        int temp = vetor[i];
+        vetor[i] = vetor[indiceMinimo];
+        vetor[indiceMinimo] = temp;
+    }
+}</code></pre>
+
+<h3>Ordenação com métodos do Java</h3>
+<pre><code>int[] nums = {5, 2, 8, 1, 9};
+Arrays.sort(nums);
+System.out.println(Arrays.toString(nums)); // [1, 2, 5, 8, 9]
+
+ArrayList&lt;Integer&gt; lista = new ArrayList&lt;&gt;(Arrays.asList(5, 2, 8, 1));
+Collections.sort(lista);
+System.out.println(lista); // [1, 2, 5, 8]</code></pre>
+
+<h3>Busca linear</h3>
+<pre><code>public static int buscaLinear(int[] vetor, int alvo) {
+    for (int i = 0; i &lt; vetor.length; i++) {
+        if (vetor[i] == alvo) return i;
+    }
+    return -1;
+}</code></pre>
+
+<h3>Busca binária</h3>
+<pre><code>public static int buscaBinaria(int[] vetor, int alvo) {
+    int esq = 0, dir = vetor.length - 1;
+    while (esq &lt;= dir) {
+        int meio = (esq + dir) / 2;
+        if (vetor[meio] == alvo)      return meio;
+        else if (vetor[meio] &lt; alvo)  esq = meio + 1;
+        else                          dir = meio - 1;
+    }
+    return -1;
+}</code></pre>
+<table>
+  <thead><tr><th>Algoritmo</th><th>Dados desordenados?</th><th>Pior caso</th></tr></thead>
+  <tbody>
+    <tr><td>Busca linear</td><td>Sim</td><td>O(n)</td></tr>
+    <tr><td>Busca binária</td><td>Não</td><td>O(log n)</td></tr>
+  </tbody>
+</table>
+
+<h3>Métodos estáticos vs. de instância</h3>
+<pre><code>// Método de instância
+public void incrementar() { this.valor++; }
+
+// Método estático — sem criar objeto
+public static int maximo(int a, int b) { return a &gt; b ? a : b; }
+Matematica.maximo(5, 10);</code></pre>
+
+<hr>
+
+<h2 id="parte3">Parte 3: Exercícios de Programação Maiores</h2>
+
+<blockquote>Identifique os substantivos (classes) e verbos (métodos) do enunciado antes de começar a codificar.</blockquote>
+
+<h3>Exercício 1 — Agenda de contatos</h3>
+<p><strong>Classe Contato:</strong> nome, telefone, email. Getters, toString(), equals() por nome.<br>
+<strong>Classe Agenda:</strong> adicionarContato, buscarPorNome (parcial), removerContato, listarTodos (alfabética).<br>
+<strong>main:</strong> menu com adicionar, buscar, remover, listar, sair.</p>
+
+<h3>Exercício 2 — Registro de notas</h3>
+<p><strong>Classe Aluno:</strong> nome, matrícula, notas (0-10); calcularMedia(), melhorNota(), piorNota(), aprovado(double).<br>
+<strong>Classe Turma:</strong> mediaGeral(), melhorAluno(), listarAprovados(double).<br>
+<strong>main:</strong> 5 alunos, 3 notas cada. Exibir média geral, melhor aluno, aprovados (>= 6).</p>
+
+<h3>Exercício 3 — Loja simples</h3>
+<p><strong>Classe Produto:</strong> nome, preço, estoque; vender(int), repor(int).<br>
+<strong>Classe Carrinho:</strong> HashMap&lt;Produto,Integer&gt;; adicionar, remover, calcularTotal().<br>
+<strong>main:</strong> simule cliente adicionando 3 itens e finalizando a compra.</p>
+
+<hr>
+
+<h2 id="conclusao">Conclusão do Java Programming I</h2>
+
+<p><strong>Você concluiu o Java Programming I!</strong> Ao longo das sete partes, aprendeu:</p>
+<table>
+  <thead><tr><th>Parte</th><th>Tópico</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Primeiros passos: variáveis, tipos, condicionais</td></tr>
+    <tr><td>2</td><td>Repetição com while e for, métodos</td></tr>
+    <tr><td>3</td><td>Listas (ArrayList), arrays, Strings</td></tr>
+    <tr><td>4</td><td>Orientação a objetos: classes, objetos, encapsulamento</td></tr>
+    <tr><td>5</td><td>OOP avançada: sobrecarga, referências, composição</td></tr>
+    <tr><td>6</td><td>Listas de objetos, separação UI/lógica, testes unitários</td></tr>
+    <tr><td>7</td><td>Paradigmas, algoritmos de ordenação e busca</td></tr>
+  </tbody>
+</table>
+<p>No <strong>Java Programming II</strong>, você aprenderá herança, polimorfismo, interfaces, generics, streams, lambdas e muito mais. <strong>Parabéns e continue programando!</strong></p>
+
+<footer>
+  Java Programming MOOC · Universidade de Helsinque · tradução para o português · 2026
+</footer>
+</body>
+</html>

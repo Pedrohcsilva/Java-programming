@@ -1,0 +1,349 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage{xcolor}
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaShade}{HTML}{FFF3E8}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtcbox{\inlinecode}{
+  on line,
+  colback=javaCodeBg, colframe=javaRule,
+  boxrule=0.5pt, arc=2pt,
+  fontupper=\ttfamily\small\color{javaDeep},
+  boxsep=1pt, left=2pt, right=2pt, top=1pt, bottom=1pt,
+}
+
+\usepackage[margin=2.4cm, top=2.8cm, bottom=2.8cm]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaRule}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\sffamily\color{javaDeep} Java Programming MOOC}
+\fancyhead[R]{\small\sffamily\color{javaDeep} Apresentação do Curso}
+\fancyfoot[C]{\small\sffamily\color{gray}\thepage}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{javaOrange}}{\thesection}{0.7em}{}
+  [\vspace{2pt}{\color{javaRule}\titlerule[1.2pt]}]
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{javaDeep}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{javaTeal}}{\thesubsubsection}{0.5em}{}
+
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt, parsep=0pt}
+\setlist[enumerate]{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=javaBlue, urlcolor=javaBlue, citecolor=javaBlue,
+  pdftitle={Programação em Java — Apresentação do Curso},
+  pdfauthor={Java Programming MOOC · Universidade de Helsinque},
+  pdflang={pt-BR},
+}
+
+\newtcolorbox{destaque}[1][Atenção]{
+  enhanced, breakable,
+  colback=javaShade, colframe=javaOrange,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt,
+  fonttitle=\sffamily\bfseries\color{javaOrange},
+  title=#1,
+  top=4pt, bottom=4pt,
+}
+
+\newtcolorbox{faqbox}{
+  enhanced, breakable,
+  colback=white, colframe=javaRule,
+  leftrule=3pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt,
+  top=4pt, bottom=4pt, left=8pt, right=6pt,
+}
+
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\color{javaRule}\rule{\linewidth}{1pt}}\\[6pt]
+    {\Huge\sffamily\bfseries\color{javaOrange} \@title}\\[6pt]
+    \ifx\@subtitle\undefined\else
+      {\Large\sffamily\color{javaDeep} \@subtitle}\\[4pt]
+    \fi
+    {\small\sffamily\color{gray} \@author}\\[2pt]
+    {\small\sffamily\color{gray} \@date}\\[6pt]
+    {\color{javaRule}\rule{\linewidth}{1pt}}
+  \end{center}
+  \vspace{1em}
+}
+\makeatother
+
+\title{Programação em Java}
+\subtitle{Apresentação do Curso: Sobre, Suporte e Perguntas Frequentes}
+\author{Java Programming MOOC · Universidade de Helsinque — tradução para o português}
+\date{2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1.5em}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Sobre o Curso}
+
+Este é um curso \textbf{gratuito e online} de programação em Java oferecido pela \textbf{Universidade de Helsinque}, desenvolvido pelo grupo de pesquisa \href{https://www.helsinki.fi/en/researchgroups/data-driven-education}{Agile Education Research}. Trata-se de uma versão atualizada do antigo curso \textit{Object-Oriented Programming with Java}.
+
+O objetivo é ensinar os \textbf{fundamentos de programação de computadores}, incluindo algoritmos e programação orientada a objetos, utilizando a linguagem \textbf{Java}.
+
+\subsection{Para quem é este curso?}
+
+O curso \textbf{não exige conhecimento prévio em programação}. É voltado tanto para iniciantes absolutos quanto para quem deseja aprender Java especificamente.
+
+\subsection{Estrutura}
+
+\begin{center}
+\begin{tabular}{l c p{8cm}}
+\toprule
+\textbf{Curso} & \textbf{Partes} & \textbf{Conteúdo} \\
+\midrule
+Java Programming I  & 1 a 7  & Fundamentos: variáveis, condicionais, repetição, métodos, listas, OOP, algoritmos \\
+Java Programming II & 8 a 14 & Avançado: herança, polimorfismo, interfaces, generics, streams, lambdas \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{O que você aprenderá}
+
+Ao concluir o \textbf{Java Programming I}, você será capaz de:
+
+\begin{itemize}
+  \item Escrever programas estruturados em Java
+  \item Usar variáveis, condicionais e laços de repetição
+  \item Criar e chamar métodos
+  \item Trabalhar com listas, arrays e Strings
+  \item Projetar e implementar classes e objetos
+  \item Aplicar encapsulamento e composição
+  \item Implementar algoritmos básicos de ordenação e busca
+  \item Entender os paradigmas de programação
+\end{itemize}
+
+\subsection{Ferramentas necessárias}
+
+\begin{enumerate}
+  \item \textbf{Java Development Kit (JDK) versão 11 ou superior}\\
+    \url{https://www.oracle.com/java/technologies/downloads/}\\
+    Alternativa gratuita: \url{https://adoptium.net/}
+
+  \item \textbf{IntelliJ IDEA} (IDE recomendada)\\
+    \url{https://www.jetbrains.com/idea/download/}
+
+  \item \textbf{Plugin TMC (Test My Code)}\\
+    \url{https://www.mooc.fi/en/installation/intellij/}
+\end{enumerate}
+
+\subsection{Como começar}
+
+\begin{enumerate}
+  \item Acesse \url{https://www.mooc.fi/en/sign-up} e crie uma conta gratuita
+  \item Instale o JDK 11 e o IntelliJ IDEA
+  \item Instale o plugin TMC no IntelliJ
+  \item No TMC, selecione o curso \textbf{"Java Programming I"}
+  \item Faça o download da Parte 1 e comece!
+\end{enumerate}
+
+\subsection{Links principais}
+
+\begin{center}
+\begin{tabular}{l l}
+\toprule
+\textbf{Recurso} & \textbf{Link} \\
+\midrule
+Página principal      & \url{https://java-programming.mooc.fi/} \\
+Criar conta           & \url{https://www.mooc.fi/en/sign-up} \\
+Ver seus pontos       & \url{https://tmc.mooc.fi} \\
+Ver certificados      & \url{https://www.mooc.fi/en/profile/completions} \\
+Repositório GitHub    & \url{https://github.com/rage/java-programming} \\
+Guia de instalação    & \url{https://www.mooc.fi/en/installation/intellij/} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Avaliação e Certificados}
+
+A avaliação é feita exclusivamente por meio dos \textbf{exercícios de programação}, corrigidos automaticamente pela ferramenta \textbf{Test My Code (TMC)}.
+
+Para o \textbf{certificado de conclusão}, você precisa atingir pelo menos \textbf{80\% dos pontos} em cada parte:
+
+\begin{itemize}
+  \item Certificado do \textbf{Java Programming I}: ao completar 80\%+ das partes 1 a 7
+  \item Certificado do \textbf{Java Programming II}: ao completar 80\%+ das partes 8 a 14
+\end{itemize}
+
+Certificados disponíveis em: \url{https://www.mooc.fi/en/profile/completions}
+
+\begin{destaque}[Atenção]
+Este curso \textbf{não oferece créditos acadêmicos} da Universidade de Helsinque. Para cursos com créditos ECTS: \url{https://programming-23.mooc.fi/}.
+\end{destaque}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Suporte e Assistência}
+
+\subsection{Canal oficial: Discord}
+
+O suporte é oferecido \textbf{voluntariamente} no servidor Discord do Departamento de Ciência da Computação da Universidade de Helsinque.
+
+\textbf{Entre no servidor:}
+\url{https://study.cs.helsinki.fi/discord/join/java}
+
+\subsection{Boas práticas ao pedir ajuda}
+
+Ao postar uma dúvida, inclua:
+
+\begin{enumerate}
+  \item \textbf{Qual exercício} você está tentando resolver
+  \item \textbf{O que você tentou fazer} — mostre seu código
+  \item \textbf{Qual erro aparece} — copie a mensagem completa
+  \item \textbf{O que você esperava} que acontecesse
+\end{enumerate}
+
+\subsection{Links de apoio ao estudo}
+
+\begin{center}
+\begin{tabular}{l l}
+\toprule
+\textbf{Recurso} & \textbf{Link} \\
+\midrule
+Discord do curso        & \url{https://study.cs.helsinki.fi/discord/join/java} \\
+Repositório GitHub      & \url{https://github.com/rage/java-programming} \\
+Documentação Java       & \url{https://docs.oracle.com/en/java/javase/11/docs/api/} \\
+Tutorial Java Oracle    & \url{https://docs.oracle.com/javase/tutorial/} \\
+W3Schools Java          & \url{https://www.w3schools.com/java/} \\
+Stack Overflow          & \url{https://stackoverflow.com/questions/tagged/java} \\
+Visualizador Java       & \url{https://pythontutor.com/java.html} \\
+IntelliJ IDEA           & \url{https://www.jetbrains.com/idea/download/} \\
+Guia TMC                & \url{https://www.mooc.fi/en/installation/intellij/} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Perguntas Frequentes (FAQ)}
+
+\subsection{Sobre o curso em geral}
+
+\begin{faqbox}
+\textbf{O curso é gratuito?}\\
+Sim. O curso é completamente gratuito — material, exercícios e certificado.
+\end{faqbox}
+
+\vspace{0.5em}
+\begin{faqbox}
+\textbf{Preciso criar uma conta?}\\
+Sim. Para usar o TMC, crie uma conta em \url{https://www.mooc.fi/en/sign-up}.
+\end{faqbox}
+
+\vspace{0.5em}
+\begin{faqbox}
+\textbf{Posso estudar no meu próprio ritmo?}\\
+Sim. Não há prazos fixos para conclusão.
+\end{faqbox}
+
+\vspace{0.5em}
+\begin{faqbox}
+\textbf{Este curso oferece créditos acadêmicos?}\\
+Não. Apenas certificado de conclusão. Para créditos ECTS: \url{https://programming-23.mooc.fi/}.
+\end{faqbox}
+
+\subsection{Sobre instalação e ferramentas}
+
+\begin{faqbox}
+\textbf{Qual IDE devo usar?}\\
+IntelliJ IDEA (Community Edition, gratuita) com o plugin TMC.\\
+Instruções: \url{https://www.mooc.fi/en/installation/intellij/}
+\end{faqbox}
+
+\vspace{0.5em}
+\begin{faqbox}
+\textbf{Qual versão do Java devo instalar?}\\
+JDK versão 11. Remova outras versões para evitar conflitos.
+\end{faqbox}
+
+\vspace{0.5em}
+\begin{faqbox}
+\textbf{Estou recebendo erro sobre JAVA\_HOME. Como resolver?}\\
+Verifique se o JDK 11 está instalado e configure a variável de ambiente \inlinecode{JAVA\_HOME} apontando para o diretório de instalação do JDK.
+\end{faqbox}
+
+\subsection{Sobre o plugin TMC e exercícios}
+
+\begin{faqbox}
+\textbf{Como atualizo o plugin TMC?}\\
+No IntelliJ IDEA: \textbf{Help → Check for Updates}.
+\end{faqbox}
+
+\vspace{0.5em}
+\begin{faqbox}
+\textbf{Como baixo os exercícios das próximas partes?}\\
+O TMC libera automaticamente ao atingir \textbf{25\% dos pontos} da parte anterior.
+\end{faqbox}
+
+\vspace{0.5em}
+\begin{faqbox}
+\textbf{Como reporto um possível bug em um exercício?}\\
+Primeiro verifique se o erro está no seu código (peça ajuda no Discord). Se confirmar que é um bug, notifique os assistentes no Discord.
+\end{faqbox}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Créditos}
+
+O curso foi criado e é mantido pelo grupo \textbf{Agile Education Research} da Universidade de Helsinque:
+
+\begin{itemize}
+  \item \textbf{Arto Hellas} e \textbf{Matti Luukkainen} (autores principais)
+  \item Colaboradores: Antti Laaksonen, Henrik Nygren, Juho Leinonen, entre outros
+\end{itemize}
+
+\textbf{Licença:} Creative Commons BY-NC-SA 4.0\\
+\url{https://creativecommons.org/licenses/by-nc-sa/4.0/}
+
+\begin{center}
+\begin{tabular}{l l}
+\toprule
+\textbf{Recurso} & \textbf{Link} \\
+\midrule
+Universidade de Helsinque   & \url{https://www.helsinki.fi/en} \\
+Agile Education Research    & \url{https://www.helsinki.fi/en/researchgroups/data-driven-education} \\
+Plataforma mooc.fi          & \url{https://www.mooc.fi/en/} \\
+Test My Code (TMC)          & \url{https://tmc.mooc.fi} \\
+GitHub do curso             & \url{https://github.com/rage/java-programming} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

@@ -1,0 +1,358 @@
+﻿\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage{xcolor}
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaShade}{HTML}{FFF3E8}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{listings}
+\usepackage{fvextra}
+
+\lstdefinestyle{javastyle}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{javaBlue}\bfseries,
+  stringstyle=\color{javaDeep},
+  commentstyle=\color{javaTeal}\itshape,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+}
+
+\newtcblisting{javacode}{
+  listing only,
+  listing style=javastyle,
+  breakable, enhanced,
+  colback=javaCodeBg, colframe=javaDeep,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt, fontupper=\small,
+  top=4pt, bottom=4pt, left=6pt, right=6pt,
+}
+
+\newtcbox{\inlinecode}{
+  on line,
+  colback=javaCodeBg, colframe=javaRule,
+  boxrule=0.5pt, arc=2pt,
+  fontupper=\ttfamily\small\color{javaDeep},
+  boxsep=1pt, left=2pt, right=2pt, top=1pt, bottom=1pt,
+}
+
+\usepackage[margin=2.4cm, top=2.8cm, bottom=2.8cm]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaRule}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\sffamily\color{javaDeep} Java Programming MOOC}
+\fancyhead[R]{\small\sffamily\color{javaDeep} Licao 7}
+\fancyfoot[C]{\small\sffamily\color{gray}\thepage}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{javaOrange}}{\thesection}{0.7em}{}
+  [\vspace{2pt}{\color{javaRule}\titlerule[1.2pt]}]
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{javaDeep}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{javaTeal}}{\thesubsubsection}{0.5em}{}
+
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt, parsep=0pt}
+\setlist[enumerate]{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=javaBlue, urlcolor=javaBlue, citecolor=javaBlue,
+  pdftitle={Programacao em Java - Licao 7: Paradigmas, Algoritmos e Exercicios Finais},
+  pdfauthor={Java Programming MOOC - Universidade de Helsinque},
+  pdflang={pt-BR},
+}
+
+\newtcolorbox{destaque}[1][Dica]{
+  enhanced, breakable,
+  colback=javaShade, colframe=javaOrange,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt,
+  fonttitle=\sffamily\bfseries\color{javaOrange},
+  title=#1,
+  top=4pt, bottom=4pt,
+}
+
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\color{javaRule}\rule{\linewidth}{1pt}}\\[6pt]
+    {\Huge\sffamily\bfseries\color{javaOrange} \@title}\\[6pt]
+    \ifx\@subtitle\undefined\else
+      {\Large\sffamily\color{javaDeep} \@subtitle}\\[4pt]
+    \fi
+    {\small\sffamily\color{gray} \@author}\\[2pt]
+    {\small\sffamily\color{gray} \@date}\\[6pt]
+    {\color{javaRule}\rule{\linewidth}{1pt}}
+  \end{center}
+  \vspace{1em}
+}
+\makeatother
+
+\title{Programacao em Java}
+\subtitle{Licao 7: Paradigmas de Programacao, Algoritmos e Exercicios Finais}
+\author{Java Programming MOOC - Universidade de Helsinque --- traducao para o portugues}
+\date{2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1.5em}
+
+\section{Objetivos de aprendizagem}
+
+\begin{itemize}
+  \item Compreender o conceito de paradigma de programacao
+  \item Distinguir a programacao procedural da orientada a objetos
+  \item Implementar o algoritmo de ordenacao por selecao
+  \item Usar \inlinecode{Arrays.sort()} e \inlinecode{Collections.sort()}
+  \item Implementar busca linear e busca binaria
+  \item Distinguir metodos estaticos de metodos de instancia
+  \item Aplicar os conceitos do curso em exercicios de maior porte
+\end{itemize}
+
+\section{Parte 1: Paradigmas de Programacao}
+
+\subsection{O que e um paradigma?}
+
+Um \textbf{paradigma de programacao} e uma maneira de pensar e estruturar a funcionalidade de um programa. Os principais sao:
+\begin{enumerate}
+  \item \textbf{Programacao orientada a objetos} (POO)
+  \item \textbf{Programacao procedural}
+  \item \textbf{Programacao funcional}
+\end{enumerate}
+
+\subsection{Comparacao: Relogio}
+
+\textbf{Versao procedural:}
+
+\begin{javacode}
+int horas = 0, minutos = 0, segundos = 0;
+while (true) {
+    System.out.printf("%02d:%02d:%02d%n", horas, minutos, segundos);
+    segundos++;
+    if (segundos >= 60) { segundos = 0; minutos++; }
+    if (minutos >= 60)  { minutos = 0;  horas++;   }
+    if (horas >= 24)    { horas = 0; }
+}
+\end{javacode}
+
+\textbf{Versao orientada a objetos:}
+
+\begin{javacode}
+public class Ponteiro {
+    private int valor, limite;
+    public Ponteiro(int limite) { this.limite = limite; this.valor = 0; }
+    public void avanca() { this.valor++; if (this.valor >= this.limite) this.valor = 0; }
+    public int getValor() { return this.valor; }
+    public String toString() { return (this.valor < 10 ? "0" : "") + this.valor; }
+}
+
+public class Relogio {
+    private Ponteiro horas, minutos, segundos;
+    public Relogio() {
+        this.horas = new Ponteiro(24);
+        this.minutos = new Ponteiro(60);
+        this.segundos = new Ponteiro(60);
+    }
+    public void avanca() {
+        this.segundos.avanca();
+        if (this.segundos.getValor() == 0) {
+            this.minutos.avanca();
+            if (this.minutos.getValor() == 0) this.horas.avanca();
+        }
+    }
+    public String toString() { return horas + ":" + minutos + ":" + segundos; }
+}
+\end{javacode}
+
+\begin{center}
+\begin{tabular}{l l l}
+\toprule
+\textbf{Aspecto} & \textbf{Procedural} & \textbf{Orientado a objetos} \\
+\midrule
+Estado & Variaveis soltas & Encapsulado nos objetos \\
+Responsabilidade & Concentrada & Distribuida \\
+Reuso & Dificil & Facil \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Programacao funcional em Java 8+}
+
+\begin{javacode}
+List<Integer> numeros = List.of(1, 2, 3, 4, 5, 6);
+int somaDosParES = numeros.stream()
+    .filter(n -> n % 2 == 0)
+    .mapToInt(Integer::intValue)
+    .sum();
+System.out.println(somaDosParES); // 12
+\end{javacode}
+
+\section{Parte 2: Algoritmos}
+
+\subsection{Ordenacao por selecao}
+
+\begin{javacode}
+public static void ordenacaoPorSelecao(int[] vetor) {
+    for (int i = 0; i < vetor.length - 1; i++) {
+        int indiceMinimo = i;
+        for (int j = i + 1; j < vetor.length; j++) {
+            if (vetor[j] < vetor[indiceMinimo]) indiceMinimo = j;
+        }
+        int temp = vetor[i];
+        vetor[i] = vetor[indiceMinimo];
+        vetor[indiceMinimo] = temp;
+    }
+}
+\end{javacode}
+
+\subsection{Ordenacao com metodos do Java}
+
+\begin{javacode}
+int[] nums = {5, 2, 8, 1, 9};
+Arrays.sort(nums);
+System.out.println(Arrays.toString(nums)); // [1, 2, 5, 8, 9]
+
+ArrayList<Integer> lista = new ArrayList<>(Arrays.asList(5, 2, 8, 1));
+Collections.sort(lista);
+System.out.println(lista); // [1, 2, 5, 8]
+\end{javacode}
+
+\subsection{Busca linear}
+
+\begin{javacode}
+public static int buscaLinear(int[] vetor, int alvo) {
+    for (int i = 0; i < vetor.length; i++) {
+        if (vetor[i] == alvo) return i;
+    }
+    return -1;
+}
+\end{javacode}
+
+\subsection{Busca binaria}
+
+\begin{javacode}
+public static int buscaBinaria(int[] vetor, int alvo) {
+    int esq = 0, dir = vetor.length - 1;
+    while (esq <= dir) {
+        int meio = (esq + dir) / 2;
+        if (vetor[meio] == alvo)      return meio;
+        else if (vetor[meio] < alvo)  esq = meio + 1;
+        else                          dir = meio - 1;
+    }
+    return -1;
+}
+\end{javacode}
+
+\begin{center}
+\begin{tabular}{l c c}
+\toprule
+\textbf{Algoritmo} & \textbf{Dados desordenados?} & \textbf{Pior caso} \\
+\midrule
+Busca linear  & Sim & $O(n)$ \\
+Busca binaria & Nao & $O(\log n)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Metodos estaticos vs.\ de instancia}
+
+\begin{javacode}
+// Metodo de instancia -- acessa o estado do objeto
+public void incrementar() { this.valor++; }
+
+// Metodo estatico -- nao depende de nenhum objeto
+public static int maximo(int a, int b) { return a > b ? a : b; }
+
+// Chamada sem criar objeto:
+Matematica.maximo(5, 10);
+\end{javacode}
+
+\section{Parte 3: Exercicios de Programacao Maiores}
+
+\begin{destaque}[Dica]
+Identifique os substantivos (classes) e verbos (metodos) do enunciado antes de comecar a codificar.
+\end{destaque}
+
+\subsection{Exercicio 1 --- Agenda de contatos}
+
+Implemente uma agenda de contatos com menu interativo.
+
+\begin{itemize}
+  \item \textbf{Classe Contato:} \inlinecode{nome}, \inlinecode{telefone}, \inlinecode{email}. Getters, \inlinecode{toString()}, \inlinecode{equals()} por nome.
+  \item \textbf{Classe Agenda:} \inlinecode{adicionarContato}, \inlinecode{buscarPorNome} (parcial), \inlinecode{removerContato}, \inlinecode{listarTodos} (ordem alfabetica).
+  \item \textbf{main:} menu com adicionar, buscar, remover, listar, sair.
+\end{itemize}
+
+\subsection{Exercicio 2 --- Registro de notas}
+
+\begin{itemize}
+  \item \textbf{Classe Aluno:} nome, matricula, notas (0--10); \inlinecode{calcularMedia()}, \inlinecode{melhorNota()}, \inlinecode{piorNota()}, \inlinecode{aprovado(double)}.
+  \item \textbf{Classe Turma:} \inlinecode{mediaGeral()}, \inlinecode{melhorAluno()}, \inlinecode{listarAprovados(double)}.
+  \item \textbf{main:} crie turma com 5 alunos, 3 notas cada; exiba media geral, melhor aluno, aprovados ($\geq 6$).
+\end{itemize}
+
+\subsection{Exercicio 3 --- Loja simples}
+
+\begin{itemize}
+  \item \textbf{Classe Produto:} nome, preco, estoque; \inlinecode{vender(int)}, \inlinecode{repor(int)}.
+  \item \textbf{Classe Carrinho:} \inlinecode{HashMap<Produto, Integer>}; \inlinecode{adicionar}, \inlinecode{remover}, \inlinecode{calcularTotal()}.
+  \item \textbf{main:} simule cliente adicionando 3 itens e finalizando a compra.
+\end{itemize}
+
+\section{Conclusao do Java Programming I}
+
+\begin{center}
+\begin{longtable}{c l}
+\toprule
+\textbf{Parte} & \textbf{Topico} \\
+\midrule
+1 & Primeiros passos: variaveis, tipos, condicionais \\
+2 & Repeticao com \texttt{while} e \texttt{for}, metodos \\
+3 & Listas (\texttt{ArrayList}), arrays, Strings \\
+4 & Orientacao a objetos: classes, objetos, encapsulamento \\
+5 & OOP avancada: sobrecarga, referencias, composicao \\
+6 & Listas de objetos, separacao UI/logica, testes unitarios \\
+7 & Paradigmas, algoritmos de ordenacao e busca \\
+\bottomrule
+\end{longtable}
+\end{center}
+
+No \textbf{Java Programming II}, voce aprendera: heranca, polimorfismo, interfaces, generics, streams, lambdas, excecoes avancadas e muito mais.
+
+\bigskip
+\begin{center}
+  {\large\sffamily\bfseries\color{javaOrange} Parabens e continue programando!}
+\end{center}
+
+\end{document}

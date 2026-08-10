@@ -1,0 +1,594 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[11pt,a4paper]{article}
+
+% ── Codificação e língua ──────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+
+% ── Tipografia ────────────────────────────────────────────────────────────────
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ── Cores ─────────────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{javaOrange}{HTML}{E76F00}
+\definecolor{javaDeep}{HTML}{BF5700}
+\definecolor{javaBlue}{HTML}{1565C0}
+\definecolor{javaTeal}{HTML}{00695C}
+\definecolor{javaAmber}{HTML}{B45309}
+\definecolor{javaInk}{HTML}{2B2140}
+\definecolor{javaCodeBg}{HTML}{FFF8F0}
+\definecolor{javaRule}{HTML}{FFD7B5}
+\definecolor{javaShade}{HTML}{FFF3E8}
+
+% ── Caixas e código ───────────────────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+\usepackage{listings}
+\usepackage{fvextra}
+
+\lstdefinestyle{javastyle}{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{javaBlue}\bfseries,
+  stringstyle=\color{javaDeep},
+  commentstyle=\color{javaTeal}\itshape,
+  numberstyle=\tiny\color{gray},
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  tabsize=4,
+}
+
+\newtcblisting{javacode}{
+  listing only,
+  listing style=javastyle,
+  breakable,
+  enhanced,
+  colback=javaCodeBg,
+  colframe=javaDeep,
+  leftrule=4pt,
+  rightrule=0.4pt,
+  toprule=0.4pt,
+  bottomrule=0.4pt,
+  arc=2pt,
+  fontupper=\small,
+  top=4pt, bottom=4pt, left=6pt, right=6pt,
+}
+
+\newtcbox{\inlinecode}{
+  on line,
+  colback=javaCodeBg,
+  colframe=javaRule,
+  boxrule=0.5pt,
+  arc=2pt,
+  fontupper=\ttfamily\small\color{javaDeep},
+  boxsep=1pt, left=2pt, right=2pt, top=1pt, bottom=1pt,
+}
+
+% ── Layout ────────────────────────────────────────────────────────────────────
+\usepackage[margin=2.4cm, top=2.8cm, bottom=2.8cm]{geometry}
+
+% ── Cabeçalho / rodapé ────────────────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{javaRule}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\sffamily\color{javaDeep} Java Programming MOOC}
+\fancyhead[R]{\small\sffamily\color{javaDeep} Resoluções · Lição 7}
+\fancyfoot[C]{\small\sffamily\color{gray}\thepage}
+
+% ── Seções ────────────────────────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}
+  {\sffamily\Large\bfseries\color{javaOrange}}
+  {\thesection}{0.7em}{}
+  [\vspace{2pt}{\color{javaRule}\titlerule[1.2pt]}]
+\titleformat{\subsection}
+  {\sffamily\large\bfseries\color{javaDeep}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\sffamily\normalsize\bfseries\color{javaTeal}}
+  {\thesubsubsection}{0.5em}{}
+
+% ── Listas ────────────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt, topsep=4pt, parsep=0pt}
+\setlist[enumerate]{itemsep=2pt, topsep=4pt, parsep=0pt}
+
+% ── Tabelas ───────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+
+% ── Hiperlinks ────────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=javaBlue,
+  urlcolor=javaBlue,
+  citecolor=javaBlue,
+  pdftitle={Programação em Java --- Resoluções --- Lição 7},
+  pdfauthor={Java Programming MOOC · Universidade de Helsinque},
+  pdflang={pt-BR},
+}
+
+% ── Caixa de destaque (dica/atenção) ─────────────────────────────────────────
+\newtcolorbox{destaque}[1][Observação]{
+  enhanced, breakable,
+  colback=javaShade,
+  colframe=javaOrange,
+  leftrule=4pt, rightrule=0.4pt, toprule=0.4pt, bottomrule=0.4pt,
+  arc=2pt,
+  fonttitle=\sffamily\bfseries\color{javaOrange},
+  title=#1,
+  top=4pt, bottom=4pt,
+}
+
+% ── Título personalizado ──────────────────────────────────────────────────────
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\renewcommand{\maketitle}{%
+  \begin{center}
+    {\color{javaRule}\rule{\linewidth}{1pt}}\\[6pt]
+    {\Huge\sffamily\bfseries\color{javaOrange} \@title}\\[6pt]
+    \ifx\@subtitle\undefined\else
+      {\Large\sffamily\color{javaDeep} \@subtitle}\\[4pt]
+    \fi
+    {\small\sffamily\color{gray} \@author}\\[2pt]
+    {\small\sffamily\color{gray} \@date}\\[6pt]
+    {\color{javaRule}\rule{\linewidth}{1pt}}
+  \end{center}
+  \vspace{1em}
+}
+\makeatother
+
+% ─────────────────────────────────────────────────────────────────────────────
+\title{Programação em Java — Resoluções}
+\subtitle{Lição 7}
+\author{Java Programming MOOC · Universidade de Helsinque — tradução para o português}
+\date{2026}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1.5em}
+
+Como o enunciado não fixa uma estrutura de classes, as escolhas de design abaixo são uma entre várias soluções possíveis.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 1 --- Agenda de contatos}
+
+\begin{javacode}
+import java.util.Objects;
+
+public class Contato {
+    private String nome;
+    private String telefone;
+    private String email;
+
+    public Contato(String nome, String telefone, String email) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String toString() {
+        return nome + " | " + telefone + " | " + email;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Contato)) return false;
+        return nome.equals(((Contato) obj).nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome);
+    }
+}
+\end{javacode}
+
+\begin{javacode}
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class Agenda {
+    private ArrayList<Contato> contatos;
+
+    public Agenda() {
+        this.contatos = new ArrayList<>();
+    }
+
+    public void adicionarContato(Contato c) {
+        contatos.add(c);
+    }
+
+    public ArrayList<Contato> buscarPorNome(String nome) {
+        ArrayList<Contato> encontrados = new ArrayList<>();
+        String busca = nome.toLowerCase();
+
+        for (Contato c : contatos) {
+            if (c.getNome().toLowerCase().contains(busca)) {
+                encontrados.add(c);
+            }
+        }
+        return encontrados;
+    }
+
+    public boolean removerContato(String nome) {
+        for (Contato c : contatos) {
+            if (c.getNome().equals(nome)) {
+                contatos.remove(c);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<Contato> listarTodos() {
+        ArrayList<Contato> ordenados = new ArrayList<>(contatos);
+        Collections.sort(ordenados, Comparator.comparing(Contato::getNome));
+        return ordenados;
+    }
+}
+\end{javacode}
+
+\begin{javacode}
+import java.util.Scanner;
+
+public class InterfaceAgenda {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Agenda agenda = new Agenda();
+
+        while (true) {
+            System.out.println("\n1-Adicionar 2-Buscar 3-Remover 4-Listar 5-Sair");
+            String opcao = scanner.nextLine();
+
+            switch (opcao) {
+                case "1":
+                    System.out.print("Nome: ");
+                    String nome = scanner.nextLine();
+                    System.out.print("Telefone: ");
+                    String telefone = scanner.nextLine();
+                    System.out.print("Email: ");
+                    String email = scanner.nextLine();
+                    agenda.adicionarContato(new Contato(nome, telefone, email));
+                    break;
+                case "2":
+                    System.out.print("Buscar por nome: ");
+                    for (Contato c : agenda.buscarPorNome(scanner.nextLine())) {
+                        System.out.println(c);
+                    }
+                    break;
+                case "3":
+                    System.out.print("Nome do contato a remover: ");
+                    boolean removido = agenda.removerContato(scanner.nextLine());
+                    System.out.println(removido ? "Removido." : "Contato não encontrado.");
+                    break;
+                case "4":
+                    for (Contato c : agenda.listarTodos()) {
+                        System.out.println(c);
+                    }
+                    break;
+                case "5":
+                    return;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
+    }
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 2 --- Registro de notas}
+
+\begin{javacode}
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Aluno {
+    private String nome;
+    private String matricula;
+    private ArrayList<Integer> notas;
+
+    public Aluno(String nome, String matricula) {
+        this.nome = nome;
+        this.matricula = matricula;
+        this.notas = new ArrayList<>();
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void adicionarNota(int nota) {
+        if (nota < 0 || nota > 10) {
+            throw new IllegalArgumentException("A nota deve estar entre 0 e 10.");
+        }
+        notas.add(nota);
+    }
+
+    public double calcularMedia() {
+        if (notas.isEmpty()) return 0;
+        int soma = 0;
+        for (int n : notas) soma += n;
+        return (double) soma / notas.size();
+    }
+
+    public int melhorNota() {
+        return Collections.max(notas);
+    }
+
+    public int piorNota() {
+        return Collections.min(notas);
+    }
+
+    public boolean aprovado(double notaMinima) {
+        return calcularMedia() >= notaMinima;
+    }
+
+    @Override
+    public String toString() {
+        return nome + " (" + matricula + ") - média: " + calcularMedia();
+    }
+}
+\end{javacode}
+
+\begin{javacode}
+import java.util.ArrayList;
+
+public class Turma {
+    private ArrayList<Aluno> alunos;
+
+    public Turma() {
+        this.alunos = new ArrayList<>();
+    }
+
+    public void adicionarAluno(Aluno aluno) {
+        alunos.add(aluno);
+    }
+
+    public Aluno buscarPorMatricula(String matricula) {
+        for (Aluno a : alunos) {
+            if (a.getMatricula().equals(matricula)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public double mediaGeral() {
+        if (alunos.isEmpty()) return 0;
+        double soma = 0;
+        for (Aluno a : alunos) {
+            soma += a.calcularMedia();
+        }
+        return soma / alunos.size();
+    }
+
+    public Aluno melhorAluno() {
+        Aluno melhor = alunos.get(0);
+        for (Aluno a : alunos) {
+            if (a.calcularMedia() > melhor.calcularMedia()) {
+                melhor = a;
+            }
+        }
+        return melhor;
+    }
+
+    public ArrayList<Aluno> listarAprovados(double notaMinima) {
+        ArrayList<Aluno> aprovados = new ArrayList<>();
+        for (Aluno a : alunos) {
+            if (a.aprovado(notaMinima)) {
+                aprovados.add(a);
+            }
+        }
+        return aprovados;
+    }
+
+    public static void main(String[] args) {
+        Turma turma = new Turma();
+
+        String[] nomes = {"Ana", "Bruno", "Carla", "Diego", "Elisa"};
+        int[][] notasPorAluno = {
+            {8, 7, 9},
+            {5, 4, 6},
+            {10, 9, 10},
+            {3, 5, 4},
+            {7, 8, 6}
+        };
+
+        for (int i = 0; i < nomes.length; i++) {
+            Aluno aluno = new Aluno(nomes[i], "M0" + (i + 1));
+            for (int nota : notasPorAluno[i]) {
+                aluno.adicionarNota(nota);
+            }
+            turma.adicionarAluno(aluno);
+        }
+
+        System.out.println("Média geral da turma: " + turma.mediaGeral());
+        System.out.println("Melhor aluno: " + turma.melhorAluno());
+
+        System.out.println("Aprovados (média >= 6):");
+        for (Aluno aprovado : turma.listarAprovados(6)) {
+            System.out.println(aprovado);
+        }
+    }
+}
+\end{javacode}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Exercício 3 --- Loja simples}
+
+\begin{javacode}
+public class Produto {
+    private String nome;
+    private double preco;
+    private int estoque;
+
+    public Produto(String nome, double preco, int estoque) {
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public int getEstoque() {
+        return estoque;
+    }
+
+    public boolean vender(int qtd) {
+        if (qtd > estoque) {
+            return false;
+        }
+        estoque -= qtd;
+        return true;
+    }
+
+    public void repor(int qtd) {
+        estoque += qtd;
+    }
+
+    @Override
+    public String toString() {
+        return nome + " - R$" + preco + " (estoque: " + estoque + ")";
+    }
+}
+\end{javacode}
+
+\begin{javacode}
+import java.util.HashMap;
+import java.util.Map;
+
+public class Carrinho {
+    private HashMap<Produto, Integer> itens;
+
+    public Carrinho() {
+        this.itens = new HashMap<>();
+    }
+
+    public void adicionar(Produto produto, int qtd) {
+        itens.put(produto, itens.getOrDefault(produto, 0) + qtd);
+    }
+
+    public void remover(Produto produto) {
+        itens.remove(produto);
+    }
+
+    public double calcularTotal() {
+        double total = 0;
+        for (Map.Entry<Produto, Integer> entrada : itens.entrySet()) {
+            total += entrada.getKey().getPreco() * entrada.getValue();
+        }
+        return total;
+    }
+
+    public HashMap<Produto, Integer> getItens() {
+        return itens;
+    }
+}
+\end{javacode}
+
+\begin{javacode}
+import java.util.ArrayList;
+import java.util.Map;
+
+public class Loja {
+    private ArrayList<Produto> produtos;
+
+    public Loja() {
+        this.produtos = new ArrayList<>();
+    }
+
+    public void adicionarProduto(Produto produto) {
+        produtos.add(produto);
+    }
+
+    public Produto buscarProduto(String nome) {
+        for (Produto p : produtos) {
+            if (p.getNome().equals(nome)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public boolean finalizarVenda(Carrinho carrinho) {
+        for (Map.Entry<Produto, Integer> entrada : carrinho.getItens().entrySet()) {
+            if (entrada.getValue() > entrada.getKey().getEstoque()) {
+                System.out.println("Estoque insuficiente para: " + entrada.getKey().getNome());
+                return false;
+            }
+        }
+
+        for (Map.Entry<Produto, Integer> entrada : carrinho.getItens().entrySet()) {
+            entrada.getKey().vender(entrada.getValue());
+        }
+
+        System.out.println("Venda finalizada. Total: R$" + carrinho.calcularTotal());
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Loja loja = new Loja();
+
+        Produto caneta = new Produto("Caneta", 2.50, 100);
+        Produto caderno = new Produto("Caderno", 15.90, 40);
+        Produto mochila = new Produto("Mochila", 89.90, 12);
+
+        loja.adicionarProduto(caneta);
+        loja.adicionarProduto(caderno);
+        loja.adicionarProduto(mochila);
+
+        Carrinho carrinho = new Carrinho();
+        carrinho.adicionar(loja.buscarProduto("Caneta"), 3);
+        carrinho.adicionar(loja.buscarProduto("Caderno"), 2);
+        carrinho.adicionar(loja.buscarProduto("Mochila"), 1);
+
+        loja.finalizarVenda(carrinho);
+
+        System.out.println("Estoque de caneta após a venda: " + caneta.getEstoque());
+    }
+}
+\end{javacode}
+
+\begin{destaque}
+\inlinecode{Produto} é usado como chave de um \inlinecode{HashMap} sem sobrescrever \inlinecode{equals}/\inlinecode{hashCode}, então a comparação usada pelo \inlinecode{Carrinho} é por identidade de objeto (o mesmo objeto \inlinecode{Produto}, não produtos ``iguais'' por nome). Isso é aceitável aqui porque a \inlinecode{Loja} sempre devolve a mesma instância via \inlinecode{buscarProduto}.
+\end{destaque}
+
+\end{document}

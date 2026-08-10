@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lição 2: Repetição e Métodos — Programação em Java</title>
+<style>
+:root {
+  --primary:   #e76f00;
+  --secondary: #bf5700;
+  --blue:      #1565c0;
+  --teal:      #00695c;
+  --amber:     #b45309;
+  --ink:       #2b2140;
+  --rule:      #ffd7b5;
+  --code-bg:   #fff8f0;
+  --code-inline: #bf5700;
+  --bg:        #fafafa;
+  --text:      #1a1a2e;
+  --muted:     #6b6b80;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+header.title-block {
+  border-top: 5px solid var(--primary);
+  padding: 2.2rem 0 1.4rem;
+  margin-bottom: 2rem;
+}
+header.title-block h1.title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 2rem;
+  color: var(--primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+header.title-block p.subtitle {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.15rem;
+  color: var(--secondary);
+  margin-top: 0.35rem;
+  font-weight: 600;
+}
+header.title-block p.author,
+header.title-block p.date {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  font-style: italic;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+nav#TOC {
+  background: #fff3e8;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 2.5rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.92rem;
+}
+nav#TOC::before {
+  content: 'Índice';
+  display: block;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+nav#TOC ol { padding-left: 1.2rem; }
+nav#TOC li { margin: 0.18rem 0; }
+nav#TOC a { color: var(--blue); text-decoration: none; }
+nav#TOC a:hover { text-decoration: underline; }
+h1 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.7rem;
+  color: var(--primary);
+  border-bottom: 1.2px solid var(--rule);
+  padding-bottom: 0.35rem;
+  margin: 2.2rem 0 0.9rem;
+}
+h2 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.3rem;
+  color: var(--secondary);
+  margin: 1.9rem 0 0.65rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ffe0c4;
+}
+h3 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: var(--teal);
+  margin: 1.4rem 0 0.5rem;
+}
+h4 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.97rem;
+  color: var(--amber);
+  margin: 1.1rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+p { margin: 0.75rem 0; }
+ul, ol { padding-left: 1.6rem; margin: 0.6rem 0; }
+li { margin: 0.25rem 0; }
+strong { color: var(--ink); }
+blockquote {
+  border-left: 4px solid var(--primary);
+  background: #fff8f0;
+  margin: 1.2rem 0;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink);
+  font-style: italic;
+}
+blockquote strong { font-style: normal; }
+code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+  background: var(--code-bg);
+  color: var(--code-inline);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  border-left: 4px solid var(--secondary);
+  background: var(--code-bg);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  line-height: 1.55;
+}
+pre code {
+  background: none;
+  color: var(--ink);
+  padding: 0;
+  font-size: 0.855rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+thead th {
+  background: var(--secondary);
+  color: #fff;
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+}
+tbody tr:nth-child(odd)  { background: #fff8f0; }
+tbody tr:nth-child(even) { background: #fff; }
+td, th { padding: 0.45rem 0.9rem; border-bottom: 1px solid #f0d8c0; }
+hr { border: none; border-top: 1.5px solid var(--rule); margin: 2rem 0; }
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+</style>
+</head>
+<body>
+
+<header class="title-block">
+  <h1 class="title">Programação em Java</h1>
+  <p class="subtitle">Lição 2: Repetição e Métodos</p>
+  <p class="author">Java Programming MOOC · Universidade de Helsinque — tradução para o português</p>
+  <p class="date">2026</p>
+</header>
+
+<nav id="TOC">
+  <ol>
+    <li><a href="#objetivos-de-aprendizagem">Objetivos de aprendizagem</a></li>
+    <li><a href="#padroes-comuns-de-repeticao">Padrões comuns de repetição</a></li>
+    <li><a href="#o-laco-while">O laço <code>while</code></a></li>
+    <li><a href="#o-laco-for">O laço <code>for</code></a></li>
+    <li><a href="#metodos">Métodos</a></li>
+    <li><a href="#quando-usar-while-vs-for">Quando usar <code>while</code> vs. <code>for</code></a></li>
+    <li><a href="#resumo">Resumo</a></li>
+    <li><a href="#exercicios">Exercícios</a></li>
+  </ol>
+</nav>
+
+<h1 id="licao-2-repeticao-e-metodos">Lição 2: Repetição e Métodos</h1>
+
+<h2 id="objetivos-de-aprendizagem">Objetivos de aprendizagem</h2>
+<ul>
+  <li>Usar o laço <code>while</code> para repetir código</li>
+  <li>Usar os comandos <code>break</code> e <code>continue</code></li>
+  <li>Usar o laço <code>for</code> para percorrer sequências</li>
+  <li>Criar e chamar métodos próprios</li>
+  <li>Criar métodos com parâmetros e com valor de retorno</li>
+</ul>
+
+<h2 id="padroes-comuns-de-repeticao">Padrões comuns de repetição</h2>
+
+<p>Antes de aprender os laços, é útil reconhecer padrões frequentes.</p>
+
+<p><strong>Leitura contínua até um valor sentinela:</strong></p>
+<pre><code>Scanner scanner = new Scanner(System.in);
+while (true) {
+    String linha = scanner.nextLine();
+    if (linha.equals("fim")) {
+        break;
+    }
+    System.out.println("Você digitou: " + linha);
+}</code></pre>
+
+<p><strong>Acúmulo de resultado:</strong></p>
+<pre><code>int soma = 0;
+int contador = 0;
+// ... leitura de valores no laço ...
+double media = (double) soma / contador;</code></pre>
+
+<h2 id="o-laco-while">O laço <code>while</code></h2>
+
+<p>O laço <code>while</code> repete um bloco de código enquanto uma condição for verdadeira.</p>
+
+<h3>Forma básica com condição</h3>
+<pre><code>int numero = 1;
+while (numero &lt;= 5) {
+    System.out.println(numero);
+    numero++;
+}</code></pre>
+
+<h3>Laço infinito com <code>break</code></h3>
+<p>Muitas vezes é mais claro usar <code>while (true)</code> e sair com <code>break</code>:</p>
+<pre><code>Scanner scanner = new Scanner(System.in);
+
+int soma = 0;
+while (true) {
+    System.out.print("Digite um número (0 para sair): ");
+    int n = Integer.valueOf(scanner.nextLine());
+    if (n == 0) {
+        break;
+    }
+    soma += n;
+}
+System.out.println("Soma total: " + soma);</code></pre>
+
+<h3>O comando <code>continue</code></h3>
+<p>O <code>continue</code> pula o restante da iteração atual e volta para o início do laço:</p>
+<pre><code>int i = 0;
+while (i &lt; 10) {
+    i++;
+    if (i % 2 == 0) {
+        continue; // pula os pares
+    }
+    System.out.println(i); // imprime apenas ímpares: 1, 3, 5, 7, 9
+}</code></pre>
+
+<h3>Calculando estatísticas com laço</h3>
+<p>Variáveis de acúmulo devem ser declaradas <strong>antes</strong> do laço:</p>
+<pre><code>Scanner scanner = new Scanner(System.in);
+
+int soma = 0;
+int quantidade = 0;
+int maior = Integer.MIN_VALUE;
+
+while (true) {
+    System.out.print("Digite um número (ou -1 para encerrar): ");
+    int n = Integer.valueOf(scanner.nextLine());
+    if (n == -1) {
+        break;
+    }
+    soma += n;
+    quantidade++;
+    if (n > maior) {
+        maior = n;
+    }
+}
+
+if (quantidade > 0) {
+    System.out.println("Quantidade: " + quantidade);
+    System.out.println("Soma: " + soma);
+    System.out.println("Média: " + (double) soma / quantidade);
+    System.out.println("Maior: " + maior);
+}</code></pre>
+
+<h2 id="o-laco-for">O laço <code>for</code></h2>
+
+<p>O <code>for</code> é mais compacto e muito usado quando se sabe antecipadamente quantas iterações serão feitas.</p>
+
+<h3>Sintaxe</h3>
+<pre><code>for (inicialização; condição; atualização) {
+    // corpo
+}</code></pre>
+
+<h3>Exemplos</h3>
+<pre><code>// Conta de 1 a 5
+for (int i = 1; i &lt;= 5; i++) {
+    System.out.println(i);
+}
+
+// Conta de 10 a 1 (regressivo)
+for (int i = 10; i >= 1; i--) {
+    System.out.println(i);
+}
+
+// Pulos de 2 em 2
+for (int i = 0; i &lt;= 10; i += 2) {
+    System.out.println(i); // 0 2 4 6 8 10
+}</code></pre>
+
+<h3>Laços aninhados</h3>
+<pre><code>for (int linha = 1; linha &lt;= 3; linha++) {
+    for (int coluna = 1; coluna &lt;= 3; coluna++) {
+        System.out.print(linha + "x" + coluna + "=" + (linha * coluna) + "  ");
+    }
+    System.out.println();
+}</code></pre>
+<p><strong>Saída:</strong></p>
+<pre><code>1x1=1  1x2=2  1x3=3
+2x1=2  2x2=4  2x3=6
+3x1=3  3x2=6  3x3=9</code></pre>
+
+<h2 id="metodos">Métodos</h2>
+
+<p>Um <strong>método</strong> é um bloco de código nomeado que realiza uma tarefa específica. Métodos evitam repetição e tornam o programa mais legível e organizado.</p>
+
+<h3>Método sem parâmetros e sem retorno</h3>
+<pre><code>public static void saudacao() {
+    System.out.println("Olá! Bem-vindo ao programa.");
+}</code></pre>
+<p>Chamada:</p>
+<pre><code>public static void main(String[] args) {
+    saudacao();
+    saudacao();
+}</code></pre>
+
+<h3>Método com parâmetros</h3>
+<pre><code>public static void saudar(int vezes) {
+    for (int i = 0; i &lt; vezes; i++) {
+        System.out.println("Olá!");
+    }
+}
+
+public static void soma(int a, int b) {
+    System.out.println(a + " + " + b + " = " + (a + b));
+}</code></pre>
+
+<blockquote>
+  <strong>Atenção:</strong> Parâmetros são <strong>cópias</strong> dos valores passados. Modificá-los dentro do método não altera as variáveis originais.
+</blockquote>
+
+<h3>Método com valor de retorno</h3>
+<p>Substitua <code>void</code> pelo tipo do valor retornado e use <code>return</code>:</p>
+<pre><code>public static int soma(int a, int b) {
+    return a + b;
+}
+
+public static double media(int a, int b, int c) {
+    return (a + b + c) / 3.0;
+}
+
+public static boolean ehPar(int n) {
+    return n % 2 == 0;
+}</code></pre>
+
+<h3>Exemplo completo com métodos</h3>
+<pre><code>import java.util.Scanner;
+
+public class Calculadora {
+
+    public static double calcularMedia(int a, int b, int c) {
+        return (a + b + c) / 3.0;
+    }
+
+    public static int calcularMaximo(int a, int b) {
+        if (a > b) {
+            return a;
+        }
+        return b;
+    }
+
+    public static void exibirResultados(double media, int maximo) {
+        System.out.println("Média: " + media);
+        System.out.println("Maior dos dois primeiros: " + maximo);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Primeiro número: ");
+        int n1 = Integer.valueOf(scanner.nextLine());
+        System.out.print("Segundo número: ");
+        int n2 = Integer.valueOf(scanner.nextLine());
+        System.out.print("Terceiro número: ");
+        int n3 = Integer.valueOf(scanner.nextLine());
+
+        double media = calcularMedia(n1, n2, n3);
+        int maximo = calcularMaximo(n1, n2);
+
+        exibirResultados(media, maximo);
+    }
+}</code></pre>
+
+<h3>Escopo de variáveis</h3>
+<p>Variáveis definidas dentro de um método existem apenas naquele método:</p>
+<pre><code>public static void exemplo() {
+    int x = 10; // x só existe aqui dentro
+}
+
+public static void main(String[] args) {
+    exemplo();
+    // System.out.println(x); // ERRO: x não existe aqui
+}</code></pre>
+
+<h2 id="quando-usar-while-vs-for">Quando usar <code>while</code> vs. <code>for</code></h2>
+
+<table>
+  <thead><tr><th>Situação</th><th>Use</th></tr></thead>
+  <tbody>
+    <tr><td>Número de iterações desconhecido</td><td><code>while</code></td></tr>
+    <tr><td>Lendo até um valor sentinela</td><td><code>while (true)</code> com <code>break</code></td></tr>
+    <tr><td>Percorrendo um intervalo conhecido</td><td><code>for</code></td></tr>
+    <tr><td>Percorrendo uma coleção</td><td><code>for-each</code> (veremos em breve)</td></tr>
+  </tbody>
+</table>
+
+<h2 id="resumo">Resumo</h2>
+<ul>
+  <li>O laço <code>while</code> repete enquanto a condição for verdadeira; <code>break</code> sai do laço, <code>continue</code> pula a iteração.</li>
+  <li>O laço <code>for</code> é ideal quando sabemos o número de iterações.</li>
+  <li>Variáveis de acúmulo devem ser declaradas <strong>antes</strong> do laço.</li>
+  <li>Um <strong>método</strong> é um bloco nomeado de código que pode receber parâmetros e retornar valores.</li>
+  <li>Parâmetros são cópias: alterá-los no método não afeta as variáveis originais.</li>
+  <li><code>return</code> encerra o método e devolve um valor.</li>
+</ul>
+
+<h2 id="exercicios">Exercícios</h2>
+
+<p><strong>Exercício 1 — Tabuada</strong><br>Escreva um programa que lê um número inteiro <code>n</code> e imprime a tabuada de <code>n</code> (de 1 a 10).</p>
+
+<p><strong>Exercício 2 — Fatorial</strong><br>Crie um método <code>fatorial(int n)</code> que retorna o fatorial de <code>n</code>. Teste com <code>fatorial(0)</code>, <code>fatorial(1)</code>, <code>fatorial(5)</code> e <code>fatorial(10)</code>.</p>
+
+<p><strong>Exercício 3 — Contagem de pares e ímpares</strong><br>Escreva um programa que lê números inteiros até o usuário digitar <code>0</code>, e ao final exibe quantos foram pares e quantos foram ímpares.</p>
+
+<p><strong>Exercício 4 — Potência</strong><br>Crie um método <code>potencia(int base, int expoente)</code> que calcula <code>base</code> elevado ao <code>expoente</code> usando um laço (sem usar <code>Math.pow</code>). Teste com <code>potencia(2, 10)</code>.</p>
+
+<p><strong>Exercício 5 — Validação de entrada</strong><br>Crie um método <code>lerInteiroPositivo(Scanner scanner)</code> que pede ao usuário um número positivo, repete enquanto o número for zero ou negativo, e retorna o número válido. Use-o no <code>main</code> para ler dois números e exibir o produto.</p>
+
+<p><strong>Exercício 6 — Estrelas</strong><br>Crie um método <code>imprimirEstrelas(int n)</code> que imprime uma linha com <code>n</code> asteriscos. Depois use-o para imprimir um triângulo crescente de 1 a 5 linhas.</p>
+
+<footer>
+  Java Programming MOOC · Universidade de Helsinque · tradução para o português · 2026
+</footer>
+</body>
+</html>
