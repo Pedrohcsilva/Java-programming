@@ -21,7 +21,6 @@ Este repositório reúne o conteúdo teórico das 7 lições do curso, traduzido
 ## 📂 Estrutura do repositório
 
 ```
-Java-programming/
 ├── Apresentacao/          # Sobre o curso, suporte e perguntas frequentes
 │   ├── apresentacao.md
 │   ├── apresentacao.tex
@@ -50,34 +49,34 @@ Cada lição e cada arquivo de resoluções segue o mesmo padrão de três forma
 
 | Lição | Tópico | Link |
 |---|---|---|
-| Apresentação | Sobre o curso, suporte e FAQ | [apresentacao.md](Java-programming/Apresentacao/apresentacao.md) |
-| Lição 1 | Primeiros Passos | [licao01.md](Java-programming/Licao01/licao01.md) |
-| Lição 2 | Repetição e Métodos | [licao02.md](Java-programming/Licao02/licao02.md) |
-| Lição 3 | Listas, Arrays e Strings | [licao03.md](Java-programming/Licao03/licao03.md) |
-| Lição 4 | Orientação a Objetos — Fundamentos | [licao04.md](Java-programming/Licao04/licao04.md) |
-| Lição 5 | Orientação a Objetos — Aprofundamento | [licao05.md](Java-programming/Licao05/licao05.md) |
-| Lição 6 | Listas de Objetos, Testes e Programas Complexos | [licao06.md](Java-programming/Licao06/licao06.md) |
-| Lição 7 | Paradigmas de Programação, Algoritmos e Exercícios Finais | [licao07.md](Java-programming/Licao07/licao07.md) |
+| Apresentação | Sobre o curso, suporte e FAQ | [apresentacao.md](Apresentacao/apresentacao.md) |
+| Lição 1 | Primeiros Passos | [licao01.md](Licao01/licao01.md) |
+| Lição 2 | Repetição e Métodos | [licao02.md](Licao02/licao02.md) |
+| Lição 3 | Listas, Arrays e Strings | [licao03.md](Licao03/licao03.md) |
+| Lição 4 | Orientação a Objetos — Fundamentos | [licao04.md](Licao04/licao04.md) |
+| Lição 5 | Orientação a Objetos — Aprofundamento | [licao05.md](Licao05/licao05.md) |
+| Lição 6 | Listas de Objetos, Testes e Programas Complexos | [licao06.md](Licao06/licao06.md) |
+| Lição 7 | Paradigmas de Programação, Algoritmos e Exercícios Finais | [licao07.md](Licao07/licao07.md) |
 
 > Cada lição inclui objetivos de aprendizagem, explicações teóricas e exemplos de código em Java.
 
 ## ✅ Resoluções
 
-A pasta [`Resolucoes/`](Java-programming/Resolucoes) contém a resolução comentada de todos os exercícios propostos em cada lição correspondente (`resolucoesXX` refere-se aos exercícios de `licaoXX`), com código-fonte completo em Java e explicações do raciocínio utilizado.
+A pasta [`Resolucoes/`](Resolucoes) contém a resolução comentada de todos os exercícios propostos em cada lição correspondente (`resolucoesXX` refere-se aos exercícios de `licaoXX`), com código-fonte completo em Java e explicações do raciocínio utilizado.
 
 | Lição | Resolução |
 |---|---|
-| Lição 1 | [resolucoes01.md](Java-programming/Resolucoes/resolucoes01.md) |
-| Lição 2 | [resolucoes02.md](Java-programming/Resolucoes/resolucoes02.md) |
-| Lição 3 | [resolucoes03.md](Java-programming/Resolucoes/resolucoes03.md) |
-| Lição 4 | [resolucoes04.md](Java-programming/Resolucoes/resolucoes04.md) |
-| Lição 5 | [resolucoes05.md](Java-programming/Resolucoes/resolucoes05.md) |
-| Lição 6 | [resolucoes06.md](Java-programming/Resolucoes/resolucoes06.md) |
-| Lição 7 | [resolucoes07.md](Java-programming/Resolucoes/resolucoes07.md) |
+| Lição 1 | [resolucoes01.md](Resolucoes/resolucoes01.md) |
+| Lição 2 | [resolucoes02.md](Resolucoes/resolucoes02.md) |
+| Lição 3 | [resolucoes03.md](Resolucoes/resolucoes03.md) |
+| Lição 4 | [resolucoes04.md](Resolucoes/resolucoes04.md) |
+| Lição 5 | [resolucoes05.md](Resolucoes/resolucoes05.md) |
+| Lição 6 | [resolucoes06.md](Resolucoes/resolucoes06.md) |
+| Lição 7 | [resolucoes07.md](Resolucoes/resolucoes07.md) |
 
 ## 🚀 Como usar
 
-1. Comece pela [Apresentação](Java-programming/Apresentacao/apresentacao.md) para entender o contexto do curso.
+1. Comece pela [Apresentação](Apresentacao/apresentacao.md) para entender o contexto do curso.
 2. Siga as lições em ordem (`Licao01` → `Licao07`), lendo a teoria e tentando os exercícios propostos.
 3. Depois de tentar os exercícios por conta própria, consulte a resolução correspondente na pasta `Resolucoes/` para comparar sua solução.
 4. Prefira o `.md` para leitura rápida no GitHub, o `.html` para uma versão estilizada no navegador, e o `.tex` caso queira gerar um PDF formatado.
