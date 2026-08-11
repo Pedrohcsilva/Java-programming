@@ -1,0 +1,60 @@
+Licença deste repositório
+==========================
+
+Este repositório é uma tradução e adaptação para o português do curso
+"Java Programming I", desenvolvido pela Universidade de Helsinque
+(University of Helsinki) e disponibilizado em https://java-programming.mooc.fi/.
+
+O material original do curso é licenciado sob:
+
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+(CC BY-NC-SA 4.0)
+
+Texto completo da licença: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR
+Texto legal (em inglês): https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+Como esta tradução é uma obra derivada do material original, ela é
+distribuída sob os mesmos termos da licença CC BY-NC-SA 4.0. Isso significa
+que qualquer pessoa é livre para:
+
+  - Compartilhar — copiar e redistribuir o material em qualquer suporte ou formato
+  - Adaptar — remixar, transformar e criar a partir do material
+
+Desde que respeitados os seguintes termos:
+
+  - Atribuição — Você deve dar o crédito apropriado à Universidade de
+    Helsinque como autora do conteúdo original, fornecer um link para a
+    licença e indicar se mudanças foram feitas. Você deve fazê-lo de
+    maneira razoável, mas não de forma que sugira que a Universidade de
+    Helsinque endossa você ou o seu uso.
+
+  - NãoComercial — Você não pode usar o material para fins comerciais.
+
+  - CompartilhaIgual — Se você remixar, transformar ou criar a partir do
+    material, deve distribuir suas contribuições sob a mesma licença que
+    o material original.
+
+Sem restrições adicionais — Você não pode aplicar termos jurídicos ou
+medidas de caráter tecnológico que restrinjam legalmente outras pessoas
+de fazerem algo que a licença permita.
+
+------------------------------------------------------------------------
+
+Sobre este repositório
+
+Este repositório é um projeto de extensão desenvolvido por alunos do
+curso de Engenharia de Computação da Universidade Federal de Uberlândia
+(UFU). O conteúdo aqui presente consiste na tradução para o português
+das lições teóricas do curso, além de resoluções comentadas dos
+exercícios propostos.
+
+A autoria do conteúdo original (texto das lições, estrutura do curso e
+enunciados dos exercícios) pertence à Universidade de Helsinque. A
+tradução, adaptação e as resoluções comentadas foram produzidas pelos
+alunos responsáveis por este projeto de extensão, com apoio de
+ferramentas de IA e revisão humana, e são disponibilizadas sob os
+mesmos termos da licença CC BY-NC-SA 4.0.
+
+Em caso de dúvida sobre reutilização deste material, consulte a licença
+completa no link acima ou entre em contato com os mantenedores deste
+repositório.
